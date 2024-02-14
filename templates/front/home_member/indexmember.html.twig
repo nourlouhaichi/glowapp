@@ -10,7 +10,7 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            {# <a href="index.html" class="nav-item nav-link active">Home</a>
+                            <a href="index.html" class="nav-item nav-link active">Home</a>
                             <a href="shop.html" class="nav-item nav-link">Shop</a>
                             <a href="shop-detail.html" class="nav-item nav-link">Events</a>
                             <div class="nav-item dropdown">
@@ -21,12 +21,15 @@
                                     
                                 </div>
                             </div>
-                            <a href="contact.html" class="nav-item nav-link">Publications</a> #}
+                            <a href="contact.html" class="nav-item nav-link">Publications</a>
                         </div>
                         <div class="d-flex m-3 me-0">
-                            <button type="submit" class="btn btn-secondary py-3 w-100 mb-2"> <a href="{{ path('app_login') }}">Sign In</a></button>
-                            &nbsp;&nbsp;
-                            <button type="submit" class="btn btn-secondary py-3 w-100 mb-2"> <a href="{{ path('app_register') }}">SignUp</a></button>
+                         <a href="#" class="my-auto">
+                                <i class="fas fa-user fa-2x"><a href=""></i>
+                            </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="submit" class="btn btn-secondary py-3 w-100 mb-2"> <a href="{{ path('app_logout') }}">Log Out</a></button>
+                           
+                            {# <button type="submit" class="btn btn-secondary py-3 w-100 mb-2"> <a href="{{ path('app_register') }}">SignUp</a></button> #}
                         </div>
                     </div>
                 </nav>
