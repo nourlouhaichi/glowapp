@@ -4,13 +4,13 @@
 {% block body %}
 <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
-                    <img src="{{asset('front/img/logoglowapp.png')}}" length='150px' width='150px'>
+                    <a href="{{ path('app_home_member') }}"><img src="{{asset('front/img/logoglowapp.png')}}" length='150px' width='150px'></a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
                         <span class="fa fa-bars text-primary"></span>
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="index.html" class="nav-item nav-link active">Home</a>
+                            <a href="{{ path('app_home_member') }}" class="nav-item nav-link active">Home</a>
                             <a href="shop.html" class="nav-item nav-link">Shop</a>
                             <a href="shop-detail.html" class="nav-item nav-link">Events</a>
                             <div class="nav-item dropdown">
@@ -24,7 +24,7 @@
                             <a href="contact.html" class="nav-item nav-link">Publications</a>
                         </div>
                         <div class="d-flex m-3 me-0">
-                         <a href="" class="my-auto">
+                         <a href="{{ path('profile_member') }}" class="my-auto">
                                 <i class="fas fa-user fa-2x"></i>
                             </a> &nbsp;&nbsp;&nbsp;&nbsp;
                             <button type="submit" class="btn btn-secondary py-3 w-100 mb-2"> <a href="{{ path('app_logout') }}">Log Out</a></button>
@@ -57,7 +57,6 @@
         </div>
         <!-- Modal Search End -->
 <br>
-
         <!-- Hero Start -->
         <div class="container-fluid py-5 mb-5 hero-header">
             <div class="container py-5">
