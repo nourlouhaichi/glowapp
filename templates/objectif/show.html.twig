@@ -1,0 +1,46 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Objectif{% endblock %}
+
+{% block body %}
+    <h1>Objectif</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ objectif.id }}</td>
+            </tr>
+            <tr>
+                <th>Cin</th>
+                <td>{{ objectif.cin }}</td>
+            </tr>
+            <tr>
+                <th>Objectif_o</th>
+                <td>{{ objectif.objectifO }}</td>
+            </tr>
+            <tr>
+                <th>Description_o</th>
+                <td>{{ objectif.descriptionO }}</td>
+            </tr>
+            <tr>
+                <th>Categorie_o</th>
+                <td>{{ objectif.categorieO }}</td>
+            </tr>
+            <tr>
+                <th>Poid_o</th>
+                <td>{{ objectif.poidO }}</td>
+            </tr>
+            <tr>
+                <th>Taille_o</th>
+                <td>{{ objectif.tailleO }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_objectif_index') }}">back to list</a>
+
+    <a href="{{ path('app_objectif_edit', {'id': objectif.id}) }}">edit</a>
+
+    {{ include('objectif/_delete_form.html.twig') }}
+{% endblock %}
