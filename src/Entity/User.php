@@ -8,6 +8,7 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Validator\Constraints as Assert; 
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
@@ -20,38 +21,88 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Id]
     #[ORM\Column(length: 8)]
+    #[Assert\NotBlank(message:"CIN is required")]
+    #[Assert\Length(
+        min: 8,
+        max: 8,
+        exactMessage: "CIN must contain exactly {{ limit }} digits"
+    )]
+    
+    #[Assert\Regex(pattern: "/^\d+$/", message: "CIN must contain only digits")]
     private ?string $cin = null;
 
+
     #[ORM\Column(length: 180, unique: true)]
+    #[Assert\NotBlank(message:"Email is required")]
+    #[Assert\Email(message:"Email format is invalid")]
     private ?string $email = null;
+
 
     #[ORM\Column]
     private array $roles = [];
+
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
+    // #[Assert\NotBlank(message:"Password is required")]
     private ?string $password = null;
 
+
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message:"Lastname is required")]
+    #[Assert\Length(
+        max: 30,
+        maxMessage: "Lastname cannot be longer than {{ limit }} characters"
+    )]
+    #[Assert\Regex(
+        pattern: "/^\D*$/",
+        message: "Lastname cannot contain digits"
+    )]
     private ?string $lastname = null;
 
+
     #[ORM\Column(length: 100)]
+    #[Assert\NotBlank(message:"Firstname is required")]
+    #[Assert\Length(
+        max: 25,
+        maxMessage: "Firstname cannot be longer than {{ limit }} characters"
+    )]
+    #[Assert\Regex(
+        pattern: "/^\D*$/",
+        message: "Firstname cannot contain digits"
+    )]
     private ?string $firstname = null;
 
+
     #[ORM\Column(length: 25)]
+    #[Assert\NotBlank(message:"Gender is required")]
+    // #[Assert\Choice(choices: ['male', 'female'], message: "Gender should be one of: male or female")]
     private ?string $gender = null;
 
+
     #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[Assert\NotBlank(message:"Date of birth is required")]
+    #[Assert\LessThanOrEqual("today", message:"Date of birth cannot be in the future")]
     private ?\DateTimeInterface $datebirth = null;
 
+
     #[ORM\Column(length: 8)]
+    #[Assert\NotBlank(message:"Phone number is required")]
+    #[Assert\Length(
+        min: 8,
+        max: 8,
+        exactMessage: "Phone number must be {{ limit }} digits"
+    )]
+    #[Assert\Regex(pattern: "/^\d+$/", message: "Phone number must contain only digits")]
     private ?string $phone = null;
+
 
     #[ORM\Column(type: 'datetime_immutable', options: ['default'=> 'CURRENT_TIMESTAMP'])] //saisir date creation automatique
     private ?\DateTimeImmutable $created_at = null;
 
+    
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();

@@ -59,38 +59,46 @@
                     <h3>Sign Up</h3>
                 </div>
                 {{ form_errors(registrationForm) }}
-                {{ form_start(registrationForm) }}
+                {{ form_start(registrationForm,{'attr': {'novalidate': 'novalidate'}} ) }}
                     <div class="form-floating mb-3">
                         {{ form_widget(registrationForm.lastname, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
                         <label for="floatingInput">Last Name</label>
+                        {{ form_errors(registrationForm.lastname) }}  
                     </div>
                     <div class="form-floating mb-3">
                         {{ form_widget(registrationForm.firstname, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
                         <label for="floatingInput">First Name</label>
+                        {{ form_errors(registrationForm.firstname) }}
                     </div>
                     <div class="form-floating mb-3">
                         {{ form_widget(registrationForm.cin, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
                         <label for="floatingInput">CIN</label>
+                        {{ form_errors(registrationForm.cin) }}
                     </div>
                     <div class="form-floating mb-3">
-                        {{ form_widget(registrationForm.gender, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
+                        {{ form_widget(registrationForm.gender, {'attr': {'class': 'form-select', 'id': 'genderSelect'}}) }}
                         <label for="floatingInput">Gender</label>
+                        {{ form_errors(registrationForm.gender) }}
                     </div>
                     <div class="form-floating mb-3">
-                        {{ form_widget(registrationForm.datebirth, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
+                        {{ form_widget(registrationForm.datebirth, {'attr': {'class': 'form-select', 'id': 'dateOfBirth'}}) }}
                         <label for="floatingInput">Date of Birth</label>
+                        {{ form_errors(registrationForm.datebirth) }}
                     </div>
                     <div class="form-floating mb-3">
                         {{ form_widget(registrationForm.phone, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
                         <label for="floatingInput">Phone</label>
+                        {{ form_errors(registrationForm.phone) }}
                     </div>
                     <div class="form-floating mb-3">
                         {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
                         <label for="floatingInput">Email address</label>
+                        {{ form_errors(registrationForm.email) }}
                     </div>
                     <div class="form-floating mb-4">
                         {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'id': 'floatingPassword', 'placeholder': 'Password'}}) }}
                         <label for="floatingPassword">Password</label>
+                        {# {{ form_errors(registrationForm.plainPassword) }} #}
                     </div>
                     <div class="form-check mb-4">
                         {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input', 'id': 'exampleCheck1'}}) }}
