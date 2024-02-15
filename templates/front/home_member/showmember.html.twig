@@ -23,13 +23,20 @@
                             </div>
                             <a href="contact.html" class="nav-item nav-link">Publications</a>
                         </div>
-                        <div class="d-flex m-3 me-0">
-                         <a href="" class="my-auto">
-                                <i class="fas fa-user fa-2x"></i>
-                            </a> &nbsp;&nbsp;&nbsp;&nbsp;
-                            <button type="submit" class="btn btn-secondary py-3 w-100 mb-2"> <a href="{{ path('app_logout') }}">Log Out</a></button>
-                           
-                            {# <button type="submit" class="btn btn-secondary py-3 w-100 mb-2"> <a href="{{ path('app_register') }}">SignUp</a></button> #}
+                        <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        {% if app.user.gender == "female"%}
+                        <img class="rounded-circle me-lg-2" src="{{asset('back/img/Fprofile.png')}}" alt="" style="width: 40px; height: 40px;">
+                        {% else %}
+                        <img class="rounded-circle me-lg-2" src="{{asset('back/img/Mprofile.png')}}" alt="" style="width: 40px; height: 40px;">
+                        {% endif %}
+                            
+                            <span class="d-none d-lg-inline-flex">{{ app.user.lastname}} {{ app.user.firstname}}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="{{ path('profile_member') }}" class="dropdown-item">My Profile</a>
+                            {# <a href="#" class="dropdown-item">Settings</a> #}
+                            <a href="{{ path('app_logout') }}" class="dropdown-item">Log Out</a>
                         </div>
                     </div>
                 </nav>

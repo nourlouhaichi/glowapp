@@ -58,7 +58,7 @@
                     </a>
                     <h3>Sign Up</h3>
                 </div>
-                {{ form_errors(registrationForm) }}
+                {# {{ form_errors(registrationForm) }} #}
                 {{ form_start(registrationForm,{'attr': {'novalidate': 'novalidate'}} ) }}
                     <div class="form-floating mb-3">
                         {{ form_widget(registrationForm.lastname, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
@@ -98,7 +98,7 @@
                     <div class="form-floating mb-4">
                         {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'id': 'floatingPassword', 'placeholder': 'Password'}}) }}
                         <label for="floatingPassword">Password</label>
-                        {# {{ form_errors(registrationForm.plainPassword) }} #}
+                        {{ form_errors(registrationForm.plainPassword) }}
                     </div>
                     <div class="form-check mb-4">
                         {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input', 'id': 'exampleCheck1'}}) }}

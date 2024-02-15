@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 #[Route('/user/admin')]
 class UserAdminController extends AbstractController
@@ -22,6 +23,33 @@ class UserAdminController extends AbstractController
         ]);
     }
 
+    // #[Route('/new', name: 'app_user_admin_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request, EntityManagerInterface $entityManager): Response
+    // {
+    //     $user = new User();
+    //     $form = $this->createForm(UserType::class, $user);
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->persist($user);
+    //         $entityManager->flush();
+
+    //         return $this->redirectToRoute('app_user_admin_index', [], Response::HTTP_SEE_OTHER);
+    //     }
+
+    //     return $this->renderForm('back/user_admin/new.html.twig', [
+    //         'user' => $user,
+    //         'form' => $form,
+    //     ]);
+    // }
+
+    private $passwordEncoder;
+
+    public function __construct(UserPasswordEncoderInterface $passwordEncoder)
+    {
+        $this->passwordEncoder = $passwordEncoder;
+    }
+
     #[Route('/new', name: 'app_user_admin_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -30,6 +58,12 @@ class UserAdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
+            $plainPassword = $form->get('password')->getData();
+            
+            $hashedPassword = $this->passwordEncoder->encodePassword($user, $plainPassword);
+            $user->setPassword($hashedPassword);
+
             $entityManager->persist($user);
             $entityManager->flush();
 
@@ -41,6 +75,7 @@ class UserAdminController extends AbstractController
             'form' => $form,
         ]);
     }
+
 
     #[Route('/{cin}', name: 'app_user_admin_show', methods: ['GET'])]
     public function show(User $user): Response
