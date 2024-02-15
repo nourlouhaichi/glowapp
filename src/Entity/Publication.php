@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\PublicationRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -16,62 +14,21 @@ class Publication
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    private ?int $idp = null;
-
-    #[ORM\Column]
-    private ?int $cin = null;
-
     #[ORM\Column(length: 255)]
     private ?string $titre_p = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $description_p = null;
 
     #[ORM\Column(length: 255)]
     private ?string $type_p = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $contenu_p = null;
+    private ?string $contenue_p = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $datecr_p = null;
 
-    #[ORM\OneToMany(targetEntity: Avis::class, mappedBy: 'idr')]
-    private Collection $idav;
-
-    public function __construct()
-    {
-        $this->idav = new ArrayCollection();
-    }
-
     public function getId(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdp(): ?int
-    {
-        return $this->idp;
-    }
-
-    public function setIdp(int $idp): static
-    {
-        $this->idp = $idp;
-
-        return $this;
-    }
-
-    public function getCin(): ?int
-    {
-        return $this->cin;
-    }
-
-    public function setCin(int $cin): static
-    {
-        $this->cin = $cin;
-
-        return $this;
     }
 
     public function getTitreP(): ?string
@@ -82,18 +39,6 @@ class Publication
     public function setTitreP(string $titre_p): static
     {
         $this->titre_p = $titre_p;
-
-        return $this;
-    }
-
-    public function getDescriptionP(): ?string
-    {
-        return $this->description_p;
-    }
-
-    public function setDescriptionP(string $description_p): static
-    {
-        $this->description_p = $description_p;
 
         return $this;
     }
@@ -110,14 +55,14 @@ class Publication
         return $this;
     }
 
-    public function getContenuP(): ?string
+    public function getContenueP(): ?string
     {
-        return $this->contenu_p;
+        return $this->contenue_p;
     }
 
-    public function setContenuP(string $contenu_p): static
+    public function setContenueP(string $contenue_p): static
     {
-        $this->contenu_p = $contenu_p;
+        $this->contenue_p = $contenue_p;
 
         return $this;
     }
@@ -130,36 +75,6 @@ class Publication
     public function setDatecrP(\DateTimeInterface $datecr_p): static
     {
         $this->datecr_p = $datecr_p;
-
-        return $this;
-    }
-
-    /**
-     * @return Collection<int, Avis>
-     */
-    public function getIdav(): Collection
-    {
-        return $this->idav;
-    }
-
-    public function addIdav(Avis $idav): static
-    {
-        if (!$this->idav->contains($idav)) {
-            $this->idav->add($idav);
-            $idav->setIdr($this);
-        }
-
-        return $this;
-    }
-
-    public function removeIdav(Avis $idav): static
-    {
-        if ($this->idav->removeElement($idav)) {
-            // set the owning side to null (unless already changed)
-            if ($idav->getIdr() === $this) {
-                $idav->setIdr(null);
-            }
-        }
 
         return $this;
     }
