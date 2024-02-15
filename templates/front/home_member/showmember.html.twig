@@ -67,7 +67,7 @@
                     <img src="{{asset('front/img/profile.png')}}" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
                       <h4 class="text-primary mb-1">{{ app.user.lastname}} {{ app.user.firstname}}</h4>
-                      <p class="text-secondary mb-1">Member</p>
+                      <p class="text-secondary mb-1">{% for role in app.user.roles %}{{ role }}{% endfor %}</p>
                       <p class="text-muted font-size-sm">{{ app.user.createdAt | date('Y-m-d H:i:s') }}</p>
                     </div>
                   </div>
