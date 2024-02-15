@@ -15,4 +15,10 @@ class HomeAdminController extends AbstractController
             'controller_name' => 'HomeAdminController',
         ]);
     }
+
+    #[Route('/home/admin/profile', name: 'profile_admin')]
+    public function showAdmin()
+    {
+        return $this->render("back/home_admin/showadmin.html.twig");
+    }
 }

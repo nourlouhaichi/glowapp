@@ -1,0 +1,86 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}Profile{% endblock %}
+{% block body %}
+<br>
+<div class="container">
+    <div class="main-body">
+    
+          <div class="row gutters-sm">
+            <div class="col-md-4 mb-3">
+              <div class="card">
+                <div class="card-body">
+                  <div class="d-flex flex-column align-items-center text-center">
+                    {% if app.user.gender == "female"%}
+                    <img src="{{asset('back/img/Fprofile.png')}}" alt="Admin" class="rounded-circle" width="150">
+                    {% else %}
+                    <img src="{{asset('back/img/Mprofile.png')}}" alt="Admin" class="rounded-circle" width="150">
+                    {% endif %}
+                    <div class="mt-3">
+                      <h4 class="text-success mb-1">{{ app.user.lastname}} {{ app.user.firstname}}</h4>
+                      <p class="text-warning mb-0">{% for role in app.user.roles %}{{ role }}{% endfor %}</p>
+                      <p class="text-muted font-size-sm">{{ app.user.createdAt | date('Y-m-d H:i:s') }}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+            </div>
+            <div class="col-md-8">
+              <div class="card mb-3">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">CIN</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ app.user.cin}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Email</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ app.user.email}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Gender</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ app.user.gender}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Date of Birth</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ app.user.datebirth|date('Y-m-d')}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Phone</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ app.user.phone}}
+                    </div>
+                  </div>
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-12">
+                      <a class="btn btn-success py-3 w-100 mb-2" target="__blank" href="https://www.bootdey.com/snippets/view/profile-edit-data-and-skills">Edit</a>
+                    </div>
+                  </div>
+                </div>
+              </div></div></div></div></div>
+
+{% endblock %}
+

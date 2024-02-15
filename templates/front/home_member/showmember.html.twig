@@ -64,7 +64,11 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-                    <img src="{{asset('front/img/profile.png')}}" alt="Admin" class="rounded-circle" width="150">
+                    {% if app.user.gender == "female"%}
+                    <img src="{{asset('back/img/Fprofile.png')}}" alt="Admin" class="rounded-circle" width="150">
+                    {% else %}
+                    <img src="{{asset('back/img/Mprofile.png')}}" alt="Admin" class="rounded-circle" width="150">
+                    {% endif %}
                     <div class="mt-3">
                       <h4 class="text-primary mb-1">{{ app.user.lastname}} {{ app.user.firstname}}</h4>
                       <p class="text-secondary mb-1">{% for role in app.user.roles %}{{ role }}{% endfor %}</p>

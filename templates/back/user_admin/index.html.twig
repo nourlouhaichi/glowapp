@@ -1,0 +1,56 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}User index{% endblock %}
+
+{% block body %}
+    <br><center><h1 class="mb-3 text-success">Users Table</h1></center><br>
+
+
+      <div class="container-fluid pt-4 px-4">                  
+    <table  class="table table-striped">
+        <thead>
+            <tr>
+                <th>Cin</th>
+                <th>Email</th>
+                <th>Roles</th>
+                {# <th>Password</th> #}
+                <th>Lastname</th>
+                <th>Firstname</th>
+                <th>Gender</th>
+                <th>Datebirth</th>
+                <th>Phone</th>
+                <th>Created_at</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.cin }}</td>
+                <td>{{ user.email }}</td>
+                <td>{{ user.roles ? user.roles|json_encode : '' }}</td>
+                {# <td>{{ user.password }}</td> #}
+                <td>{{ user.lastname }}</td>
+                <td>{{ user.firstname }}</td>
+                <td>{{ user.gender }}</td>
+                <td>{{ user.datebirth ? user.datebirth|date('Y-m-d') : '' }}</td>
+                <td>{{ user.phone }}</td>
+                <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a class="btn btn-success rounded-pill m-2" href="{{ path('app_user_admin_show', {'cin': user.cin}) }}">show</a>
+                    <a class="btn btn-warning rounded-pill m-2" href="{{ path('app_user_admin_edit', {'cin': user.cin}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="11">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    
+  
+    <br>
+    <a class="btn btn-success py-3 w-100 mb-2"  href="{{ path('app_user_admin_new') }}">Create new</a>
+    </div>
+{% endblock %}
