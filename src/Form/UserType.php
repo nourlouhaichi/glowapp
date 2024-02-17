@@ -44,6 +44,18 @@ class UserType extends AbstractType
             ])
 
             ->add('datebirth')
+
+            ->add('roles', ChoiceType::class, [
+                'choices' => [
+                    'Admin' => 'ROLE_ADMIN',
+                    'Utilisateur' => 'ROLE_USER'
+                    // 'Coach' => 'ROLE_COACH',
+                    // 'Nutritionist' => 'ROLE_NUTRITIONIST'
+                ],
+                'multiple' => true, // permet de sélectionner plusieurs rôles
+                'expanded' => true, // affiche les rôles sous forme de cases à cocher
+                // 'required' => true, // indique que la sélection d'au moins un rôle est requise
+            ])
             
             ->add('phone')
 

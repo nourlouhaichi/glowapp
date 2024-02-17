@@ -19,8 +19,9 @@ class UserAdminController extends AbstractController
     #[Route('/', name: 'app_user_admin_index', methods: ['GET'])]
     public function index(UserRepository $userRepository): Response
     {
+        $currentUser = $this->getUser();
         return $this->render('back/user_admin/index.html.twig', [
-            'users' => $userRepository->findAll(),
+            'users' => $userRepository->findAllUsersWithSpecificFieldsExceptCurrentUser($currentUser),
         ]);
     }
 

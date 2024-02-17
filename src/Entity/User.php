@@ -12,6 +12,9 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
+#[UniqueEntity(fields: ['cin'], message: 'There is already an account with this cin')]
+#[UniqueEntity(fields: ['phone'], message: 'There is already an account with this phone number')]
+
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     // #[ORM\Id]
@@ -39,6 +42,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
 
     #[ORM\Column]
+    // #[Assert\NotBlank(message:"Role is required")]
     private array $roles = [];
 
 
@@ -106,6 +110,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
+        $this->roles = ['ROLE_USER'];
     }
 
     public function getCin(): ?string

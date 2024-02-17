@@ -39,6 +39,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->getEntityManager()->flush();
     }
 
+    public function findAllUsersWithSpecificFieldsExceptCurrentUser(User $currentUser)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.cin', 'u.email', 'u.roles', 'u.lastname', 'u.firstname', 'u.gender')
+            ->where('u != :currentUser')
+            ->setParameter('currentUser', $currentUser)
+            ->getQuery()
+            ->getResult();
+    }
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */
