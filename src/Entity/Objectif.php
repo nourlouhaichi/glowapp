@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\ObjectifRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: ObjectifRepository::class)]
 class Objectif
@@ -14,21 +15,38 @@ class Objectif
     private ?int $id = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message:"The CIN must not be null.")]
+    #[Assert\Positive(message:"The CIN must be a positive number.")]
     private ?int $cin = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"The objective cannot be empty.")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "The objective cannot exceed {{ limit }} characters."
+    )]
     private ?string $objectif_o = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"The description cannot be empty.")]
+    #[Assert\Length(
+        max: 255,
+        maxMessage: "The description cannot exceed {{ limit }} characters."
+    )]
     private ?string $description_o = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"The category cannot be empty.")]
     private ?string $categorie_o = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message:"The weight must not be null.")]
+    #[Assert\Positive(message:"he weight must be a positive number.")]
     private ?float $poid_o = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message:"The height must not be null.")]
+    #[Assert\Positive(message:"The height must be a positive number.")]
     private ?float $taille_o = null;
 
     

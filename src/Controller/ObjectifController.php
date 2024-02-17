@@ -17,7 +17,7 @@ class ObjectifController extends AbstractController
     #[Route('/', name: 'app_objectif_index', methods: ['GET'])]
     public function index(ObjectifRepository $objectifRepository): Response
     {
-        return $this->render('objectif/index.html.twig', [
+        return $this->render('front/objectif/index.html.twig', [
             'objectifs' => $objectifRepository->findAll(),
         ]);
     }
@@ -36,7 +36,7 @@ class ObjectifController extends AbstractController
             return $this->redirectToRoute('app_objectif_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('objectif/new.html.twig', [
+        return $this->renderForm('front/objectif/new.html.twig', [
             'objectif' => $objectif,
             'form' => $form,
         ]);
@@ -45,7 +45,7 @@ class ObjectifController extends AbstractController
     #[Route('/{id}', name: 'app_objectif_show', methods: ['GET'])]
     public function show(Objectif $objectif): Response
     {
-        return $this->render('objectif/show.html.twig', [
+        return $this->render('front/objectif/show.html.twig', [
             'objectif' => $objectif,
         ]);
     }
@@ -62,7 +62,7 @@ class ObjectifController extends AbstractController
             return $this->redirectToRoute('app_objectif_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('objectif/edit.html.twig', [
+        return $this->renderForm('front/ serveobjectif/edit.html.twig', [
             'objectif' => $objectif,
             'form' => $form,
         ]);

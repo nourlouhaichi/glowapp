@@ -17,7 +17,7 @@ class ProgrammeController extends AbstractController
     #[Route('/', name: 'app_programme_index', methods: ['GET'])]
     public function index(ProgrammeRepository $programmeRepository): Response
     {
-        return $this->render('programme/index.html.twig', [
+        return $this->render('front/programme/index.html.twig', [
             'programmes' => $programmeRepository->findAll(),
         ]);
     }
@@ -36,7 +36,7 @@ class ProgrammeController extends AbstractController
             return $this->redirectToRoute('app_programme_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('programme/new.html.twig', [
+        return $this->renderForm('front/programme/new.html.twig', [
             'programme' => $programme,
             'form' => $form,
         ]);
@@ -45,7 +45,7 @@ class ProgrammeController extends AbstractController
     #[Route('/{id}', name: 'app_programme_show', methods: ['GET'])]
     public function show(Programme $programme): Response
     {
-        return $this->render('programme/show.html.twig', [
+        return $this->render('front/programme/show.html.twig', [
             'programme' => $programme,
         ]);
     }
@@ -62,7 +62,7 @@ class ProgrammeController extends AbstractController
             return $this->redirectToRoute('app_programme_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('programme/edit.html.twig', [
+        return $this->renderForm('front/programme/edit.html.twig', [
             'programme' => $programme,
             'form' => $form,
         ]);

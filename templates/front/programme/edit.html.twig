@@ -5,9 +5,9 @@
 {% block body %}
     <h1>Edit Programme</h1>
 
-    {{ include('programme/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('front/programme/_form.html.twig', {'button_label': 'Update'}) }}
 
     <a href="{{ path('app_programme_index') }}">back to list</a>
 
-    {{ include('programme/_delete_form.html.twig') }}
+    {{ include('front/programme/_delete_form.html.twig') }}
 {% endblock %}
