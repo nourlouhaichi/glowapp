@@ -13,6 +13,7 @@ use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
+use App\Repository\CommentRepository;
 
 class PublicationsController extends AbstractController
 {
@@ -99,7 +100,7 @@ class PublicationsController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_publications', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('backapp_publications', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('back/publications/backedit.html.twig', [
@@ -128,5 +129,25 @@ class PublicationsController extends AbstractController
 
         return $this->redirectToRoute('backapp_publications', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/{id}/delete_comment/{commentId}', name: 'app_publication_delete_comment', methods: ['POST'])]
+    public function deleteComment(Request $request, Publication $publication, CommentRepository $commentRepository, EntityManagerInterface $entityManager, $commentId): Response
+    {
+        // Find the comment to delete
+        $comment = $commentRepository->find($commentId);
 
+        // Check if the comment belongs to the publication
+        if ($comment && $comment->getPublication() === $publication) {
+            // Remove the comment
+            $entityManager->remove($comment);
+            $entityManager->flush();
+
+            // Optionally, you can add a success flash message here
+        } else {
+            // Optionally, you can add a failure flash message here if the comment does not belong to the publication
+        }
+
+        // Redirect back to the publication page or wherever appropriate
+        return $this->redirectToRoute('app_publication_show', ['id' => $publication->getId()]);
+    }
 }
+    

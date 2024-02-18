@@ -1,0 +1,10 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block body %}
+<title>Edit Comment</title>
+    <h1>Edit Comment</h1>
+
+    {{ include('back/comment/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_comment_index') }}">back to list</a>
+{% endblock %}

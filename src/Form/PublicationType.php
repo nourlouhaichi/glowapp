@@ -16,7 +16,7 @@ class PublicationType extends AbstractType
             ->add('titre_p')
             ->add('type_p')
             ->add('contenue_p')
-            ->add('submit',SubmitType::class)
+
             
         ;
     }
