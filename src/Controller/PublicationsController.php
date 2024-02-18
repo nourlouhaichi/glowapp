@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Repository\PublicationRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -10,6 +11,7 @@ use App\Entity\Publication;
 use App\Form\PublicationType;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 
 class PublicationsController extends AbstractController
@@ -22,6 +24,15 @@ class PublicationsController extends AbstractController
             'publications'=>$publication
         ]);
     }
+
+        #[Route('/adminpublications', name: 'backapp_publications')]
+        public function indexback(PublicationRepository $PublicationRepository): Response
+        {
+            $publication=$PublicationRepository->findAll();
+            return $this->render('back/publications/index.html.twig', [
+                'publications'=>$publication
+            ]);
+        }
     
     #[Route('/new', name: 'app_publication_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -44,11 +55,21 @@ class PublicationsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_publication_show', methods: ['GET'])]
-    public function show(Publication $publication): Response
+    #[Route('/{id}', name: 'app_publication_show', methods: ['GET', 'POST'])]
+    public function show(Publication $publication,Request $request,EntityManagerInterface $em): Response
     {
+        $comment=new Comment();
+        $form= $this->createFormBuilder($comment)->add("contenue")->add("submit",SubmitType::class)->getForm();
+        $comment->setDatecr(new DateTime());
+        $comment->setPublication($publication);
+        $form->handleRequest($request);
+        if($form->isSubmitted() && $form->isValid()){
+            $em->persist($comment);
+            $em->flush();
+        }
         return $this->render('front/publications/show.html.twig', [
             'publications' => $publication,
+            'form' => $form->createView()
         ]);
     }
 
@@ -69,6 +90,23 @@ class PublicationsController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/{id}/adminedit', name: 'backapp_publication_edit', methods: ['GET', 'POST'])]
+    public function backedit(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(PublicationType::class, $publication);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->flush();
+
+            return $this->redirectToRoute('app_publications', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('back/publications/backedit.html.twig', [
+            'publication' => $publication,
+            'form' => $form,
+        ]);
+    }
 
     #[Route('/{id}', name: 'app_publication_delete', methods: ['POST'])]
     public function delete(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
@@ -80,4 +118,15 @@ class PublicationsController extends AbstractController
 
         return $this->redirectToRoute('app_publications', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/{id}/delete', name: 'backapp_publication_delete', methods: ['POST'])]
+    public function backdelete(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$publication->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($publication);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('backapp_publications', [], Response::HTTP_SEE_OTHER);
+    }
+
 }

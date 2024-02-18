@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Publication;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -15,6 +16,7 @@ class PublicationType extends AbstractType
             ->add('titre_p')
             ->add('type_p')
             ->add('contenue_p')
+            ->add('submit',SubmitType::class)
             
         ;
     }

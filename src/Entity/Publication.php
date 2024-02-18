@@ -2,7 +2,11 @@
 
 namespace App\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\PublicationRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Driver\Mysqli\Initializer\Options;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,16 +19,29 @@ class Publication
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"title required ")]
+    #[Assert\Length(max:10,maxMessage:"title too long ")]
     private ?string $titre_p = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"title required ")]
     private ?string $type_p = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message:"title required ")]
     private ?string $contenue_p = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $datecr_p = null;
+
+    #[ORM\OneToMany(targetEntity: Comment::class, mappedBy: 'publication')]
+    private Collection $comments;
+
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -78,4 +95,39 @@ class Publication
 
         return $this;
     }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setPublication($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getPublication() === $this) {
+                $comment->setPublication(null);
+            }
+        }
+
+        return $this;
+    }
+    public function __toString()
+    {
+        return $this->titre_p;
+    }
+
 }
