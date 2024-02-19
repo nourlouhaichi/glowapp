@@ -45,6 +45,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->select('u.cin', 'u.email', 'u.roles', 'u.lastname', 'u.firstname', 'u.gender')
             ->where('u != :currentUser')
             ->setParameter('currentUser', $currentUser)
+            ->orderBy('u.created_at', 'DESC')
             ->getQuery()
             ->getResult();
     }

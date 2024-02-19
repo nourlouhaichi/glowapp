@@ -30,7 +30,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         max: 8,
         exactMessage: "CIN must contain exactly {{ limit }} digits"
     )]
-    
     #[Assert\Regex(pattern: "/^\d+$/", message: "CIN must contain only digits")]
     private ?string $cin = null;
 

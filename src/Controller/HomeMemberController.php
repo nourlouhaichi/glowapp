@@ -5,6 +5,9 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\Request;
+use App\Form\EditProfileType;
+use Doctrine\ORM\EntityManagerInterface;
 
 class HomeMemberController extends AbstractController
 {
@@ -20,6 +23,25 @@ class HomeMemberController extends AbstractController
     public function showMember()
     {
         return $this->render("front/home_member/showmember.html.twig");
+    }
+
+    #[Route('/home/member/profile/edit', name: 'profile_member_edit')]
+    public function editProfile(Request $request, EntityManagerInterface $entityManager)
+    {
+        $user = $this->getUser();
+        $form = $this->createForm(EditProfileType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('profile_member');
+        }
+
+        return $this->renderForm('front/home_member/editprofilemember.html.twig', [
+            'form' => $form,
+        ]);
     }
 
 }

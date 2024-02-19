@@ -14,11 +14,11 @@
             <tr>
                 <th>Cin</th>
                 <th>Email</th>
-                <th>Roles</th>
-                {# <th>Password</th> #}
                 <th>Lastname</th>
                 <th>Firstname</th>
+                <th>Roles</th>
                 <th>Gender</th>
+                {# <th>Password</th> #}
                 {# <th>Datebirth</th> #}
                 {# <th>Phone</th> #}
                 {# <th>Created_at</th> #}
@@ -30,12 +30,16 @@
             <tr>
                 <td>{{ user.cin }}</td>
                 <td>{{ user.email }}</td>
-                <td>{% for role in user.roles %}
-                {% if role == "ROLE_USER" %}Membre{% elseif role == "ROLE_ADMIN" %}Administrateur{% endif %}{% endfor %}</td>
-                {# <td>{{ user.password }}</td> #}
                 <td>{{ user.lastname }}</td>
                 <td>{{ user.firstname }}</td>
-                <td>{{ user.gender }}</td>
+                <td>{% if user.gender == "female"%}
+                    <img class="rounded-circle me-lg-2" src="{{asset('back/img/Fprofile.png')}}" alt="" style="width: 40px; height: 40px;">
+                    {% else %}
+                    <img class="rounded-circle me-lg-2" src="{{asset('back/img/Mprofile.png')}}" alt="" style="width: 40px; height: 40px;">
+                    {% endif %}</td>
+                <td>{% for role in user.roles %}
+                {% if role == "ROLE_USER" %}Membre{% elseif role == "ROLE_ADMIN" %}Administrateur{% endif %}{% endfor %}</td>
+                {# <td>{{ user.password }}</td> #}  
                 {# <td>{{ user.datebirth ? user.datebirth|date('Y-m-d') : '' }}</td> #}
                 {# <td>{{ user.phone }}</td> #}
                 {# <td>{{ user.createdAt ? user.createdAt|date('Y-m-d H:i:s') : '' }}</td> #}
