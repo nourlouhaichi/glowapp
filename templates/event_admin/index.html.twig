@@ -15,6 +15,7 @@
                 <th>Location</th>
                 <th>Date</th>
                 <th>NbP</th>
+                <th>Categorie</th>
                 <th>actions</th>
             </tr>
         </thead>
@@ -28,6 +29,7 @@
                 <td>{{ event.location }}</td>
                 <td>{{ event.date ? event.date|date('Y-m-d H:i:s') : '' }}</td>
                 <td>{{ event.nbP }}</td>
+                <td>{{ event.Category }}</td>
                 <td>
                     <a href="{{ path('app_event_admin_show', {'id': event.id}) }}">show</a>
                     <a href="{{ path('app_event_admin_edit', {'id': event.id}) }}">edit</a>

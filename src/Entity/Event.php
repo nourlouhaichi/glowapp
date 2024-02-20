@@ -32,6 +32,9 @@ class Event
     #[ORM\Column(nullable: true)]
     private ?int $nbP = null;
 
+    #[ORM\ManyToOne(inversedBy: 'events')]
+    private ?Category $category = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -105,6 +108,18 @@ class Event
     public function setNbP(?int $nbP): static
     {
         $this->nbP = $nbP;
+
+        return $this;
+    }
+
+    public function getCategory(): ?Category
+    {
+        return $this->category;
+    }
+
+    public function setCategory(?Category $category): static
+    {
+        $this->category = $category;
 
         return $this;
     }
