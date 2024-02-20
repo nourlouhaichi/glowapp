@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\PanierRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PanierRepository::class)]
@@ -11,39 +13,80 @@ class Panier
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $idpan = null;
+    private ?int $id = null;
 
     #[ORM\Column]
-    private ?int $quantity_pan = null;
+    private ?int $quantity_pro = null;
 
     #[ORM\Column]
-    private ?float $totale_price = null;
+    private ?float $total_price = null;
 
-    public function getIdpan(): ?int
+    #[ORM\OneToMany(mappedBy: 'panier', targetEntity: Produit::class)]
+    private Collection $produits;
+
+    public function __construct()
     {
-        return $this->idpan;
+        $this->produits = new ArrayCollection();
     }
 
-    public function getQuantityPan(): ?int
+
+    public function getId(): ?int
     {
-        return $this->quantity_pan;
+        return $this->id;
     }
 
-    public function setQuantityPan(int $quantity_pan): static
+    public function getQuantityPro(): ?int
     {
-        $this->quantity_pan = $quantity_pan;
+        return $this->quantity_pro;
+    }
+
+    public function setQuantityPro(int $quantity_pro): static
+    {
+        $this->quantity_pro = $quantity_pro;
 
         return $this;
     }
 
-    public function getTotalePrice(): ?float
+    public function getTotalPrice(): ?float
     {
-        return $this->totale_price;
+        return $this->total_price;
     }
 
-    public function setTotalePrice(float $totale_price): static
+    public function setTotalPrice(float $total_price): static
     {
-        $this->totale_price = $totale_price;
+        $this->total_price = $total_price;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Produit>
+     */
+    public function getProduits(): Collection
+    {
+        return $this->produits;
+    }
+
+    // Add a produit to the panier
+    public function addProduit(Produit $produit): self
+    {
+        if (!$this->produits->contains($produit)) {
+            $this->produits[] = $produit;
+            $produit->setPanier($this);
+        }
+
+        return $this;
+    }
+
+    // Remove a produit from the panier
+    public function removeProduit(Produit $produit): self
+    {
+        if ($this->produits->removeElement($produit)) {
+            // set the owning side to null (unless already changed)
+            if ($produit->getPanier() === $this) {
+                $produit->setPanier(null);
+            }
+        }
 
         return $this;
     }

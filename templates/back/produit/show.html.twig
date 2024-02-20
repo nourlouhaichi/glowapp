@@ -1,0 +1,39 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+    <h1>Produit</h1>
+
+    <div class="product-details">
+        <div class="product-info">
+            <div class="info-item">
+                <strong>Ref:</strong> {{ produit.ref }}
+            </div>
+            <div class="info-item">
+                <strong>Name:</strong> {{ produit.name }}
+            </div>
+            <div class="info-item">
+                <strong>Description:</strong>
+                <p>{{ produit.description }}</p>
+            </div>
+            <div class="info-item">
+                <strong>Price:</strong> {{ produit.price }}
+            </div>
+            <div class="info-item">
+                <strong>Quantity:</strong> {{ produit.quantity }}
+            </div>
+        </div>
+        <div class="product-image">
+            {% if produit.image %}
+                <img src="{{ asset('uploads/' ~ produit.image) }}" alt="Product Image" style="max-width: 200px; max-height: 200px;">
+            {% else %}
+                <p>No Image</p>
+            {% endif %}
+        </div>
+    </div>
+    
+    <a href="{{ path('app_produit_index') }}">Back to List</a>
+    <a href="{{ path('app_produit_edit', {'ref': produit.ref}) }}">Edit</a>
+    {{ include('back/produit/_delete_form.html.twig') }}
+{% endblock %}

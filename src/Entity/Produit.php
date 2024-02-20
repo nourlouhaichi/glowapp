@@ -11,12 +11,14 @@ class Produit
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    private ?int $idpr = null;
+    private ?int $ref = null;
 
-    #[ORM\Column(length: 40)]
+   
+
+    #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 100)]
+    #[ORM\Column(length: 255)]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -25,12 +27,25 @@ class Produit
     #[ORM\Column]
     private ?int $quantity = null;
 
-    #[ORM\Column(length: 150)]
+    #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    public function getIdpr(): ?int
+    #[ORM\ManyToOne(inversedBy: 'produits')]
+    #[ORM\JoinColumn(name: 'panier_id', referencedColumnName: 'id')]
+    private ?Panier $panier;
+
+    
+
+    public function getRef(): ?string
     {
-        return $this->idpr;
+        return $this->ref;
+    }
+
+    public function setRef(string $ref): static
+    {
+        $this->ref = $ref;
+
+        return $this;
     }
 
     public function getName(): ?string
@@ -92,4 +107,19 @@ class Produit
 
         return $this;
     }
+
+   
+    // Getter and setter for panier
+    public function getPanier(): ?Panier
+    {
+        return $this->panier;
+    }
+
+    public function setPanier(?Panier $panier): self
+    {
+        $this->panier = $panier;
+
+        return $this;
+    }
+   
 }

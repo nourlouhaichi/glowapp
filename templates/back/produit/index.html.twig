@@ -1,0 +1,49 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}Product index{% endblock %}
+
+{% block body %}
+    <br><center><h1 class="mb-3 text-success">Product list</h1></center><br>
+
+    <div class="container-fluid pt-4 px-4">                  
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Ref</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Price</th>
+                    <th>Image</th>
+                    <th>Quantity</th>
+                    <th>Action</th> <!-- New column for action buttons -->
+                </tr>
+            </thead>
+            <tbody>
+                {% for produit in produits %}
+                    <tr>
+                        <td>{{ produit.ref }}</td>
+                        <td>{{ produit.name }}</td>
+                        <td>{{ produit.description }}</td>
+                        <td>{{ produit.price }}</td>
+                        <td>{{ produit.quantity }}</td>
+                        <td>{{ produit.image }}</td>
+                        <td>
+                            <div class="btn-group" role="group" aria-label="Product Actions">
+                                <a class="btn btn-success rounded-pill m-2" href="{{ path('app_produit_show', {'ref': produit.ref}) }}">show</a>
+                                <a class="btn btn-warning rounded-pill m-2" href="{{ path('app_produit_edit', {'ref': produit.ref}) }}">edit</a>
+                            </div>
+                        </td>
+                    </tr>
+                {% else %}
+                    <tr>
+                        <td colspan="7">no records found</td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    
+        <br>
+        <a class="btn btn-sm btn-success mb-2"  href="{{ path('app_produit_new') }}">Create new</a> <!-- Modified button size -->
+    </div>
+{% endblock %}
+
