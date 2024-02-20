@@ -28,6 +28,9 @@ class Reservation
     #[ORM\Column]
     private ?\DateTimeImmutable $createAt = null;
 
+    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    private ?Event $event = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -89,6 +92,18 @@ class Reservation
     public function setCreateAt(\DateTimeImmutable $createAt): static
     {
         $this->createAt = $createAt;
+
+        return $this;
+    }
+
+    public function getEvent(): ?Event
+    {
+        return $this->event;
+    }
+
+    public function setEvent(?Event $event): static
+    {
+        $this->event = $event;
 
         return $this;
     }
