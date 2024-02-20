@@ -17,7 +17,7 @@ class ProduitfrontController extends AbstractController
     #[Route('/produitfront', name: 'app_produitfront')]
     public function index(ProduitRepository $produitRepository): Response
     {
-        return $this->render('produitfront/index.html.twig', [
+        return $this->render('front/produitfront/index.html.twig', [
             'produits' => $produitRepository->findAll(),
         ]);
     }
