@@ -8,6 +8,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\EditProfileType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class HomeMemberController extends AbstractController
 {
@@ -42,6 +43,31 @@ class HomeMemberController extends AbstractController
         return $this->renderForm('front/home_member/editprofilemember.html.twig', [
             'form' => $form,
         ]);
+    }
+
+    #[Route('/home/member/profile/editpass', name: 'profile_member_editpass')]
+    public function editProfilePass(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager)
+    {
+        if($request->isMethod('POST')){
+
+            $user = $this->getUser();
+            
+            // On vérifie si les 2 mots de passe sont identiques
+            if($request->request->get('pass') == $request->request->get('pass2')){
+
+                $user->setPassword($passwordEncoder->encodePassword($user, $request->request->get('pass')));
+                
+                $entityManager->persist($user);
+                $entityManager->flush();
+                $this->addFlash('message', 'Mot de passe mis à jour avec succès');
+
+                return $this->redirectToRoute('profile_member');
+            }else{
+                $this->addFlash('error', 'Les deux mots de passe ne sont pas identiques');
+            }
+        }
+
+        return $this->render('front/home_member/editprofilepass.html.twig');
     }
 
 }

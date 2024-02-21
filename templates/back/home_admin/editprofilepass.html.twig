@@ -1,9 +1,10 @@
 {% extends 'back/backbase.html.twig' %}
 
-{% block title %}Profile{% endblock %}
+{% block title %}Edit Password{% endblock %}
+
 {% block body %}
-<br>
-<div class="container">
+ <br>
+        <div class="container">
     <div class="main-body">
     
           <div class="row gutters-sm">
@@ -27,63 +28,66 @@
               </div>
               
             </div>
+           
             <div class="col-md-8">
+             <form method="post">
               <div class="card mb-3">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">CIN</h6>
+                      <h6 class="mb-0">New Password</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      {{ app.user.cin}}
+                      <input type="password" id="pass" name="pass" class="form-control">
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">Email</h6>
+                      <h6 class="mb-0">Confirm New Password</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      {{ app.user.email}}
+                     <input type="password" id="pass2" name="pass2" class="form-control">
                     </div>
                   </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Gender</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ app.user.gender}}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Date of Birth</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ app.user.datebirth|date('Y-m-d')}}
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Phone</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ app.user.phone}}
-                    </div>
-                  </div>
+
+                {% for message in app.flashes('error') %}
+			<center><div class="col-xs4">
+				<div class="p-3 my-2 rounded-2 error">{{message}}</div>
+			</div></center>
+            {% endfor %}
                   <hr>
                   <div class="row">
                     <div class="col-sm-12">
-                      <a class="btn btn-primary rounded-pill m-2" href="{{ path('app_home_admin') }}"><i class="fa fa-arrow-left"></i></a>
-                      <a class="btn btn-warning rounded-pill m-2" href="{{ path('profile_admin_edit') }}"><i class="fa fa-pen"></i></a>
-                      <a class="btn btn-danger rounded-pill m-2" href="{{ path('profile_admin_editpass') }}"><i class="fa fa-lock"></i></a>
+                      <a class="btn btn-primary rounded-pill m-2" href="{{ path('profile_admin') }}"><i class="fa fa-arrow-left"></i></a>
+                      <button type="submit" class="btn btn-success rounded-pill m-2"><i class="fa fa-check" aria-hidden="true"></i></button>
+                      
+                      </form>
                     </div>
                   </div>
                 </div>
-              </div></div></div></div></div>
+              </div></div></div></div></div> 
+ {% endblock %}
 
-{% endblock %}
+              {# <div class="grix xs4 container">
+		<div class="col-xs4">
+			<h1>Modification du mot de passe de {{ app.user.firstname }} {{ app.user.lastname }}</h1>
+            <form method="post">
+                <div class="form-field">
+                    <label for="pass">Mot de passe</label>
+                    <input type="password" id="pass" name="pass" class="form-control">
+                </div>
+                <div class="form-field">
+                    <label for="pass2">Confirmer le mot de passe</label>
+                    <input type="password" id="pass2" name="pass2" class="form-control">
+                </div>
+                <button class="btn blue">Valider</button>
+            
+            </form>
+		</div> #}
+        
+	{# </div> #}
+   
 
+
+   

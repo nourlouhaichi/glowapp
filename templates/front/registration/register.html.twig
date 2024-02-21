@@ -24,16 +24,40 @@
     {{ form_end(registrationForm) }}
 {% endblock %} #}
 
-{% extends 'front/frontbase.html.twig' %}
 
-{% block title %}Register{% endblock %}
 
-{% block body %}
-    {% for flash_error in app.flashes('verify_email_error') %}
+
+ {# {% extends 'front/frontbase.html.twig' %}  #}
+
+ {# {% block css %} #}
+        <!-- Icon Font Stylesheet -->
+        {# <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet"> #}
+
+        <!-- Libraries Stylesheet -->
+        {# <link href="{{asset('front/lib/lightbox/css/lightbox.min.css')}}" rel="stylesheet">
+        <link href="{{asset('front/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet"> #}
+
+
+        <!-- Customized Bootstrap Stylesheet -->
+        {# <link href="{{asset('front/css/bootstrap.min.css')}}" rel="stylesheet"> #}
+
+        <!-- Template Stylesheet -->
+        {# <link href="{{asset('front/css/style.css')}}" rel="stylesheet"> #}
+
+        {# ajouter #}
+        {# <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"rel="stylesheet"/> #}
+                
+    {# {% endblock %} #}
+
+{# {% block title %}Register{% endblock %} #}
+
+{# {% block body %} #}
+    {# {% for flash_error in app.flashes('verify_email_error') %}
         <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
-    {% endfor %}
+    {% endfor %}  #}
 
-<div class="container px-0">
+{# <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
                     <a href="{{ path('app_home') }}"><img src="{{asset('front/img/logoglowapp.png')}}" length='150px' width='150px'></a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -45,10 +69,10 @@
                     </div>
                 </nav>
             </div>
-        </div>
+        </div> #}
         <!-- Navbar End -->
-<!-- Sign Up Start --><br><br><br><br><br><br>
-<div class="container-fluid">
+{# <!-- Sign Up Start --><br><br><br><br><br><br> #}
+{# <div class="container-fluid">
     <div class="row h-100 align-items-center justify-content-center" style="min-height: 100vh;">
         <div class="col-12 col-sm-8 col-md-6 col-lg-5 col-xl-4">
             <div class="bg-light rounded p-4 p-sm-5 my-4 mx-3">
@@ -58,7 +82,6 @@
                     </a>
                     <h3>Sign Up</h3>
                 </div>
-                {# {{ form_errors(registrationForm) }} #}
                 {{ form_start(registrationForm,{'attr': {'novalidate': 'novalidate'}} ) }}
                     <div class="form-floating mb-3">
                         {{ form_widget(registrationForm.lastname, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
@@ -110,9 +133,294 @@
             </div>
         </div>
     </div>
-</div>
+</div> #}
 <!-- Sign Up End -->
 
+{# {% endblock %} #}
 
 
-{% endblock %}
+
+
+{# <html>
+  <head>
+    <link
+      href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;900&display=swap"
+      rel="stylesheet"
+    />
+    <meta
+      name="viewport"
+      content="width=device-width,initial-scale=1,maximum-scale=1"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+    <script
+      src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.js"
+      defer
+    ></script>
+  </head> #}
+
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+    <meta charset="utf-8">
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+    <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1"/>
+
+    <!-- Favicon -->
+    <link rel="icon" href="{{asset('front/img/icon.png')}}" />
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Raleway:wght@600;800&display=swap" rel="stylesheet"> 
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"/>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{{asset('front/lib/lightbox/css/lightbox.min.css')}}" rel="stylesheet">
+    <link href="{{asset('front/lib/owlcarousel/assets/owl.carousel.min.css')}}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{{asset('front/css/bootstrap.min.css')}}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{{asset('front/css/style.css')}}" rel="stylesheet">
+
+    <!-- Tailwind CSS -->
+    <link href="https://unpkg.com/tailwindcss@^1.0/dist/tailwind.min.css" rel="stylesheet"/>
+    
+    
+</head>
+
+
+    
+    {% for flash_error in app.flashes('verify_email_error') %}
+        <div class="alert alert-danger" role="alert">{{ flash_error }}</div>
+    {% endfor %}
+
+
+        <!-- Navbar start -->
+        <div class="container-fluid fixed-top">
+            <div class="container topbar bg-primary d-none d-lg-block">
+                <div class="d-flex justify-content-between">
+                    <div class="top-info ps-2">
+                        <small class="me-3"><i class="fas fa-map-marker-alt me-2 text-secondary"></i> <a href="#" class="text-white">Ariana, Tunisia</a></small>
+                        <small class="me-3"><i class="fas fa-envelope me-2 text-secondary"></i><a href="#" class="text-white">GlowApp@gmail.com</a></small>
+                    </div>
+                    <div class="top-link pe-2">
+                        <a href="#" class="text-white"><small class="text-white mx-2">Privacy Policy</small>/</a>
+                        <a href="#" class="text-white"><small class="text-white mx-2">Terms of Use</small>/</a>
+                        <a href="#" class="text-white"><small class="text-white ms-2">Sales and Refunds</small></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Navbar End -->
+
+<br><br><br>
+
+
+  <body >
+   <div class="justify-center max-w-screen-xl m-0 sm:m-20 bg-white shadow sm:rounded-lg flex  flex-1">
+    <div class="lg:w-1/2 xl:w-5/12 p-6 sm:p-5 flex flex-col items-center"> 
+        <div class="flex flex-col items-center w-full"> 
+            <h1 class="text-secondary xl:text-5xl font-extrabold">Register</h1>
+            <div class="w-full mt-8">  
+                <div class="mx-auto max-w-s">
+                    {{ form_start(registrationForm, {'attr': {'novalidate': 'novalidate'}}) }}
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <div class="form-floating">
+                                {{ form_widget(registrationForm.lastname, {'attr': {'class': 'form-control', 'id': 'floatingInputLastName', 'placeholder': 'Last Name'}}) }}
+                                <label for="floatingInputLastName">Last Name</label>
+                                {{ form_errors(registrationForm.lastname) }}
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2 px-3">
+                            <div class="form-floating">
+                                {{ form_widget(registrationForm.firstname, {'attr': {'class': 'form-control', 'id': 'floatingInputFirstName', 'placeholder': 'First Name'}}) }}
+                                <label for="floatingInputFirstName">First Name</label>
+                                {{ form_errors(registrationForm.firstname) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <div class="form-floating">
+                                {{ form_widget(registrationForm.cin, {'attr': {'class': 'form-control', 'id': 'floatingInputCIN', 'placeholder': 'CIN'}}) }}
+                                <label for="floatingInputCIN">CIN</label>
+                                {{ form_errors(registrationForm.cin) }}
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2 px-3">
+                            <div class="form-floating">
+                                {{ form_widget(registrationForm.phone, {'attr': {'class': 'form-control', 'id': 'floatingInputPhone', 'placeholder': 'Phone'}}) }}
+                                <label for="floatingInputPhone">Phone</label>
+                                {{ form_errors(registrationForm.phone) }}   
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap -mx-3 mb-6">
+                        <div class="w-full md:w-1/2 px-3 mb-6 md:mb-0">
+                            <div class="form-floating">
+                                {{ form_widget(registrationForm.datebirth, {'attr': {'class': 'form-select', 'id': 'dateOfBirth'}}) }}
+                                <label for="dateOfBirth">Date of Birth</label>
+                                {{ form_errors(registrationForm.datebirth) }}
+                            </div>
+                        </div>
+                        <div class="w-full md:w-1/2 px-3">
+                            <div class="form-floating">
+                             {{ form_widget(registrationForm.gender, {'attr': {'class': 'form-select', 'id': 'genderSelect'}}) }}
+                                <label for="genderSelect">Gender</label>
+                                {{ form_errors(registrationForm.gender) }}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-floating mb-3">
+                        {{ form_widget(registrationForm.email, {'attr': {'class': 'form-control', 'id': 'floatingInputEmail', 'placeholder': 'Email address'}}) }}
+                        <label for="floatingInputEmail">Email address</label>
+                        {{ form_errors(registrationForm.email) }}
+                    </div>
+                    <div class="form-floating mb-4">
+                        {{ form_widget(registrationForm.plainPassword, {'attr': {'class': 'form-control', 'id': 'floatingPassword', 'placeholder': 'Password'}}) }}
+                        <label for="floatingPassword">Password</label>
+                        {{ form_errors(registrationForm.plainPassword) }}
+                    </div>
+                    <div class="form-check mb-4">
+                        {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input', 'id': 'exampleCheck1'}}) }}
+                        <label class="form-check-label" for="exampleCheck1">Check me out</label>
+                    </div>
+                    <button type="submit" class="btn btn-primary py-3 w-full mb-4">Sign Up</button>
+                    <p class="text-center mb-0">Don't have an Account? <a class="text-secondary" href="{{ path('app_login') }}">Sign In</a></a></p>
+                    {{ form_end(registrationForm) }}
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="flex-1 bg-indigo-100 text-center hidden lg:flex">
+        <img src="{{ asset('front/img/hero-img-2.jpg') }}" class="img-fluid w-full h-full rounded" alt="Second slide">
+    </div>
+</div>
+
+  {# {% endblock %} #}
+
+
+
+
+
+  <!-- Footer Start -->
+        <div class="container-fluid bg-dark text-white-50 footer pt-5 mt-5">
+            <div class="container py-5">
+                <div class="pb-4 mb-4" style="border-bottom: 1px solid rgba(226, 175, 24, 0.5) ;">
+                    <div class="row g-4">
+                        <div class="col-lg-3">
+                            <a href="#">
+                                <img src="/front/img/logoglowapp.png" length="150px" width="150px">
+                                
+                            </a>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="position-relative mx-auto">
+                               
+                            </div>
+                        </div>
+                        <div class="col-lg-3">
+                            <div class="d-flex justify-content-end pt-3">
+                                <a class="btn  btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-twitter"></i></a>
+                                <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-facebook-f"></i></a>
+                                <a class="btn btn-outline-secondary me-2 btn-md-square rounded-circle" href=""><i class="fab fa-youtube"></i></a>
+                                <a class="btn btn-outline-secondary btn-md-square rounded-circle" href=""><i class="fab fa-linkedin-in"></i></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-5">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-item">
+                            <h4 class="text-light mb-3">Why People Like us!</h4>
+                            <p class="mb-4">Welcome to GlowApp – your ally for a healthier lifestyle. Discover curated services and products to elevate your well-being. Let's shine together!</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="d-flex flex-column text-start footer-item">
+                            <h4 class="text-light mb-3">Contact</h4>
+                            <p>Address: 1429 Netus Rd, NY 48247</p>
+                            <p>Email: Example@gmail.com</p>
+                            <p>Phone: +0123 4567 8910</p>
+                            <p>Payment Accepted</p>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                       
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="footer-item">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+        <!-- Copyright Start -->
+        <div class="container-fluid copyright bg-dark py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        
+                    </div>
+           
+                </div>
+            </div>
+        </div>
+        <!-- Footer End -->
+        <!-- Copyright Start -->
+        <div class="container-fluid copyright bg-dark py-4">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                        <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Glow</a>, All right reserved.</span>
+                    </div>
+                    <div class="col-md-6 my-auto text-center text-md-end text-white">
+                        <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
+                        <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
+                        <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
+                        Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Copyright End -->
+
+
+
+        <!-- Back to Top -->
+        <a href="#" class="btn btn-primary border-3 border-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>   
+
+       
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{{asset('front/lib/easing/easing.min.js')}}"></script>
+    <script src="{{asset('front/lib/waypoints/waypoints.min.js')}}"></script>
+    <script src="{{asset('front/lib/lightbox/js/lightbox.min.js')}}"></script>
+    <script src="{{asset('front/lib/owlcarousel/owl.carousel.min.js')}}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{{asset('front/js/main.js')}}"></script>
+</body>
+</html>

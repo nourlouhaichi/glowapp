@@ -1,11 +1,9 @@
-
 {% extends 'front/frontbase.html.twig' %}
 
+{% block title %}Edit Password{% endblock %}
 
-{% block title %}Edit Profile{% endblock %}
 {% block body %}
-
-<div class="container px-0">
+ <div class="container px-0">
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
                     <a href="{{ path('app_home_member') }}"><img src="{{asset('front/img/logoglowapp.png')}}" length='150px' width='150px'></a>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -50,34 +48,8 @@
         </div>
         <!-- Navbar End -->
 
-         <br><br><br><br><br><br><br>
-
-{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
-
-
-{# <div class="form-floating mb-3">
-                        {{ form_widget(form.lastname, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
-                        <label for="floatingInput">Last Name</label>
-                        {{ form_errors(form.lastname) }}  
-                    </div>
-                    <div class="form-floating mb-3">
-                        {{ form_widget(form.firstname, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
-                        <label for="floatingInput">First Name</label>
-                        {{ form_errors(form.firstname) }}
-                    </div>
-                    <div class="form-floating mb-3">
-                        {{ form_widget(form.email, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
-                        <label for="floatingInput">Email</label>
-                        {{ form_errors(form.email) }}  
-                    </div>
-                    <div class="form-floating mb-3">
-                        {{ form_widget(form.phone, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
-                        <label for="floatingInput">Phone</label>
-                        {{ form_errors(form.phone) }}
-                    </div> #} 
-
- <br>
-<div class="container">
+         <br><br><br><br><br><br><br> <br>
+        <div class="container">
     <div class="main-body">
     
           <div class="row gutters-sm">
@@ -101,61 +73,66 @@
               </div>
               
             </div>
+           
             <div class="col-md-8">
+             <form method="post">
               <div class="card mb-3">
                 <div class="card-body">
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">LastName</h6>
+                      <h6 class="mb-0">New Password</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      {{ form_widget(form.lastname, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
-                      {{ form_errors(form.lastname) }}  
+                      <input type="password" id="pass" name="pass" class="form-control">
                     </div>
                   </div>
                   <hr>
                   <div class="row">
                     <div class="col-sm-3">
-                      <h6 class="mb-0">FirstName</h6>
+                      <h6 class="mb-0">Confirm New Password</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      {{ form_widget(form.firstname, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
-                      {{ form_errors(form.firstname) }}  
+                     <input type="password" id="pass2" name="pass2" class="form-control">
                     </div>
                   </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Email</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                       {{ form_widget(form.email, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
-                       {{ form_errors(form.email) }} 
-                    </div>
-                  </div>
-                  <hr>
-                  <div class="row">
-                    <div class="col-sm-3">
-                      <h6 class="mb-0">Phone</h6>
-                    </div>
-                    <div class="col-sm-9 text-secondary">
-                      {{ form_widget(form.phone, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'name@example.com'}}) }}
-                      {{ form_errors(form.phone) }} 
-                    </div>
-                  </div>
-                
+
+                {% for message in app.flashes('error') %}
+			<center><div class="col-xs4">
+				<div class="p-3 my-2 rounded-2 error">{{message}}</div>
+			</div></center>
+            {% endfor %}
                   <hr>
                   <div class="row">
                     <div class="col-sm-12">
-                      <a class="btn btn-secondary rounded-pill m-2" href="{{ path('profile_member') }}"><i class="fa fa-arrow-left"></i></a>
+                      <a class="btn btn-primary rounded-pill m-2" href="{{ path('profile_member') }}"><i class="fa fa-arrow-left"></i></a>
                       <button type="submit" class="btn btn-success rounded-pill m-2"><i class="fa fa-check" aria-hidden="true"></i></button>
+                      
+                      </form>
                     </div>
                   </div>
                 </div>
               </div></div></div></div></div> 
+ {% endblock %}
 
-              
-          {{ form_end(form) }} 
+              {# <div class="grix xs4 container">
+		<div class="col-xs4">
+			<h1>Modification du mot de passe de {{ app.user.firstname }} {{ app.user.lastname }}</h1>
+            <form method="post">
+                <div class="form-field">
+                    <label for="pass">Mot de passe</label>
+                    <input type="password" id="pass" name="pass" class="form-control">
+                </div>
+                <div class="form-field">
+                    <label for="pass2">Confirmer le mot de passe</label>
+                    <input type="password" id="pass2" name="pass2" class="form-control">
+                </div>
+                <button class="btn blue">Valider</button>
+            
+            </form>
+		</div> #}
+        
+	{# </div> #}
+   
 
-{% endblock %}
- 
+
+   
