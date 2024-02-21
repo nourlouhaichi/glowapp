@@ -1,10 +1,13 @@
-{% extends 'back/backbase.html.twig' %}
+{% extends 'front/frontbase.html.twig' %}
+
+{% block title %}GlowApp{% endblock %}
+
 
 {% block body %}
-<title>Edit Comment</title>
-    <h1>Edit Comment</h1>
+    <h1>Edit Publication</h1>
 
-    {{ include('back/comment/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ include('front/publications/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_comment_index') }}">back to list</a>
+    <a href="{{ path('app_publications') }}">back to list</a>
+
 {% endblock %}

@@ -10,7 +10,7 @@
                     </button>
                     <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
                         <div class="navbar-nav mx-auto">
-                            <a href="index.html" class="nav-item nav-link active">Home</a>
+                            <a href="{{path('app_home')}}" class="nav-item nav-link active">Home</a>
                             <a href="shop.html" class="nav-item nav-link">Shop</a>
                             <a href="shop-detail.html" class="nav-item nav-link">Events</a>
                             <div class="nav-item dropdown">
@@ -39,25 +39,45 @@
 <br>
 
 <center>
-     <div class="toast show" role="alert" aria-live="assertive" aria-atomic="true">
-     
-  <div class="toast-header">
-    <strong class="me-auto">{{publications.getTitreP()}}</strong><span class="badge bg-secondary">{{publications.gettypep()}}</span>
-    <small>{{ publications.getDatecrP()|date('Y-m-d') }}</small>
-    
-  </div>
-  <div class="toast-body">
-    {{publications.getContenueP()}}
-  </div>
+<div class="col-md-6 col-lg-4 col-xl-3">
+    <div class="rounded position-relative fruite-item">
+        <div class="fruite-img">
+            <img style="max-width: 100%" src="{{ vich_uploader_asset(publications,'imageFile') }}">
+        </div>
+        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">{{publications.getTypeP()}}</div>
+        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+            <h4>{{publications.getTitreP()}}</h4>
+            <p>{{publications.getContenueP()}}</p>
+            <div class="d-flex justify-content-between flex-lg-wrap">
+                
+            </div>
+        </div>
+    </div>
 </div>
 </center>
 <br>
-<br>
- <h2 class="comment-title mt-5"><span id="comment-count">{{publications.comments|length}}</span>comments</h2>
- <br>
  {%for comment in publications.comments%}
- <h3>{{comment.getContenue()}}</h3><small>created at {{comment.Datecr| date("d/m/Y")}}</small>
+<div class="testimonial-item img-border-radius bg-light rounded p-4">
+                        <div class="position-relative">
+                            <i class="fa fa-quote-right fa-2x text-secondary position-absolute" style="bottom: 30px; right: 0;"></i>
+                            <div class="mb-4 pb-4 border-bottom border-secondary">
+                                <p class="mb-0">{{comment.getContenue()}}
+                                </p>
+                            </div>
+                            <div class="d-flex align-items-center flex-nowrap">
+                                <div class="bg-secondary rounded">
+                                    <img src="{{asset('front/img/avatar.jpg')}}" class="img-fluid rounded" style="width: 100px; height: 100px;" alt="">
+                                </div>
+                                <div class="ms-4 d-block">
+                                    <h4 class="text-dark">User</h4>
+                                    <p class="m-0 pb-3">created at {{comment.Datecr| date("d/m/Y")}}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
  {% endfor %}
  <br>
 {{form(form)}}
+<a href="{{ path('app_publications') }}">back to list</a>
 {% endblock %}

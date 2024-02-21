@@ -12,7 +12,7 @@
     <th >{{pub.getContenueP()}}</th>
     <th>{{ pub.getDatecrP()|date('Y-m-d') }}</th>
     <th ><a href="{{path('backapp_publication_edit', {'id': pub.id}) }}"> modify</a></th>
-    <th ><form method="post" action="{{ path('backapp_publication_delete', {'id': pub.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <th ><form method="post" action="{{ path('backapp_publicationcomdelete', {'id': pub.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ pub.id) }}">
     <button class="btn">Delete</button>
 </form></th>

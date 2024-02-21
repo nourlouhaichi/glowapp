@@ -1,6 +1,7 @@
 {% extends 'back/backbase.html.twig' %}
 
 {% block title %}GlowApp{% endblock %}
+{% block body %}
         <!-- Sidebar Start -->
         <div class="sidebar pe-4 pb-3">
             <nav class="navbar bg-light navbar-light">
@@ -18,11 +19,11 @@
                     </div>
                 </div> #}
                 <div class="navbar-nav w-100">
-                    <a href="index.html" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
+                    <a href="{{path('Admin_page')}}" class="nav-item nav-link active"><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="widget.html" class="nav-item nav-link"><i class="fa fa-user me-2"></i>Users</a>
                     <a href="widget.html" class="nav-item nav-link"><i class="fa fa-shopping-basket me-2"></i>Products</a>
                     <a href="{{path('backapp_publications')}}" class="nav-item nav-link"><i class="fa fa-file-image me-2"></i>Publications</a>
-                    <a href="{{path('app_comment_show')}}" class="nav-item nav-link"><i class="fa fa-comments me-2"></i>Opinions</a>
+                    <a href="{{path('app_comment_index')}}" class="nav-item nav-link"><i class="fa fa-comments me-2"></i>Opinions</a>
                     <div class="nav-item dropdown">
                         <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-user me-2"></i>Programs</a>
                         <div class="dropdown-menu bg-transparent border-0">
@@ -51,5 +52,5 @@
             </nav>
         </div>
         <!-- Sidebar End -->
-{% block body %}
+
 {% endblock %}

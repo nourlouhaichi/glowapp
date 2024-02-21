@@ -3,5 +3,6 @@
 <center>
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>
+    <a href="{{ path('backapp_publications') }}">back to list</a>
 {{ form_end(form) }}
 </center>

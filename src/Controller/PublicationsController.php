@@ -14,6 +14,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\CommentRepository;
+use Vich\UploaderBundle\Form\Type\VichImageType;
 
 class PublicationsController extends AbstractController
 {
@@ -22,6 +23,14 @@ class PublicationsController extends AbstractController
     {
         $publication=$PublicationRepository->findAll();
         return $this->render('front/publications/index.html.twig', [
+            'publications'=>$publication
+        ]);
+    }
+    #[Route('/Admin', name: 'Admin_page')]
+    public function indexadmin(PublicationRepository $PublicationRepository): Response
+    {
+        $publication=$PublicationRepository->findAll();
+        return $this->render('back/home_admin/index.html.twig', [
             'publications'=>$publication
         ]);
     }
@@ -39,7 +48,7 @@ class PublicationsController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $publication = new Publication();
-        $form = $this->createForm(PublicationType::class, $publication);
+        $form = $this->createForm(PublicationType::class, $publication)->add('imageFile', VichImageType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -60,7 +69,7 @@ class PublicationsController extends AbstractController
     public function show(Publication $publication,Request $request,EntityManagerInterface $em): Response
     {
         $comment=new Comment();
-        $form= $this->createFormBuilder($comment)->add("contenue")->add("submit",SubmitType::class)->getForm();
+        $form= $this->createFormBuilder($comment)->add("contenue")->add("Add",SubmitType::class)->getForm();
         $comment->setDatecr(new DateTime());
         $comment->setPublication($publication);
         $form->handleRequest($request);
@@ -91,6 +100,7 @@ class PublicationsController extends AbstractController
             'form' => $form,
         ]);
     }
+    
     #[Route('/{id}/adminedit', name: 'backapp_publication_edit', methods: ['GET', 'POST'])]
     public function backedit(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
     {
@@ -109,7 +119,7 @@ class PublicationsController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_publication_delete', methods: ['POST'])]
+   /* #[Route('/delete/{id}', name: 'app_publicationdelete', methods: ['POST'])]
     public function delete(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$publication->getId(), $request->request->get('_token'))) {
@@ -118,8 +128,8 @@ class PublicationsController extends AbstractController
         }
 
         return $this->redirectToRoute('app_publications', [], Response::HTTP_SEE_OTHER);
-    }
-    #[Route('/{id}/delete', name: 'backapp_publication_delete', methods: ['POST'])]
+    }*/
+    /*#[Route('/{id}/delete', name: 'backapp_publication_delete', methods: ['POST'])]
     public function backdelete(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$publication->getId(), $request->request->get('_token'))) {
@@ -128,26 +138,32 @@ class PublicationsController extends AbstractController
         }
 
         return $this->redirectToRoute('backapp_publications', [], Response::HTTP_SEE_OTHER);
-    }
-    #[Route('/{id}/delete_comment/{commentId}', name: 'app_publication_delete_comment', methods: ['POST'])]
-    public function deleteComment(Request $request, Publication $publication, CommentRepository $commentRepository, EntityManagerInterface $entityManager, $commentId): Response
+    }*/
+
+    #[Route('/deletecm/{id}', name: 'app_publicationcomdelete', methods: ['POST'])]
+    public function deletecm(Request $request, Publication $publication, EntityManagerInterface $entityManager, CommentRepository $commentRepository): Response
     {
-        // Find the comment to delete
-        $comment = $commentRepository->find($commentId);
+        $comments = $commentRepository->findBy(['publication' => $publication]);
 
-        // Check if the comment belongs to the publication
-        if ($comment && $comment->getPublication() === $publication) {
-            // Remove the comment
+        foreach ($comments as $comment) {
             $entityManager->remove($comment);
-            $entityManager->flush();
-
-            // Optionally, you can add a success flash message here
-        } else {
-            // Optionally, you can add a failure flash message here if the comment does not belong to the publication
         }
+        $entityManager->remove($publication);
+        $entityManager->flush();
+    
+        return $this->redirectToRoute('app_publications', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/admindeletecm/{id}', name: 'backapp_publicationcomdelete', methods: ['POST'])]
+    public function deleteadcm(Request $request, Publication $publication, EntityManagerInterface $entityManager, CommentRepository $commentRepository): Response
+    {
+        $comments = $commentRepository->findBy(['publication' => $publication]);
 
-        // Redirect back to the publication page or wherever appropriate
-        return $this->redirectToRoute('app_publication_show', ['id' => $publication->getId()]);
+        foreach ($comments as $comment) {
+            $entityManager->remove($comment);
+        }
+        $entityManager->remove($publication);
+        $entityManager->flush();
+    
+        return $this->redirectToRoute('backapp_publications', [], Response::HTTP_SEE_OTHER);
     }
 }
-    
