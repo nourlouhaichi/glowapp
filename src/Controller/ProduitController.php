@@ -75,7 +75,7 @@ class ProduitController extends AbstractController
     {
         $form = $this->createForm(Produit1Type::class, $produit);
         $form->handleRequest($request);
-
+        // $form->handleRequest($request); bch man5srhomich ya3ni les donnees yab9o persisté
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 

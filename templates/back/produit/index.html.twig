@@ -3,57 +3,74 @@
 {% block title %}Product index{% endblock %}
 
 {% block body %}
-    <br><center><h1 class="mb-3 text-success">Product list</h1></center><br>
 
-    <div class="container-fluid pt-4 px-4">                  
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Ref</th>
-                    <th>Name</th>
-                    <th>Description</th>
-                    <th>Price</th>
-                    <th>categorie</th>
-                    
-                    <th>Quantity</th>
-                    <th>Image</th>
-                    <th>Action</th> <!-- New column for action buttons -->
-                </tr>
-            </thead>
-            <tbody>
-                {% for produit in produits %}
+    <div class="container-fluid pt-4 px-4">  
+        <center><h1 class="mb-3 text-warning">Product Table</h1></center>
+        <div class="container d-flex justify-content-end">
+            <a class="btn btn-success rounded-pill m-2" href="{{ path('app_produit_new') }}"><i class="fa fa-plus"></i></a>
+        </div>
+        <div class="container-fluid pt-4 px-4">                  
+            <table class="table table-bordered">
+                <thead>
                     <tr>
-                        <td>{{ produit.ref }}</td>
-                        <td>{{ produit.name }}</td>
-                        <td>{{ produit.description }}</td>
-                        <td>{{ produit.price }}</td>
-                             <td>
-                            {% if produit.categorieProd is not null %}
-                                {{ produit.categorieProd.nomCa }}
-                            {% else %}
-                                No Category
-                            {% endif %}
-                        </td>
-                        <td>{{ produit.quantity }}</td>
-                      
-                        <td>{{ produit.image }}</td>
-                        <td>
-                            <div class="btn-group" role="group" aria-label="Product Actions">
-                                <a class="btn btn-success rounded-pill m-2" href="{{ path('app_produit_show', {'ref': produit.ref}) }}">show</a>
-                                <a class="btn btn-warning rounded-pill m-2" href="{{ path('app_produit_edit', {'ref': produit.ref}) }}">edit</a>
-                            </div>
-                        </td>
+                        <th scope="col" class="text-center">Ref</th>
+                        <th scope="col" class="text-center">Name</th>
+                        <th scope="col" class="text-center">Description</th>
+                        <th scope="col" class="text-center">Price</th>
+                        <th scope="col" class="text-center">Category</th>
+                        <th scope="col" class="text-center">Quantity</th>
+                        <th scope="col" class="text-center">Image</th>
+                        <th scope="col" class="text-center">Action</th> <!-- New column for action buttons -->
                     </tr>
-                {% else %}
-                    <tr>
-                        <td colspan="7">no records found</td>
-                    </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    
-        <br>
-        <a class="btn btn-sm btn-success mb-2"  href="{{ path('app_produit_new') }}">Create new</a> <!-- Modified button size -->
+                </thead>
+                <tbody>
+                    {% for produit in produits %}
+                        <tr>
+                            <th scope="row" class="text-center">{{ produit.ref }}</th>
+                            <td>{{ produit.name }}</td>
+                            <td>{{ produit.description }}</td>
+                            <td class="text-end">{{ produit.price }}</td>
+                            <td>
+                                {% if produit.categorieProd is not null %}
+                                    {{ produit.categorieProd.nomCa }}
+                                {% else %}
+                                    No Category
+                                {% endif %}
+                            </td>
+                            <td class="text-center">{{ produit.quantity }}</td>
+                            <td class="text-center">
+                                {% if produit.image %}
+                                    <img src="{{ asset('uploads/'  ~ produit.image) }}" alt="Product Image" style="max-width: 100px;">
+                                {% else %}
+                                    No Image
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group" aria-label="Product Actions">
+                                    <a class="btn btn-primary rounded-pill m-2" href="{{ path('app_produit_show', {'ref': produit.ref}) }}"><i class="fa fa-eye"></i></a>
+                                    <a class="btn btn-warning rounded-pill m-2" href="{{ path('app_produit_edit', {'ref': produit.ref}) }}"><i class="fa fa-pen"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="8" class="text-center">no records found</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
     </div>
 {% endblock %}
+
+
+
+
+
+
+
+
+
+
+
 

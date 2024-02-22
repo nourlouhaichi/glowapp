@@ -3,32 +3,36 @@
 {% block title %}CategorieProd{% endblock %}
 
 {% block body %}
-    <h1>CategorieProd</h1>
+    <div class="container-fluid pt-4 px-4">
+        <center><h1 class="mb-3 text-success">Category Details</h1></center>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ categorie_prod.id }}</td>
-            </tr>
-            <tr>
-                <th>NomCa</th>
-                <td>{{ categorie_prod.nomCa }}</td>
-            </tr>
-            <tr>
-                <th>DescripCa</th>
-                <td>{{ categorie_prod.descriptionCat }}</td>
-            </tr>
-            <tr>
-                <th>CreateDateCa</th>
-                <td>{{ categorie_prod.CreateDateCa ? categorie_prod.CreateDateCa|date('Y-m-d') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+        <table class="table table-striped">
+            <tbody>
+                <tr>
+                    <th scope="row">Id</th>
+                    <td>{{ categorie_prod.id }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">NomCa</th>
+                    <td>{{ categorie_prod.nomCa }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Description</th>
+                    <td>{{ categorie_prod.descriptionCat }}</td>
+                </tr>
+                <tr>
+                    <th scope="row">Creation Date</th>
+                    <td>{{ categorie_prod.CreateDateCa ? categorie_prod.CreateDateCa|date('Y-m-d') : '' }}</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <a href="{{ path('app_categorie_prod_index') }}">back to list</a>
+        <div class="container d-flex justify-content-center">
+            <a href="{{ path('app_categorie_prod_index') }}" class="btn btn-warning rounded-pill m-2">Back to list</a>
+            <a href="{{ path('app_categorie_prod_edit', {'id': categorie_prod.id}) }}" class="btn btn-success rounded-pill m-2">Edit</a>
+        </div>
 
-    <a href="{{ path('app_categorie_prod_edit', {'id': categorie_prod.id}) }}">edit</a>
-
-    {{ include('back/categorie_prod/_delete_form.html.twig') }}
+        {{ include('back/categorie_prod/_delete_form.html.twig') }}
+    </div>
 {% endblock %}
+
