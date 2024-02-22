@@ -83,7 +83,7 @@
                       <h6 class="mb-0">New Password</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                      <input type="password" id="pass" name="pass" class="form-control">
+                     <input type="password" id="pass" name="pass" class="form-control" pattern="(?=.*\d)(?=.*[a-z]).{8,}" title="Le mot de passe doit contenir au moins un chiffre et au moins 8 caractères de long." required>
                     </div>
                   </div>
                   <hr>
@@ -92,7 +92,7 @@
                       <h6 class="mb-0">Confirm New Password</h6>
                     </div>
                     <div class="col-sm-9 text-secondary">
-                     <input type="password" id="pass2" name="pass2" class="form-control">
+                      <input type="password" id="pass2" name="pass2" class="form-control" pattern="(?=.*\d)(?=.*[a-z]).{8,}" title="Le mot de passe doit contenir au moins un chiffre et au moins 8 caractères de long." required>
                     </div>
                   </div>
 
