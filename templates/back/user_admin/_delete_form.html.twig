@@ -10,5 +10,10 @@
     <a class="btn btn-warning rounded-pill m-2" href="{{ path('app_user_admin_edit', {'cin': user.cin}) }}"><i class="fa fa-pen"></i></a>
     <button class="btn btn-danger rounded-pill m-2"><i class="fa fa-trash" aria-hidden="true"></i></button>
     <a class="btn btn-primary rounded-pill m-2" href="{{ path('app_user_admin_index') }}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+    {% if user.isBanned %}
+        <a href="{{ path('admin_unban_user', {'cin': user.cin}) }}" class="btn btn-success rounded-pill m-2"><i class="fa fa-user" aria-hidden="true"></i></a>
+    {% else %}
+        <a href="{{ path('admin_ban_user', {'cin': user.cin}) }}" class="btn btn-danger rounded-pill m-2"><i class="fa fa-user-times" aria-hidden="true"></i></a>
+    {% endif %}
     
 </form>

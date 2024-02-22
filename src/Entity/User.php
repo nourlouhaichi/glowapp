@@ -105,12 +105,22 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'datetime_immutable', options: ['default'=> 'CURRENT_TIMESTAMP'])] //saisir date creation automatique
     private ?\DateTimeImmutable $created_at = null;
 
+
+    #[ORM\Column(type: 'boolean')]
+    private ?bool $isBanned = false;
     
+
+
+
+
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
         $this->roles = ['ROLE_USER'];
     }
+
+
+
 
     public function getCin(): ?string
     {
@@ -276,6 +286,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setCreatedAt(\DateTimeImmutable $created_at): static
     {
         $this->created_at = $created_at;
+
+        return $this;
+    }
+
+    public function getIsBanned(): ?bool
+    {
+        return $this->isBanned;
+    }
+
+    public function setIsBanned(bool $isBanned): static
+    {
+        $this->isBanned = $isBanned;
 
         return $this;
     }

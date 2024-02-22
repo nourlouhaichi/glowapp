@@ -47,7 +47,6 @@ class HomeAdminController extends AbstractController
         ]);
     }
 
-
     #[Route('/home/admin/profile/editpass', name: 'profile_admin_editpass')]
     public function editProfilePass(Request $request, UserPasswordEncoderInterface $passwordEncoder, EntityManagerInterface $entityManager)
     {

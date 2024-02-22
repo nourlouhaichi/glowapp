@@ -15,4 +15,10 @@ class HomeController extends AbstractController
             'controller_name' => 'HomeController',
         ]);
     }
+
+    #[Route('/404error', name: 'error')]
+    public function error(): Response
+    {
+        return $this->render('front/home/404error.html.twig');
+    }
 }

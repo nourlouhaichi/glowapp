@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
-#[Route('/user/admin')]
+#[Route('home/admin/user')]
 class UserAdminController extends AbstractController
 {
     #[Route('/', name: 'app_user_admin_index', methods: ['GET'])]
@@ -87,6 +87,7 @@ class UserAdminController extends AbstractController
         ]);
     }
 
+    
     #[Route('/{cin}/edit', name: 'app_user_admin_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
@@ -105,6 +106,7 @@ class UserAdminController extends AbstractController
         ]);
     }
 
+
     #[Route('/{cin}', name: 'app_user_admin_delete', methods: ['POST'])]
     public function delete(Request $request, User $user, EntityManagerInterface $entityManager): Response
     {
@@ -114,5 +116,39 @@ class UserAdminController extends AbstractController
         }
 
         return $this->redirectToRoute('app_user_admin_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+    #[Route('home/admin/ban/{cin}', name: 'admin_ban_user')]
+    public function banUser($cin): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->find($cin);
+
+        if (!$user) {
+            throw $this->createNotFoundException('No user found for id '.$cin);
+        }
+
+        $user->setIsBanned(true);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_user_admin_index');
+    }
+
+
+    #[Route('home/admin/unban/{cin}', name: 'admin_unban_user')]
+    public function unbanUser($cin): Response
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $user = $entityManager->getRepository(User::class)->find($cin);
+
+        if (!$user) {
+            throw $this->createNotFoundException('No user found for id '.$cin);
+        }
+
+        $user->setIsBanned(false);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('app_user_admin_index');
     }
 }

@@ -1,5 +1,7 @@
 security:
 
+    access_denied_url: '/404error'
+
     role_hierarchy:
         ROLE_ADMIN: ROLE_USER
         # ROLE_COACH:        ROLE_USER
@@ -27,6 +29,8 @@ security:
                 path: app_logout
                 # where to redirect after logout
                 # target: app_any_route
+                target: app_home # Redirection après la déconnexion
+                
 
             remember_me:
                 secret: '%kernel.secret%'
