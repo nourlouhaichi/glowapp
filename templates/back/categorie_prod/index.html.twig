@@ -1,0 +1,55 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}CategorieProd index{% endblock %}
+
+{% block body %}
+    <h1>CategorieProd index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>NomCa</th>
+                <th>DescripCa</th>
+                <th>CreateDateCa</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for categorie_prod in categorie_prods %}
+            <tr>
+                <td>{{ categorie_prod.id }}</td>
+                <td>{{ categorie_prod.nomCa }}</td>
+                <td>{{ categorie_prod.descripCa }}</td>
+                <td>{{ categorie_prod.CreateDateCa ? categorie_prod.CreateDateCa|date('Y-m-d') : '' }}</td>
+                <td>
+                     <div class="btn-group" role="group" aria-label="Category Actions">
+                                
+                                <a class="btn btn-warning rounded-pill m-2" href="{{ path('app_categorie_prod_show', {'id': categorie_prod.id}) }}">show</a>
+                                <a  class="btn btn-success rounded-pill m-2" href="{{ path('app_categorie_prod_edit', {'id': categorie_prod.id}) }}">edit</a>
+                            </div>
+                </td>
+            </tr>
+          {% else %}
+            <tr>
+                <td colspan="5">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_categorie_prod_new') }}">Create new</a>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,50 @@
+{% extends 'back/backbase.html.twig' %}
+{% block title %}Edit CategorieProd{% endblock %}
+
+{% block body %}
+    <h1>Edit CategorieProd</h1>
+
+
+    <div class="container-fluid pt-4 px-4">
+        <div class="row g-4">
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-light rounded h-100 p-4">
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form.nomCa, {'attr': {'class': 'form-control', 'id': 'floatingName', 'placeholder': 'Enter name'}}) }}
+                        <label for="floatingName">Name Category</label>
+                        {{ form_errors(form.nomCa) }}
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form.descripCa, {'attr': {'class': 'form-control', 'id': 'floatingDescription', 'placeholder': 'Enter description'}}) }}
+                        <label for="floatingDescription">Description Category</label>
+                        {{ form_errors(form.descripCa) }}
+                    </div>
+
+                    <div class="input-group mb-3">
+                        
+                        {{ form_widget(form.CreateDateCa, {'attr': {'class': 'form-control', 'placeholder': 'Enter la date de creation'}}) }}
+                  
+                    <label for="floatingCreateDateCa">Creation Date</label>
+                    {{ form_errors(form.CreateDateCa) }}
+                    </div>
+
+               
+
+                
+                </div>
+            </div>
+            
+        </div>
+    </div>
+<div class="text-center">
+        <a class="btn btn-warning rounded-pill m-2" href="{{ path('app_categorie_prod_index') }}">Back to list</a>
+        <button type="submit" class="btn btn-success rounded-pill m-2">Edit</button>
+    </div>
+    {{ form_end(form) }}
+     {{ include('back/categorie_prod/_delete_form.html.twig') }}
+{% endblock %}
+
+   

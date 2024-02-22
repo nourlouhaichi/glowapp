@@ -34,6 +34,9 @@ class Produit
     #[ORM\JoinColumn(name: 'panier_id', referencedColumnName: 'id')]
     private ?Panier $panier;
 
+    #[ORM\ManyToOne(inversedBy: 'Produits')]
+    private ?CategorieProd $categorieProd = null;
+
     
 
     public function getRef(): ?string
@@ -118,6 +121,18 @@ class Produit
     public function setPanier(?Panier $panier): self
     {
         $this->panier = $panier;
+
+        return $this;
+    }
+
+    public function getCategorieProd(): ?CategorieProd
+    {
+        return $this->categorieProd;
+    }
+
+    public function setCategorieProd(?CategorieProd $categorieProd): static
+    {
+        $this->categorieProd = $categorieProd;
 
         return $this;
     }

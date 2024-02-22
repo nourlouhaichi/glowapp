@@ -13,8 +13,10 @@
                     <th>Name</th>
                     <th>Description</th>
                     <th>Price</th>
-                    <th>Image</th>
+                    <th>categorie</th>
+                    
                     <th>Quantity</th>
+                    <th>Image</th>
                     <th>Action</th> <!-- New column for action buttons -->
                 </tr>
             </thead>
@@ -25,7 +27,15 @@
                         <td>{{ produit.name }}</td>
                         <td>{{ produit.description }}</td>
                         <td>{{ produit.price }}</td>
+                             <td>
+                            {% if produit.categorieProd is not null %}
+                                {{ produit.categorieProd.nomCa }}
+                            {% else %}
+                                No Category
+                            {% endif %}
+                        </td>
                         <td>{{ produit.quantity }}</td>
+                      
                         <td>{{ produit.image }}</td>
                         <td>
                             <div class="btn-group" role="group" aria-label="Product Actions">

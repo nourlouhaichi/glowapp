@@ -33,7 +33,11 @@
                         <label for="floatingInput"></label>
                         {{ form_errors(form.price) }}
                     </div>
-
+                     <div class="form-floating mb-3">
+                       {{ form_widget(form.categorieProd, {'attr': {'class': 'form-select', 'id': 'categorieSelect'}}) }}
+                       <label for="categorieSelect">Category</label>
+                       {{ form_errors(form.categorieProd) }}
+                       </div>
                     <div class="form-floating mb-3">
                         {{ form_widget(form.image, {'attr': {'class': 'form-select', 'id': 'genderSelect'}}) }}
                         <label for="floatingInput">Image</label>

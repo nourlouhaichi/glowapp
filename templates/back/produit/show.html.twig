@@ -20,6 +20,9 @@
             <div class="info-item">
                 <strong>Price:</strong> {{ produit.price }}
             </div>
+             <div class="info-item">
+                <strong>Categorie:</strong> {{ produit.CategorieProd.nomCa }}
+            </div>
             <div class="info-item">
                 <strong>Quantity:</strong> {{ produit.quantity }}
             </div>
@@ -32,6 +35,7 @@
             {% endif %}
         </div>
     </div>
+    
     
     <a href="{{ path('app_produit_index') }}">Back to List</a>
     <a href="{{ path('app_produit_edit', {'ref': produit.ref}) }}">Edit</a>
