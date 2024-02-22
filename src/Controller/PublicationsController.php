@@ -65,6 +65,27 @@ class PublicationsController extends AbstractController
         ]);
     }
 
+    #[Route('/adminnew', name: 'backapp_publication_new', methods: ['GET', 'POST'])]
+    public function backnew(Request $request, EntityManagerInterface $entityManager): Response
+    {
+        $publication = new Publication();
+        $form = $this->createForm(PublicationType::class, $publication)->add('imageFile', VichImageType::class);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $publication->setDatecrP(new DateTime());
+            $entityManager->persist($publication);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('backapp_publications', [], Response::HTTP_SEE_OTHER);
+        }
+
+        return $this->renderForm('back/publications/new.html.twig', [
+            'publication' => $publication,
+            'form' => $form,
+        ]);
+    }
+
     #[Route('/{id}', name: 'app_publication_show', methods: ['GET', 'POST'])]
     public function show(Publication $publication,Request $request,EntityManagerInterface $em): Response
     {
@@ -82,11 +103,11 @@ class PublicationsController extends AbstractController
             'form' => $form->createView()
         ]);
     }
-
     #[Route('/{id}/edit', name: 'app_publication_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(PublicationType::class, $publication);
+        dump('Before handling request:', $publication);
+        $form = $this->createForm(PublicationType::class, $publication)->add('imageFile', VichImageType::class);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -100,7 +121,6 @@ class PublicationsController extends AbstractController
             'form' => $form,
         ]);
     }
-    
     #[Route('/{id}/adminedit', name: 'backapp_publication_edit', methods: ['GET', 'POST'])]
     public function backedit(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
     {
@@ -153,7 +173,7 @@ class PublicationsController extends AbstractController
     
         return $this->redirectToRoute('app_publications', [], Response::HTTP_SEE_OTHER);
     }
-    #[Route('/admindeletecm/{id}', name: 'backapp_publicationcomdelete', methods: ['POST'])]
+    #[Route('/admindeletecm/{id}', name: 'backapp_publicationcomdelete', methods: ['GET','POST'])]
     public function deleteadcm(Request $request, Publication $publication, EntityManagerInterface $entityManager, CommentRepository $commentRepository): Response
     {
         $comments = $commentRepository->findBy(['publication' => $publication]);

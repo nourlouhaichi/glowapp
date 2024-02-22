@@ -4,6 +4,6 @@
 {% block body %}
     <h1>Add new Publication</h1>
 {{form_start(form)}}
-    <a href="{{ path('app_publications') }}">back to list</a>
+    {{ include('back/publications/_form.html.twig', {'button_label': 'Add'}) }}
 {{form_end(form)}}
 {% endblock %}
