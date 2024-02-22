@@ -13,7 +13,7 @@ class CategorieProdType extends AbstractType
     {
         $builder
             ->add('nomCa')
-            ->add('descripCa')
+            ->add('descriptionCat')
             ->add('CreateDateCa' ,DateType::class, [
                 'data' => new \DateTime(),
             ])
