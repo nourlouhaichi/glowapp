@@ -13,6 +13,7 @@
                 <th>LastName</th>
                 <th>Phone</th>
                 <th>Email</th>
+                <th>Event</th>
                 <th>CreateAt</th>
                 <th>actions</th>
             </tr>
@@ -25,6 +26,7 @@
                 <td>{{ reservation.lastName }}</td>
                 <td>{{ reservation.phone }}</td>
                 <td>{{ reservation.email }}</td>
+                <td>{{ reservation.event }}</td>
                 <td>{{ reservation.createAt ? reservation.createAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
                     <a href="{{ path('app_reservation_admin_show', {'id': reservation.id}) }}">show</a>
