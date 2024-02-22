@@ -13,7 +13,11 @@
             </tr>
             <tr>
                 <th>Image</th>
-                <td>{{ event.image }}</td>
+               {% if event.image %}
+                <img src="{{ asset('uploads/' ~ event.image) }}" alt="{{ event.title }}">
+               {% else %}
+                <p>No photo available</p>
+               {% endif %}
             </tr>
             <tr>
                 <th>Title</th>

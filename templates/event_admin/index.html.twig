@@ -3,6 +3,7 @@
 {% block title %}Event index{% endblock %}
 
 {% block body %}
+
     <h1>Event index</h1>
 
     <table class="table">
@@ -23,7 +24,11 @@
         {% for event in events %}
             <tr>
                 <td>{{ event.id }}</td>
-                <td>{{ event.image }}</td>
+                <td>{% if event.image %}
+                <img src="{{ asset('uploads/' ~ event.image) }}" alt="{{ event.title }}">
+               {% else %}
+                <p>No photo available</p>
+               {% endif %} </td>
                 <td>{{ event.title }}</td>
                 <td>{{ event.description }}</td>
                 <td>{{ event.location }}</td>

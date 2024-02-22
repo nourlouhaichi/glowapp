@@ -9,7 +9,9 @@
                             <div class="col-lg-6">
                                 <div class="border rounded">
                                     <a href="#">
-                                        <img src="img/single-item.jpg" class="img-fluid rounded" alt="Image">
+                                         {% if event.image %}
+                                                    <img src="{{ asset('uploads/' ~ event.image) }}" class="img-fluid rounded" alt="Image">
+                                         {% endif %}
                                     </a>
                                 </div>
                             </div>
@@ -52,8 +54,11 @@
 
                                 <div class="d-flex align-items-center justify-content-start">
                                     <div class="rounded" style="width: 100px; height: 100px;">
-                                        <img src="img/featur-1.jpg" class="img-fluid rounded" alt="Image">
+                                         {% if item.image %}
+                                                    <img src="{{ asset('uploads/' ~ item.image) }}" class="img-fluid rounded" alt="Image">
+                                         {% endif %}
                                     </div>
+                                    
                                     <div>
                                         <h6 class="mb-2">{{item.title}}</h6>
 
