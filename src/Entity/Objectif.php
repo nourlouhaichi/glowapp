@@ -68,18 +68,6 @@ class Objectif
         return $this->id;
     }
 
-    public function getIdo(): ?int
-    {
-        return $this->ido;
-    }
-
-    public function setIdo(int $ido): static
-    {
-        $this->ido = $ido;
-
-        return $this;
-    }
-
     public function getCin(): ?int
     {
         return $this->cin;

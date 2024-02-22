@@ -1,11 +1,11 @@
-{% extends 'base.html.twig' %}
+{% extends 'front/basefrontone.html.twig' %}
 
 {% block title %}New Objectif{% endblock %}
 
 {% block body %}
     <h1>Create new Objectif</h1>
-
+{# <a href="{{ path('app_objectif_index') }}" class="btn border border-secondary rounded-pill px-3 text-primary"> back to list</a> #}
     {{ include('front/objectif/_form.html.twig') }}
 
-    <a href="{{ path('app_objectif_index') }}">back to list</a>
+    {# <a href="{{ path('app_objectif_index') }}">back to list</a> #}
 {% endblock %}

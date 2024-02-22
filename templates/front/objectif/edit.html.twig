@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'front/basefrontone.html.twig' %}
 
 {% block title %}Edit Objectif{% endblock %}
 
@@ -7,7 +7,7 @@
 
     {{ include('front/objectif/_form.html.twig', {'button_label': 'Update'}) }}
 
-    <a href="{{ path('app_objectif_index') }}">back to list</a>
+    <a href="{{ path('app_objectif_show', {'id': objectif.id}) }}">back to list</a>
 
     {{ include('front/objectif/_delete_form.html.twig') }}
 {% endblock %}
