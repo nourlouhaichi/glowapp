@@ -303,6 +303,10 @@
                         {{ form_widget(registrationForm.agreeTerms, {'attr': {'class': 'form-check-input', 'id': 'exampleCheck1'}}) }}
                         <label class="form-check-label" for="exampleCheck1">Check me out</label>
                     </div>
+                    <center><div class="form-check mb-4">
+                        {{ form_row(registrationForm.recaptcha) }}
+                         {{ form_errors(registrationForm.recaptcha) }}
+                    </div><center>
                     <button type="submit" class="btn btn-primary py-3 w-full mb-4">Sign Up</button>
                     <p class="text-center mb-0">Don't have an Account? <a class="text-secondary" href="{{ path('app_login') }}">Sign In</a></a></p>
                     {{ form_end(registrationForm) }}
