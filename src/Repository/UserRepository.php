@@ -50,6 +50,77 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
     }
 
+    public function findAllFemalesWithSpecificFieldsExceptCurrentUser(User $currentUser)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.cin', 'u.email', 'u.roles', 'u.lastname', 'u.firstname', 'u.gender', 'u.isBanned')
+            ->andWhere('u != :currentUser')
+            ->setParameter('currentUser', $currentUser)
+            ->andWhere('u.gender = :gender')
+            ->setParameter('gender', 'female')
+            ->orderBy('u.created_at', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllMalesWithSpecificFieldsExceptCurrentUser(User $currentUser)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.cin', 'u.email', 'u.roles', 'u.lastname', 'u.firstname', 'u.gender', 'u.isBanned')
+            ->andWhere('u != :currentUser')
+            ->setParameter('currentUser', $currentUser)
+            ->andWhere('u.gender = :gender')
+            ->setParameter('gender', 'male')
+            ->orderBy('u.created_at', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllBannedWithSpecificFieldsExceptCurrentUser(User $currentUser)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.cin', 'u.email', 'u.roles', 'u.lastname', 'u.firstname', 'u.gender', 'u.isBanned')
+            ->andWhere('u != :currentUser')
+            ->setParameter('currentUser', $currentUser)
+            ->andWhere('u.isBanned = :banned')
+            ->setParameter('banned', '1')
+            ->orderBy('u.created_at', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllAdminsWithSpecificFieldsExceptCurrentUser(User $currentUser)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.cin', 'u.email', 'u.roles', 'u.lastname', 'u.firstname', 'u.gender', 'u.isBanned')
+            ->andWhere('u != :currentUser')
+            ->setParameter('currentUser', $currentUser)
+            ->andWhere("u.roles LIKE :role")
+            ->setParameter('role', '%"ROLE_ADMIN"%')
+            ->orderBy('u.created_at', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function findAllMembersWithSpecificFieldsExceptCurrentUser(User $currentUser)
+    {
+        return $this->createQueryBuilder('u')
+            ->select('u.cin', 'u.email', 'u.roles', 'u.lastname', 'u.firstname', 'u.gender', 'u.isBanned')
+            ->andWhere('u != :currentUser')
+            ->setParameter('currentUser', $currentUser)
+            ->andWhere("u.roles LIKE :role")
+            ->setParameter('role', '%"ROLE_USER"%')
+            ->orderBy('u.created_at', 'DESC')
+            ->getQuery()
+            ->getResult();
+    }
+    
+
+
+
+
+
+
 //    /**
 //     * @return User[] Returns an array of User objects
 //     */

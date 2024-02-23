@@ -16,14 +16,50 @@ use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 #[Route('home/admin/user')]
 class UserAdminController extends AbstractController
 {
+    // #[Route('/', name: 'app_user_admin_index', methods: ['GET'])]
+    // public function index(UserRepository $userRepository): Response
+    // {
+    //     $currentUser = $this->getUser();
+    //     return $this->render('back/user_admin/index.html.twig', [
+    //         'users' => $userRepository->findAllUsersWithSpecificFieldsExceptCurrentUser($currentUser),
+    //     ]);
+    // }
+
     #[Route('/', name: 'app_user_admin_index', methods: ['GET'])]
-    public function index(UserRepository $userRepository): Response
+    public function index(UserRepository $userRepository, Request $request): Response
     {
         $currentUser = $this->getUser();
-        return $this->render('back/user_admin/index.html.twig', [
-            'users' => $userRepository->findAllUsersWithSpecificFieldsExceptCurrentUser($currentUser),
-        ]);
+        $type = $request->query->get('type');
+
+        switch ($type) {
+            case 'all':
+                $users = $userRepository->findAllUsersWithSpecificFieldsExceptCurrentUser($currentUser);
+                break;
+            case 'admins':
+                $users = $userRepository->findAllAdminsWithSpecificFieldsExceptCurrentUser($currentUser);
+                break;
+            case 'members':
+                $users = $userRepository->findAllMembersWithSpecificFieldsExceptCurrentUser($currentUser);
+                break;
+            case 'banned':
+                $users = $userRepository->findAllBannedWithSpecificFieldsExceptCurrentUser($currentUser);
+                break;
+            case 'females':
+                $users = $userRepository->findAllFemalesWithSpecificFieldsExceptCurrentUser($currentUser);
+                break;
+            case 'males':
+                $users = $userRepository->findAllMalesWithSpecificFieldsExceptCurrentUser($currentUser);
+                break;
+            default:
+                $users = $userRepository->findAllUsersWithSpecificFieldsExceptCurrentUser($currentUser);
     }
+
+        return $this->render('back/user_admin/index.html.twig', [
+        'users' => $users,
+        'type' => $type,
+    ]);
+}
+
 
     // #[Route('/new', name: 'app_user_admin_new', methods: ['GET', 'POST'])]
     // public function new(Request $request, EntityManagerInterface $entityManager): Response

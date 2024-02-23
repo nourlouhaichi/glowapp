@@ -5,6 +5,34 @@
 {% block body %}
 
       <div class="container-fluid pt-4 px-4">  
+        <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemple de bouton select en HTML</title>
+</head>
+<body>
+        
+        <div class='col-sm-12 col-xl-2'>
+            <select class= 'form-select' id="show" name="show" onchange="selectOption()">
+                <option value="{{ path('app_user_admin_index', {'type': 'all'}) }}" {% if type is defined and type == 'all' %}selected{% endif %}>All</option>
+                <option value="{{ path('app_user_admin_index', {'type': 'admins'}) }}" {% if type is defined and type == 'admins' %}selected{% endif %}>Admins</option>
+                <option value="{{ path('app_user_admin_index', {'type': 'members'}) }}" {% if type is defined and type == 'members' %}selected{% endif %}>Members</option>
+                <option value="{{ path('app_user_admin_index', {'type': 'banned'}) }}" {% if type is defined and type == 'banned' %}selected{% endif %}>Banned Users</option>
+                <option value="{{ path('app_user_admin_index', {'type': 'females'}) }}" {% if type is defined and type == 'females' %}selected{% endif %}>Females</option>
+                <option value="{{ path('app_user_admin_index', {'type': 'males'}) }}" {% if type is defined and type == 'males' %}selected{% endif %}>Males</option>
+            </select>
+        </div>
+            <script>
+                function selectOption() {
+                    var selectedOption = document.getElementById("show").value;
+                    window.location.href = selectedOption;
+                }
+            </script>
+</body>
+</html>
+
         <center><h1 class="mb-3 text-warning">Users Table</h1></center>
         <div class="container d-flex justify-content-end">
     <a class="btn btn-success rounded-pill m-2"  href="{{ path('app_user_admin_new') }}"><i class="fa fa-plus"></i> </a>
@@ -19,12 +47,6 @@
                 <th>Gender</th>
                 <th>Banned</th>
                 <th>Roles</th>
-                
-                {# <th>Password</th> #}
-                {# <th>Datebirth</th> #}
-                {# <th>Phone</th> #}
-                {# <th>Created_at</th> #}
-                
                 <th>Actions</th>
             </tr>
         </thead>
@@ -42,7 +64,7 @@
                     {% endif %}</td>
                 <td>{% if user.isBanned %}Yes{% else %}No{% endif %}</td>
                 <td>{% for role in user.roles %}
-                {% if role == "ROLE_USER" %}Membre{% elseif role == "ROLE_ADMIN" %}Administrateur{% endif %}{% endfor %}</td>
+                {% if role == "ROLE_USER" %}Member{% elseif role == "ROLE_ADMIN" %}Admin{% endif %}{% endfor %}</td>
                 {# <td>{{ user.password }}</td> #}  
                 {# <td>{{ user.datebirth ? user.datebirth|date('Y-m-d') : '' }}</td> #}
                 {# <td>{{ user.phone }}</td> #}
