@@ -28,7 +28,7 @@ class EventController extends AbstractController
         return $this->render('front/event/show.html.twig', [
             'event' => $event,
             'category' => $categoryRepository->findAll(),
-            'events' => $eventRepository->findBy(array(),array('id'=>'DESC'),5),
+            'events' => $eventRepository->findBy(array(),array('id'=>'DESC'),2),
 
         ]);
     }

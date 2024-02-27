@@ -22,19 +22,21 @@ class Event
 
     #[Assert\Length(
         min: 2,
-        max: 10,
+        max: 30,
         minMessage: 'Votre titre doit comporter au moins 2 caractères',
-        maxMessage: 'Votre titre ne peut pas dépasser 10 caractères',
+        maxMessage: 'Votre titre ne peut pas dépasser 30 caractères',
     )]
     #[ORM\Column(length: 255)]
     private ?string $title = null;
 
+    #[Assert\NotBlank]
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
     #[ORM\Column(length: 255)]
     private ?string $location = null;
-
+    
+    #[Assert\GreaterThanOrEqual('today', message:"la date doit etre supperieure ou egale a la date d'aujourd'hui")]
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 

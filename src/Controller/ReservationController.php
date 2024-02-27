@@ -21,16 +21,16 @@ class ReservationController extends AbstractController
         $entityManager->persist($event);
         $entityManager->flush();
         $reservation = new Reservation();
-        $reservation->setEmail('youssef@gmail.com');
-        $reservation->setFirstName('youssef');
-        $reservation->setLastName('gharbi');
+        $reservation->setEmail('sam@gmail.com');
+        $reservation->setFirstName('sam');
+        $reservation->setLastName('jones');
         $reservation->setPhone('1232566');
         $createAt = new DateTimeImmutable();
         $reservation->setCreateAt($createAt);
         $reservation->setEvent($event);
         $entityManager->persist($reservation);
         $entityManager->flush();
-        return $this->render('reservation/index.html.twig', [
+        return $this->render('front/reservation/index.html.twig', [
             'controller_name' => 'ReservationController',
         ]);
     }

@@ -11,13 +11,14 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 #[Route('/event/admin')]
 class EventAdminController extends AbstractController
 {
     #[Route('/', name: 'app_event_admin_index', methods: ['GET'])]
     public function index(EventRepository $eventRepository): Response
     {
-        return $this->render('event_admin/index.html.twig', [
+        return $this->render('back/event_admin/index.html.twig', [
             'events' => $eventRepository->findAll(),
         ]);
     }
@@ -55,7 +56,7 @@ class EventAdminController extends AbstractController
             return $this->redirectToRoute('app_event_admin_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('event_admin/new.html.twig', [
+        return $this->renderForm('back/event_admin/new.html.twig', [
             'event' => $event,
             'form' => $form,
         ]);
@@ -64,7 +65,7 @@ class EventAdminController extends AbstractController
     #[Route('/{id}', name: 'app_event_admin_show', methods: ['GET'])]
     public function show(Event $event): Response
     {
-        return $this->render('event_admin/show.html.twig', [
+        return $this->render('back/event_admin/show.html.twig', [
             'event' => $event,
         ]);
     }
@@ -76,12 +77,31 @@ class EventAdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $photoFile = $form->get('image')->getData();
+
+            if ($photoFile) {
+                $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
+
+                try {
+                    $photoFile->move(
+                        $this->getParameter('photos_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Handle file upload error
+                    // Add flash message or log error
+                }
+
+                // Update the entity with the file path or filename
+                $event->setImage($newFilename);
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('app_event_admin_index', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('event_admin/edit.html.twig', [
+        return $this->renderForm('back/event_admin/edit.html.twig', [
             'event' => $event,
             'form' => $form,
         ]);
