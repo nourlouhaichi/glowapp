@@ -1,35 +1,38 @@
 <?php
 
+
+
+
+//src/Form/SearchType.php
 namespace App\Form;
 
-use App\Entity\Programme;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 
-class ProgrammeType extends AbstractType
+class SearchType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('categorie_pro',TextType::class, [
+            ->add('categorie_pro', TextType::class, [
                 'required' => false,
-                'empty_data' => '',])
-            ->add('plan_pro',TextType::class, [
+            ])
+            ->add('plan_pro', TextType::class, [
                 'required' => false,
-                'empty_data' => '',])
-            ->add('note_pro',TextType::class, [
+            ])
+            ->add('date_pro', DateType::class, [
+                'widget' => 'single_text',
                 'required' => false,
-                'empty_data' => '',])
-            ->add('date_pro')
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
-            'data_class' => Programme::class,
+            // Define defaults if any
         ]);
     }
 }

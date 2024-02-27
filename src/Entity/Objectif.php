@@ -14,10 +14,10 @@ class Objectif
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-    #[Assert\NotNull(message:"The CIN must not be null.")]
-    #[Assert\Positive(message:"The CIN must be a positive number.")]
-    private ?int $cin = null;
+    // #[ORM\Column]
+    // #[Assert\NotNull(message:"The CIN must not be null.")]
+    // #[Assert\Positive(message:"The CIN must be a positive number.")]
+    // private ?int $cin = null;
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message:"The objective cannot be empty.")]
@@ -51,6 +51,7 @@ class Objectif
 
     
     #[ORM\ManyToOne(targetEntity: Programme::class, inversedBy: 'objectifs')]
+    #[ORM\JoinColumn(name: "programme_id", referencedColumnName: "id", onDelete: "CASCADE")]
     private ?Programme $programme;
     public function getProgramme(): ?Programme
     {
@@ -68,29 +69,17 @@ class Objectif
         return $this->id;
     }
 
-    public function getIdo(): ?int
-    {
-        return $this->ido;
-    }
+    // public function getCin(): ?int
+    // {
+    //     return $this->cin;
+    // }
 
-    public function setIdo(int $ido): static
-    {
-        $this->ido = $ido;
+    // public function setCin(int $cin): static
+    // {
+    //     $this->cin = $cin;
 
-        return $this;
-    }
-
-    public function getCin(): ?int
-    {
-        return $this->cin;
-    }
-
-    public function setCin(int $cin): static
-    {
-        $this->cin = $cin;
-
-        return $this;
-    }
+    //     return $this;
+    //}
 
     public function getObjectifO(): ?string
     {

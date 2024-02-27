@@ -18,7 +18,7 @@ class Programme
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank(message: "Category is required.")]
     private ?string $categorie_pro = null;
 
@@ -35,7 +35,7 @@ class Programme
     #[Assert\GreaterThanOrEqual(value: "today", message: "Date must be today or in the future.")]
     private ?\DateTimeInterface $date_pro = null;
     
-    #[ORM\OneToMany(targetEntity: Objectif::class, mappedBy: 'programme')]
+    #[ORM\OneToMany(targetEntity: Objectif::class, mappedBy: 'programme' ,cascade: ['persist', 'remove'])]
     private Collection $objectifs;
 
     public function getId(): ?int
