@@ -115,10 +115,114 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
     }
     
+    public function countFemales()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.gender)')
+            ->Where('u.gender = :female')
+            ->setParameter('female', 'female')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 
+    public function countMales()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.gender)')
+            ->Where('u.gender = :male')
+            ->setParameter('male', 'male')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 
+    public function countBannedUsers()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.isBanned)')
+            ->Where('u.isBanned = :ban')
+            ->setParameter('ban', '1')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 
+    public function countNoBannedUsers()
+    {
+        return $this->createQueryBuilder('u')
+            ->select('COUNT(u.isBanned)')
+            ->Where('u.isBanned = :ban')
+            ->setParameter('ban', '0')
+            ->getQuery()
+            ->getSingleScalarResult();
+    }
 
+    public function getUserEvolutionData(): array
+    {
+        return $this->createQueryBuilder('u')
+            ->select("SUBSTRING(u.created_at, 1, 10) AS date, COUNT(u.cin) AS userCount")
+            ->groupBy('date')
+            ->orderBy('date', 'ASC')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function showUsersSortedByLastname(User $currentUser)
+    {
+        return $this->createQueryBuilder('u')
+        ->select('u.cin', 'u.email', 'u.roles', 'u.lastname', 'u.firstname', 'u.gender' , 'u.isBanned')
+        ->where('u != :currentUser')
+        ->setParameter('currentUser', $currentUser)
+        ->orderBy('u.lastname', 'ASC')
+        ->getQuery()
+        ->getResult();
+    }
+
+    public function showUsersSortedByFirstname(User $currentUser)
+    {
+        return $this->createQueryBuilder('u')
+        ->select('u.cin', 'u.email', 'u.roles', 'u.lastname', 'u.firstname', 'u.gender' , 'u.isBanned')
+        ->where('u != :currentUser')
+        ->setParameter('currentUser', $currentUser)
+        ->orderBy('u.firstname', 'ASC')
+        ->getQuery()
+        ->getResult();
+    }
+
+    public function searchByCin(string $cin)
+    {
+        return $this->createQueryBuilder('u')
+        ->select('u.cin', 'u.email', 'u.roles', 'u.lastname', 'u.firstname', 'u.gender', 'u.isBanned')
+        ->where('u.cin like :cin')
+        ->setParameter('cin', $cin)
+        ->getQuery()
+        ->getResult();
+    }
+
+    public function getRolesDistribution(): array
+    {
+        $qb = $this->createQueryBuilder('u');
+
+        $qb->select('u.roles');
+        $roles = $qb->getQuery()->getResult();
+
+        $rolesDistribution = [];
+
+        foreach ($roles as $user) {
+            $userRoles = $user['roles'];
+
+            foreach ($userRoles as $role) {
+                if ($role !== null && $role !== '') {
+                    if (isset($rolesDistribution[$role])) {
+                        $rolesDistribution[$role]++;
+                    } else {
+                        $rolesDistribution[$role] = 1;
+                    }
+                }
+            }
+        }
+
+        return $rolesDistribution;
+    }
+    
 
 
 //    /**

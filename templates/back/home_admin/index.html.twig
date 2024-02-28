@@ -2,5 +2,184 @@
 
 {% block title %}GlowApp{% endblock %}
 
+{% block css %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.css" integrity="sha512-/zs32ZEJh+/EO2N1b0PEdoA10JkdC3zJ8L5FTiQu82LR9S/rOQNfQN7U59U9BC12swNeRAz3HSzIL2vpp4fv3w==" crossorigin="anonymous">
+{% endblock %}
+
 {% block body %}
+<!-- Chart Start -->
+            <div class="container-fluid pt-4 px-4">
+                <div class="row g-4">
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Distribution by gender</h6>
+                            <div class="container">
+                                <canvas id="gender" width="400" height="300"></canvas> 
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded h-100 p-4">
+                             <h6 class="mb-4">Evolution of the number of users</h6>
+                            <div class="container">
+                                <canvas id="userEvolutionChart" height="200"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Distribution By Roles</h6>
+                            <div class="container">
+                                <canvas id="rolesDistributionChart" width="400" height="300"></canvas>
+                        </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12 col-xl-6">
+                        <div class="bg-light rounded h-100 p-4">
+                            <h6 class="mb-4">Distribution by Bans</h6>
+                            <div class="container">
+                                <canvas id="userBans" width="400" height="300"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Chart End -->
+
+
+{% endblock %}
+
+{% block js %} 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js" integrity="sha512-s+xg36jbIujB2S2VKfpGmlC3T5V2TF3lY48DX7u2r9XzGzgPsa6wTpOQA7J9iffvdeBN0q9tKzRxVxw1JviZPg==" crossorigin="anonymous"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        let nbFemales = {{ nbFemales|default(0) }};
+        let nbMales = {{ nbMales|default(0) }};
+        let total = nbFemales + nbMales;
+        let percentageFemales = total > 0 ? Math.round((nbFemales / total) * 100) : 0;
+        let percentageMales = total > 0 ? Math.round((nbMales / total) * 100) : 0;
+        let gender = document.querySelector("#gender");
+        let genderGraph = new Chart(gender, {
+            type: "pie",
+            data: {
+                labels: ["Females (" + percentageFemales + "%)", "Males (" + percentageMales + "%)"],
+                datasets: [{
+                    label: "Gender Distribution",
+                    data: [nbFemales, nbMales],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)', 
+                        'rgba(54, 162, 235, 0.7)' 
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+    });
+
+        let nbBan = {{ nbBan|default(0) }};
+        let nbNoBan = {{ nbNoBan|default(0) }};
+        let total = nbBan  + nbNoBan;
+        let percentageBans = total > 0 ? Math.round((nbBan / total) * 100) : 0;
+        let percentageNoBans = total > 0 ? Math.round((nbNoBan / total) * 100) : 0;
+        let userBans = document.querySelector("#userBans");
+        let userBansGraph = new Chart(userBans, {
+            type: "pie",
+            data: {
+                labels: ["Banned Users (" + percentageBans + "%)", "No Banned Users (" + percentageNoBans + "%)"],
+                datasets: [{
+                    label: "Bans Distribution",
+                    data: [nbBan, nbNoBan],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 0.7)', 
+                        'rgba(75, 192, 192, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)', 
+                        'rgba(75, 192, 192, 1)'  
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+
+        var dates = {{ dates | raw }};
+        var userCounts = {{ userCounts | raw }};
+        var ctx = document.getElementById('userEvolutionChart').getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: dates,
+                datasets: [{
+                    label: 'Nombre total d\'utilisateurs',
+                    data: userCounts,
+                    fill: false,
+                    borderColor: 'rgba(54, 162, 235, 1)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                scales: {
+                    x: {
+                        type: 'time',
+                        time: {
+                            unit: 'day'
+                        }
+                    },
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            stepSize: 1 
+                        }
+                    }
+                }
+            }
+        }); 
+
+        let rolesDistribution = {{ rolesDistribution | json_encode | raw }};
+
+        let roleLabels = Object.keys(rolesDistribution);
+        let roleCounts = Object.values(rolesDistribution);
+        let totalUsers = roleCounts.reduce((a, b) => a + b, 0);
+        let rolePercentages = roleCounts.map(count => Math.round((count / totalUsers) * 100));
+        let roleLabelsWithPercentages = roleLabels.map((label, index) => `${label} (${rolePercentages[index]}%)`);
+        let rolesCanvas = document.querySelector("#rolesDistributionChart");
+        let rolesGraph = new Chart(rolesCanvas, {
+            type: 'pie',
+            data: {
+                labels: roleLabelsWithPercentages,
+                datasets: [{
+                    label: 'Répartition des rôles',
+                    data: roleCounts,
+                    backgroundColor: [
+                        'rgba(75, 192, 192, 0.7)', // Rouge
+                        'rgba(54, 162, 235, 0.7)', // Bleu
+                        'rgba(255, 206, 86, 0.7)', // Jaune
+                    ],
+                    borderColor: [
+                        'rgba(75, 192, 192, 1)', // Rouge
+                        'rgba(54, 162, 235, 1)', // Bleu
+                        'rgba(255, 206, 86, 1)', // Jaune
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false
+            }
+        });
+           
+</script>
 {% endblock %}

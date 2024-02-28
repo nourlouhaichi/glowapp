@@ -10,16 +10,42 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use App\Form\EditProfileType;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
-
+use App\Repository\UserRepository;
 
 class HomeAdminController extends AbstractController
 {
     #[Route('/home/admin', name: 'app_home_admin')]
-    public function index(): Response
+    public function index(UserRepository $userRepository): Response
     {
+        $nbFemales = $userRepository->countFemales();
+        $nbMales = $userRepository->countMales();
+        $nbBan = $userRepository->countBannedUsers();
+        $nbNoBan = $userRepository->countNoBannedUsers();
+
+        $userEvolutionData = $userRepository->getUserEvolutionData();
+        $dates = [];
+        $userCounts = [];
+
+        foreach ($userEvolutionData as $data) {
+            $dates[] = $data['date'];
+            $userCounts[] = $data['userCount'];
+        }
+        
+        $rolesDistribution = $userRepository->getRolesDistribution();
+
         return $this->render('back/home_admin/index.html.twig', [
-            'controller_name' => 'HomeAdminController',
+        'nbFemales' => $nbFemales,
+        'nbMales' => $nbMales,
+        'nbBan' => $nbBan,
+        'nbNoBan' => $nbNoBan,
+        'dates' => json_encode($dates),
+        'userCounts' => json_encode($userCounts),
+        'rolesDistribution' => $rolesDistribution,
+        
         ]);
+        // return $this->render('back/home_admin/index.html.twig', [
+        //     'controller_name' => 'HomeAdminController',
+        // ]);
     }
 
     #[Route('/home/admin/profile', name: 'profile_admin')]

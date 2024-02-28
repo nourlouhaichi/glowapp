@@ -17,6 +17,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     {% block css %}
+
+    {% endblock %}
     <!-- Icon Font Stylesheet -->
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
@@ -30,7 +32,7 @@
 
     <!-- Template Stylesheet -->
     <link href="{{asset('back/css/style.css')}}" rel="stylesheet">
-    {% endblock %}
+    
 
 </head>
 
@@ -107,9 +109,9 @@
                 <a href="#" class="sidebar-toggler flex-shrink-0">
                     <i class="fa fa-bars"></i>
                 </a>
-                <form class="d-none d-md-flex ms-4">
+                {# <form class="d-none d-md-flex ms-4">
                     <input class="form-control border-0" type="search" placeholder="Search">
-                </form>
+                </form> #}
                 <div class="navbar-nav align-items-center ms-auto">
                     <div class="nav-item dropdown">
                         {# <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
@@ -486,6 +488,8 @@
     </div>
 
     {% block js %} 
+
+    {% endblock %}
     <!-- JavaScript Libraries -->
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -499,7 +503,7 @@
 
     <!-- Template Javascript -->
     <script src="{{asset('back/js/main.js')}}"></script>
-    {% endblock %}
+    
 
 </body>
 

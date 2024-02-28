@@ -4,34 +4,60 @@
 
 {% block body %}
 
+
       <div class="container-fluid pt-4 px-4">  
-        <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Exemple de bouton select en HTML</title>
-</head>
-<body>
         
-        <div class='col-sm-12 col-xl-2'>
-            <select class= 'form-select' id="show" name="show" onchange="selectOption()">
-                <option value="{{ path('app_user_admin_index', {'type': 'all'}) }}" {% if type is defined and type == 'all' %}selected{% endif %}>All</option>
-                <option value="{{ path('app_user_admin_index', {'type': 'admins'}) }}" {% if type is defined and type == 'admins' %}selected{% endif %}>Admins</option>
-                <option value="{{ path('app_user_admin_index', {'type': 'members'}) }}" {% if type is defined and type == 'members' %}selected{% endif %}>Members</option>
-                <option value="{{ path('app_user_admin_index', {'type': 'banned'}) }}" {% if type is defined and type == 'banned' %}selected{% endif %}>Banned Users</option>
-                <option value="{{ path('app_user_admin_index', {'type': 'females'}) }}" {% if type is defined and type == 'females' %}selected{% endif %}>Females</option>
-                <option value="{{ path('app_user_admin_index', {'type': 'males'}) }}" {% if type is defined and type == 'males' %}selected{% endif %}>Males</option>
-            </select>
+        <div class="row">
+    <div class="col-sm-12 col-xl-4">
+    <form id="searchForm" action="{{ path('app_user_admin_index') }}" method="GET">
+        <div class="input-group">
+            <input class="form-control" type="text" id="cinInput" name="cin" placeholder="CIN">
+            <button class="btn btn-success" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
         </div>
-            <script>
-                function selectOption() {
-                    var selectedOption = document.getElementById("show").value;
-                    window.location.href = selectedOption;
-                }
-            </script>
-</body>
-</html>
+    </form>
+</div>
+
+
+
+    <div class="col-sm-12 col-xl-4">
+        <select class='form-select' id="trie" name="trie" onchange="selectOptionTrie()">
+            <option value="{{ path('app_user_admin_index', {'type1': 'created_at'}) }}" {% if type1 is defined and type1 == 'created_at' %}selected{% endif %}>Created at</option>
+            <option value="{{ path('app_user_admin_index', {'type1': 'lastname'}) }}" {% if type1 is defined and type1 == 'lastname' %}selected{% endif %}>Lastname</option>
+            <option value="{{ path('app_user_admin_index', {'type1': 'firstname'}) }}" {% if type1 is defined and type1 == 'firstname' %}selected{% endif %}>Firstname</option>
+        </select>
+    </div>
+
+    <div class="col-sm-12 col-xl-4">
+        <select class='form-select' id="show" name="show" onchange="selectOption()">
+            <option value="{{ path('app_user_admin_index', {'type1': 'all'}) }}" {% if type1 is defined and type1 == 'all' %}selected{% endif %}>All</option>
+            <option value="{{ path('app_user_admin_index', {'type1': 'admins'}) }}" {% if type1 is defined and type1 == 'admins' %}selected{% endif %}>Admins</option>
+            <option value="{{ path('app_user_admin_index', {'type1': 'members'}) }}" {% if type1 is defined and type1 == 'members' %}selected{% endif %}>Members</option>
+            <option value="{{ path('app_user_admin_index', {'type1': 'banned'}) }}" {% if type1 is defined and type1 == 'banned' %}selected{% endif %}>Banned Users</option>
+            <option value="{{ path('app_user_admin_index', {'type1': 'females'}) }}" {% if type1 is defined and type1 == 'females' %}selected{% endif %}>Females</option>
+            <option value="{{ path('app_user_admin_index', {'type1': 'males'}) }}" {% if type1 is defined and type1 == 'males' %}selected{% endif %}>Males</option>
+        </select>   
+    </div>
+</div>
+
+
+<script>
+    function selectOptionTrie() {
+        var selectedOptionTrie = document.getElementById("trie").value;
+        window.location.href = selectedOptionTrie;
+    }
+    function selectOption() {
+        var selectedOption = document.getElementById("show").value;
+        window.location.href = selectedOption;
+    }
+    var cinInput = document.getElementById("cinInput");
+    cinInput.addEventListener("input", function(event) {
+    var cinValue = cinInput.value.trim();
+    console.log(cinValue);
+});
+    
+</script>
+
+<br>      
 
         <center><h1 class="mb-3 text-warning">Users Table</h1></center>
         <div class="container d-flex justify-content-end">

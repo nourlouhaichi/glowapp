@@ -12,6 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 
 #[Route('home/admin/user')]
 class UserAdminController extends AbstractController
@@ -29,34 +32,50 @@ class UserAdminController extends AbstractController
     public function index(UserRepository $userRepository, Request $request): Response
     {
         $currentUser = $this->getUser();
-        $type = $request->query->get('type');
+        $type1 = $request->query->get('type1');
+        $cin = $request->query->get('cin');
 
-        switch ($type) {
-            case 'all':
-                $users = $userRepository->findAllUsersWithSpecificFieldsExceptCurrentUser($currentUser);
-                break;
-            case 'admins':
-                $users = $userRepository->findAllAdminsWithSpecificFieldsExceptCurrentUser($currentUser);
-                break;
-            case 'members':
-                $users = $userRepository->findAllMembersWithSpecificFieldsExceptCurrentUser($currentUser);
-                break;
-            case 'banned':
-                $users = $userRepository->findAllBannedWithSpecificFieldsExceptCurrentUser($currentUser);
-                break;
-            case 'females':
-                $users = $userRepository->findAllFemalesWithSpecificFieldsExceptCurrentUser($currentUser);
-                break;
-            case 'males':
-                $users = $userRepository->findAllMalesWithSpecificFieldsExceptCurrentUser($currentUser);
-                break;
-            default:
-                $users = $userRepository->findAllUsersWithSpecificFieldsExceptCurrentUser($currentUser);
-    }
+        if ($cin !== null) {
+            $users = $userRepository->searchByCin($cin);
+        } else {
+            switch ($type1) {
+                case 'all':
+                    $users = $userRepository->findAllUsersWithSpecificFieldsExceptCurrentUser($currentUser);
+                    break;
+                case 'admins':
+                    $users = $userRepository->findAllAdminsWithSpecificFieldsExceptCurrentUser($currentUser);
+                    break;
+                case 'members':
+                    $users = $userRepository->findAllMembersWithSpecificFieldsExceptCurrentUser($currentUser);
+                    break;
+                case 'banned':
+                    $users = $userRepository->findAllBannedWithSpecificFieldsExceptCurrentUser($currentUser);
+                    break;
+                case 'females':
+                    $users = $userRepository->findAllFemalesWithSpecificFieldsExceptCurrentUser($currentUser);
+                    break;
+                case 'males':
+                    $users = $userRepository->findAllMalesWithSpecificFieldsExceptCurrentUser($currentUser);
+                    break;
 
-        return $this->render('back/user_admin/index.html.twig', [
+                case 'created_at':
+                    $users = $userRepository->findAllUsersWithSpecificFieldsExceptCurrentUser($currentUser);
+                    break;
+                case 'lastname':
+                    $users = $userRepository->showUsersSortedByLastname($currentUser);
+                    break;
+                case 'firstname':
+                    $users = $userRepository->showUsersSortedByFirstname($currentUser);
+                    break;    
+
+                default:
+                    $users = $userRepository->findAllUsersWithSpecificFieldsExceptCurrentUser($currentUser);
+            }
+        }
+
+    return $this->render('back/user_admin/index.html.twig', [
         'users' => $users,
-        'type' => $type,
+        'type1' => $type1,
     ]);
 }
 
@@ -125,12 +144,29 @@ class UserAdminController extends AbstractController
 
     
     #[Route('/{cin}/edit', name: 'app_user_admin_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, User $user, EntityManagerInterface $entityManager, MailerInterface $mailer): Response
     {
         $form = $this->createForm(UserEditType::class, $user);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
+            $formData = $form->getData();
+            if (in_array('ROLE_ADMIN', $formData->getRoles())) {
+                $emailContent = $this->renderView('front/security/email_admin.html.twig');
+                $email = (new Email())
+                ->from('GlowApp Bot <no-reply@glowapp.com>')
+                ->to($formData->getEmail())
+                //->cc('cc@example.com')
+                //->bcc('bcc@example.com')
+                //->replyTo('fabien@example.com')
+                //->priority(Email::PRIORITY_HIGH)
+                ->subject('Congrats!')
+                ->text('....')
+                ->html($emailContent);
+                $mailer->send($email);
+            }
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_user_admin_index', [], Response::HTTP_SEE_OTHER);
@@ -156,7 +192,7 @@ class UserAdminController extends AbstractController
 
 
     #[Route('home/admin/ban/{cin}', name: 'admin_ban_user')]
-    public function banUser($cin): Response
+    public function banUser($cin, MailerInterface $mailer): Response
     {
         $entityManager = $this->getDoctrine()->getManager();
         $user = $entityManager->getRepository(User::class)->find($cin);
@@ -167,6 +203,21 @@ class UserAdminController extends AbstractController
 
         $user->setIsBanned(true);
         $entityManager->flush();
+
+        // do anything else you need here, like send an email
+
+        $emailContent = $this->renderView('front/security/email_ban.html.twig');
+        $email = (new Email())
+        ->from('GlowApp Bot <no-reply@glowapp.com>')
+        ->to($user->getEmail())
+        //->cc('cc@example.com')
+        //->bcc('bcc@example.com')
+        //->replyTo('fabien@example.com')
+        //->priority(Email::PRIORITY_HIGH)
+        ->subject('Alert!')
+        ->text('....')
+        ->html($emailContent);
+        $mailer->send($email);
 
         return $this->redirectToRoute('app_user_admin_index');
     }
