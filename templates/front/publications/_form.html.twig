@@ -1,5 +1,5 @@
 
-{{ form_start(form) }}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
 <center>
     {{ form_widget(form) }}
     <button class="btn">{{ button_label|default('Save') }}</button>

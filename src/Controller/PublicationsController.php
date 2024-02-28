@@ -15,6 +15,8 @@ use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\CommentRepository;
 use Vich\UploaderBundle\Form\Type\VichImageType;
+use Symfony\Component\Form\Extension\Core\Type\FileType;
+use App\Entity\Images;
 
 class PublicationsController extends AbstractController
 {
@@ -48,10 +50,21 @@ class PublicationsController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $publication = new Publication();
-        $form = $this->createForm(PublicationType::class, $publication)->add('imageFile', VichImageType::class);
+        $form = $this->createForm(PublicationType::class, $publication)->add('images', FileType::class,['label'=>false,'multiple'=>true,'mapped'=>false,'required'=>false]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $images=$form->get('images')->getData();
+            foreach($images as $image){
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+                $img = new images();
+                $img->setName($fichier);
+                $publication->addImage($img);
+            }
             $publication->setDatecrP(new DateTime());
             $entityManager->persist($publication);
             $entityManager->flush();
@@ -69,10 +82,21 @@ class PublicationsController extends AbstractController
     public function backnew(Request $request, EntityManagerInterface $entityManager): Response
     {
         $publication = new Publication();
-        $form = $this->createForm(PublicationType::class, $publication)->add('imageFile', VichImageType::class);
+        $form = $this->createForm(PublicationType::class, $publication)->add('images', FileType::class,['label'=>false,'multiple'=>true,'mapped'=>false,'required'=>false]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $images=$form->get('images')->getData();
+            foreach($images as $image){
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+                $img = new images();
+                $img->setName($fichier);
+                $publication->addImage($img);
+            }
             $publication->setDatecrP(new DateTime());
             $entityManager->persist($publication);
             $entityManager->flush();
@@ -107,10 +131,21 @@ class PublicationsController extends AbstractController
     public function edit(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
     {
         dump('Before handling request:', $publication);
-        $form = $this->createForm(PublicationType::class, $publication)->add('imageFile', VichImageType::class);
+        $form = $this->createForm(PublicationType::class, $publication)->add('images', FileType::class,['label'=>false,'multiple'=>true,'mapped'=>false,'required'=>false]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $images=$form->get('images')->getData();
+            foreach($images as $image){
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+                $img = new images();
+                $img->setName($fichier);
+                $publication->addImage($img);
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('app_publications', [], Response::HTTP_SEE_OTHER);
@@ -124,10 +159,21 @@ class PublicationsController extends AbstractController
     #[Route('/{id}/adminedit', name: 'backapp_publication_edit', methods: ['GET', 'POST'])]
     public function backedit(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
     {
-        $form = $this->createForm(PublicationType::class, $publication);
+        $form = $this->createForm(PublicationType::class, $publication)->add('images', FileType::class,['label'=>false,'multiple'=>true,'mapped'=>false,'required'=>false]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $images=$form->get('images')->getData();
+            foreach($images as $image){
+                $fichier = md5(uniqid()) . '.' . $image->guessExtension();
+                $image->move(
+                    $this->getParameter('images_directory'),
+                    $fichier
+                );
+                $img = new images();
+                $img->setName($fichier);
+                $publication->addImage($img);
+            }
             $entityManager->flush();
 
             return $this->redirectToRoute('backapp_publications', [], Response::HTTP_SEE_OTHER);
