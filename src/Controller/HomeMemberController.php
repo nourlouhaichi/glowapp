@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 use App\Form\EditProfileType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
+use Symfony\Component\HttpFoundation\File\Exception\FileException;
 
 class HomeMemberController extends AbstractController
 {
@@ -34,6 +35,23 @@ class HomeMemberController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $profilePictureFile = $form->get('profilePicture')->getData();
+
+            if ($profilePictureFile) {
+                $originalFilename = pathinfo($profilePictureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                $newFilename = $originalFilename.'-'.uniqid().'.'.$profilePictureFile->guessExtension();
+
+                try {
+                    $profilePictureFile->move(
+                        $this->getParameter('profile_pictures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // Handle file upload error
+                    // Add flash message or log error
+                }
+                $user->setProfilePicture($newFilename);
+            }
             $entityManager->persist($user);
             $entityManager->flush();
 

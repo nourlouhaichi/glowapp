@@ -110,13 +110,26 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?bool $isBanned = false;
     
 
+    #[ORM\Column(length: 255)]
+    private ?string $profilePicture = null;
+
 
 
 
     public function __construct()
     {
         $this->created_at = new \DateTimeImmutable();
+
         $this->roles = ['ROLE_USER'];
+        
+        if (!$this->profilePicture) {
+            if ($this->gender == "female") {
+                $this->setProfilePicture("Fprofile.png");
+            } else {
+                $this->setProfilePicture("Mprofile.png");
+            }
+        }
+                            
     }
 
 
@@ -298,6 +311,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsBanned(bool $isBanned): static
     {
         $this->isBanned = $isBanned;
+
+        return $this;
+    }
+
+    public function getProfilePicture(): ?string
+    {
+        return $this->profilePicture;
+    }
+
+    public function setProfilePicture(string $profilePicture): static
+    {
+        $this->profilePicture = $profilePicture;
 
         return $this;
     }

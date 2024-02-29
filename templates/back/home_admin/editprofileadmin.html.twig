@@ -8,7 +8,7 @@
 {# {{form(form)}} #}
 
 
-{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
+
 
 
 {# <div class="form-floating mb-3">
@@ -32,6 +32,8 @@
                         {{ form_errors(form.phone) }}
                     </div> #} 
 
+
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}} ) }}
  <br>
 <div class="container">
     <div class="main-body">
@@ -41,11 +43,7 @@
               <div class="card">
                 <div class="card-body">
                   <div class="d-flex flex-column align-items-center text-center">
-                    {% if app.user.gender == "female"%}
-                    <img src="{{asset('back/img/Fprofile.png')}}" alt="Admin" class="rounded-circle" width="150">
-                    {% else %}
-                    <img src="{{asset('back/img/Mprofile.png')}}" alt="Admin" class="rounded-circle" width="150">
-                    {% endif %}
+                    <img src="{{ asset('uploads/user/' ~ app.user.profilePicture) }}" alt="Admin" class="rounded-circle" width="150">
                     <div class="mt-3">
                       <h4 class="text-success mb-1">{{ app.user.lastname}} {{ app.user.firstname}}</h4>
                       <p class="text-warning mb-0">{% for role in app.user.roles %}
@@ -99,7 +97,18 @@
                       {{ form_errors(form.phone) }} 
                     </div>
                   </div>
-                
+                  
+                  <hr>
+                  <div class="row">
+                    <div class="col-sm-3">
+                      <h6 class="mb-0">Profile Picture</h6>
+                    </div>
+                    <div class="col-sm-9 text-secondary">
+                      {{ form_widget(form.profilePicture, {'attr': {'class': 'form-control'}}) }}
+                      {{ form_errors(form.profilePicture) }}
+                    </div>
+                  </div>
+
                   <hr>
                   <div class="row">
                     <div class="col-sm-12">
@@ -108,10 +117,14 @@
                     </div>
                   </div>
                 </div>
-              </div></div></div></div></div> 
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
 
-              
-          {{ form_end(form) }} 
+{{ form_end(form) }}
+
 
 {% endblock %}
  
