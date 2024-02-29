@@ -32,7 +32,6 @@ class EventAdminController extends AbstractController
 
         if ($form->isSubmitted() && $form->isValid()) {
             $photoFile = $form->get('image')->getData();
-
             if ($photoFile) {
                 $originalFilename = pathinfo($photoFile->getClientOriginalName(), PATHINFO_FILENAME);
                 $newFilename = $originalFilename.'-'.uniqid().'.'.$photoFile->guessExtension();
@@ -77,6 +76,7 @@ class EventAdminController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            
             $photoFile = $form->get('image')->getData();
 
             if ($photoFile) {

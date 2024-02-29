@@ -46,6 +46,10 @@ class EventType extends AbstractType
                 ])
             ->add('date', DateType::class, [
                 'attr' => ['class' => 'form-control'], // Classe Bootstrap pour le champ texte
+                'label' => 'Date de l\'événement',
+                'widget' => 'single_text',
+                // Optionnel : définir un format de date personnalisé
+                'format' => 'yyyy-MM-dd',
                 ])
             ->add('nbP', NumberType::class, [
                 'attr' => ['class' => 'form-control'], // Classe Bootstrap pour le champ texte
