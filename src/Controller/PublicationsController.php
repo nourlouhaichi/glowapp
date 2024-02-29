@@ -17,6 +17,7 @@ use App\Repository\CommentRepository;
 use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use App\Entity\Images;
+use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class PublicationsController extends AbstractController
 {

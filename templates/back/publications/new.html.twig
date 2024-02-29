@@ -3,7 +3,7 @@
 {% block title %}GlowApp{% endblock %}
 {% block body %}
     <h1>Add new Publication</h1>
-{{form_start(form)}}
+
     {{ include('back/publications/_form.html.twig', {'button_label': 'Add'}) }}
-{{form_end(form)}}
+
 {% endblock %}
