@@ -18,7 +18,7 @@ class Programme
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, nullable: true)]
     #[Assert\NotBlank(message: "Category is required.")]
     private ?string $categorie_pro = null;
 
@@ -26,6 +26,9 @@ class Programme
     #[Assert\NotBlank(message: "Plan is required.")]
     private ?string $plan_pro = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
+    
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Note is required.")]
     private ?string $note_pro = null;
@@ -35,8 +38,12 @@ class Programme
     #[Assert\GreaterThanOrEqual(value: "today", message: "Date must be today or in the future.")]
     private ?\DateTimeInterface $date_pro = null;
     
-    #[ORM\OneToMany(targetEntity: Objectif::class, mappedBy: 'programme')]
+    #[ORM\OneToMany(targetEntity: Objectif::class, mappedBy: 'programme' ,cascade: ['persist', 'remove'])]
     private Collection $objectifs;
+
+    
+
+    
 
     public function getId(): ?int
     {
@@ -99,5 +106,17 @@ public function __toString()
         
         return $this->categorie_pro;
     }
+
+public function getImage(): ?string
+{
+    return $this->image;
+}
+
+public function setImage(?string $image): static
+{
+    $this->image = $image;
+
+    return $this;
+}
     
 }

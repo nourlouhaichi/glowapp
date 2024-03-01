@@ -1,38 +1,80 @@
-{% extends 'base.html.twig' %}
+{% extends 'front/basefrontone.html.twig' %}
 
-{% block title %}Programme{% endblock %}
+{% block title %}Programme
+{% endblock %}
 
 {% block body %}
-    <h1>Programme</h1>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ programme.id }}</td>
-            </tr>
-            <tr>
-                <th>Categorie_pro</th>
-                <td>{{ programme.categoriePro }}</td>
-            </tr>
-            <tr>
-                <th>Plan_pro</th>
-                <td>{{ programme.planPro }}</td>
-            </tr>
-            <tr>
-                <th>Note_pro</th>
-                <td>{{ programme.notePro }}</td>
-            </tr>
-            <tr>
-                <th>Date_pro</th>
-                <td>{{ programme.datePro ? programme.datePro|date('Y-m-d') : '' }}</td>
-            </tr>
-        </tbody>
-    </table>
+	{# <table class="table">
+		        <tbody>
+		            <tr>
+		                <th>Id</th>
+		                <td>{{ programme.id }}</td>
+		            </tr>
+		            <tr>
+		                <th>Categorie_pro</th>
+		                <td>{{ programme.categoriePro }}</td>
+		            </tr>
+		            <tr>
+		                <th>Plan_pro</th>
+		                <td>{{ programme.planPro }}</td>
+		            </tr>
+		            <tr>
+		                <th>Note_pro</th>
+		                <td>{{ programme.notePro }}</td>
+		            </tr>
+		            <tr>
+		                <th>Date_pro</th>
+		                <td>{{ programme.datePro ? programme.datePro|date('Y-m-d') : '' }}</td>
+		            </tr>
+		        </tbody>
+		    </table> #}
 
-    <a href="{{ path('app_programme_index') }}">back to list</a>
+	<a href="{{ path('app_programme_index') }}">back to list</a>
 
-    <a href="{{ path('app_programme_edit', {'id': programme.id}) }}">edit</a>
+	<a href="{{ path('app_programme_edit', {'id': programme.id}) }}">edit</a>
 
-    {{ include('front/programme/_delete_form.html.twig') }}
+	{{ include('front/programme/_delete_form.html.twig') }}
+
+
+	<div class="container-fluid py-5 mt-5">
+		<div class="container py-5">
+			<div class="row g-4">
+				<div class="col-lg-6">
+					<div class="border rounded">
+						<a href="#">
+							<img src="{{ asset('Uploads/Image/' ~ programme.image) }}" style="width: 500px; height: 400px; class=" img-fluid rounded" alt=" image">
+
+						</a>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<h4 class="fw-bold mb-3">{{ programme.categoriePro }}</h4>
+					<p class="mb-3">{{ programme.planPro }}</p>
+					<h5 class="fw-bold mb-3">{{ programme.datePro ? programme.datePro|date('Y-m-d') : '' }}</h5>
+					<div class="d-flex mb-4">
+						<i class="fa fa-star text-secondary"></i>
+						<i class="fa fa-star text-secondary"></i>
+						<i class="fa fa-star text-secondary"></i>
+						<i class="fa fa-star text-secondary"></i>
+						<i class="fa fa-star"></i>
+					</div>
+					<p class="mb-4">{{ programme.notePro }}</p>
+					
+					<a href="{{ path('app_programme_edit', {'id': programme.id}) }}" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">
+						<i class="fa fa-edit me-2 text-primary"></i>edit</a>
+					<a href="{{ path('app_programme_index') }}" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">
+						<i class="fa fa-arrow-left me-2 text-primary"></i>back to list</a>
+					
+					<a href="{{ path('app_programme_delete', {'id': programme.id}) }}" onclick="event.preventDefault(); {document.getElementById('delete-form-{{ programme.id }}').submit();}" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-danger">
+						<i class="fa fa-trash me-2 text-danger"></i>Delete
+					</a>
+
+				</div>
+
+
+				{{ include('front/programme/_delete_form.html.twig') }}
+			</div>
+		</div>
+	</div>
 {% endblock %}

@@ -21,6 +21,27 @@ class ProgrammeRepository extends ServiceEntityRepository
         parent::__construct($registry, Programme::class);
     }
 
+    public function findBySearchCriteria($criteria)
+{
+    $qb = $this->createQueryBuilder('p');
+
+    if (!empty($criteria['categorie_pro'])) {
+        $qb->andWhere('p.categorie_pro LIKE :categorie_pro')
+            ->setParameter('categorie_pro', '%' . $criteria['categorie_pro'] . '%');
+    }
+
+    if (!empty($criteria['plan_pro'])) {
+        $qb->andWhere('p.plan_pro LIKE :plan_pro')
+            ->setParameter('plan_pro', '%' . $criteria['plan_pro'] . '%');
+    }
+
+    if (!empty($criteria['date_pro'])) {
+        $qb->andWhere('p.date_pro = :date_pro')
+            ->setParameter('date_pro', $criteria['date_pro']);
+    }
+
+    return $qb->getQuery()->getResult();
+}
 //    /**
 //     * @return Programme[] Returns an array of Programme objects
 //     */

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240214175303 extends AbstractMigration
+final class Version20240224162446 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,16 +20,14 @@ final class Version20240214175303 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE objectif ADD programme_id INT DEFAULT NULL');
-        $this->addSql('ALTER TABLE objectif ADD CONSTRAINT FK_E2F8685162BB7AEE FOREIGN KEY (programme_id) REFERENCES programme (id)');
-        $this->addSql('CREATE INDEX IDX_E2F8685162BB7AEE ON objectif (programme_id)');
+        $this->addSql('ALTER TABLE objectif DROP FOREIGN KEY FK_E2F8685162BB7AEE');
+        $this->addSql('ALTER TABLE objectif ADD CONSTRAINT FK_E2F8685162BB7AEE FOREIGN KEY (programme_id) REFERENCES programme (id) ON DELETE CASCADE');
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('ALTER TABLE objectif DROP FOREIGN KEY FK_E2F8685162BB7AEE');
-        $this->addSql('DROP INDEX IDX_E2F8685162BB7AEE ON objectif');
-        $this->addSql('ALTER TABLE objectif DROP programme_id');
+        $this->addSql('ALTER TABLE objectif ADD CONSTRAINT FK_E2F8685162BB7AEE FOREIGN KEY (programme_id) REFERENCES programme (id)');
     }
 }

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7e08da23-b094-436b-9434-7877cf2d3445" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20240214175303.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/migrations/Version20240214175617.php" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/HomeAdminController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/HomeAdminController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Controller/ObjectifController.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Controller/ObjectifController.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Objectif.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Objectif.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Entity/Programme.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Entity/Programme.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/ObjectifType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ObjectifType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Form/ProgrammeType.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Form/ProgrammeType.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Repository/ProgrammeRepository.php" beforeDir="false" afterPath="$PROJECT_DIR$/src/Repository/ProgrammeRepository.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/back/backbase.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/back/backbase.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/frontbase.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/frontbase.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/home/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/home/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/objectif/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/objectif/_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/objectif/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/objectif/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/objectif/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/objectif/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/objectif/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/objectif/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/objectif/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/objectif/show.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/programme/_form.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/programme/_form.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/programme/edit.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/programme/edit.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/programme/index.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/programme/index.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/programme/new.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/programme/new.html.twig" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/templates/front/programme/show.html.twig" beforeDir="false" afterPath="$PROJECT_DIR$/templates/front/programme/show.html.twig" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="ProjectId" id="2d2SzIjFETWabObJvzwCdgHMvRA" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7e08da23-b094-436b-9434-7877cf2d3445" name="Changes" comment="" />
+      <created>1709204942827</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1709204942827</updated>
+      <workItem from="1709204944191" duration="100000" />
+    </task>
+    <servers />
+  </component>
+</project>

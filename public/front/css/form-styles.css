@@ -1,0 +1,27 @@
+.form-container {
+    margin-top: 900px;
+    max-width: 600px; /* Adjust the width as needed */
+    margin: 0 auto; /* Center the form container */
+    padding: 15px; /* Add some padding */
+    border: 1px solid #ccc; /* Optional: add a border */
+    border-radius: 5px; /* Optional: round corners */
+}
+
+.form-group {
+    margin-bottom: 1rem;
+}
+
+.form-control {
+    width: 100%; /* Ensure form controls take up the container width */
+    margin-bottom: .5rem; /* Add some space below each form control */
+}
+
+.btn-primary {
+    background-color: #007bff; /* Customize the button color */
+    border-color: #007bff;
+}
+
+.header_prog{
+    display: flex !important;
+    justify-content: space-between !important;
+}

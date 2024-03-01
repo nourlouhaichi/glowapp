@@ -1,0 +1,61 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}Objectif index
+{% endblock %}
+
+{% block body %}
+
+
+
+<div class="container-fluid vesitable py-5 bg-light rounded h-100 p-4">
+    <div class="container py-5">
+        <h1 class="regular_anta">Objectifs</h1>
+        <table class="table table-hover">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Id</th>
+                    <!-- Commented out Cin column
+                    <th scope="col">Cin</th>
+                    -->
+                    <th scope="col">Objectif_o</th>
+                    <th scope="col">Description_o</th>
+                    <th scope="col">Categorie_o</th>
+                    <th scope="col">Poid_o</th>
+                    <th scope="col">Taille_o</th>
+                    <th scope="col">actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for objectif in objectifs %}
+                <tr>
+                    <th scope="row">{{ loop.index }}</th>
+                    <td>{{ objectif.id }}</td>
+                   
+                    <td>{{ objectif.objectifO }}</td>
+                    <td>{{ objectif.descriptionO }}</td>
+                    <td>{{ objectif.categorieO }}</td>
+                    <td>{{ objectif.poidO }}</td>
+                    <td>{{ objectif.tailleO }}</td>
+                    <td>
+                        <a href="{{ path('app_Objectif_admin_show', {'id': objectif.id}) }}">show</a>
+                        <a href="{{ path('app_Objectif_admin_edit', {'id': objectif.id}) }}">edit</a>
+                        {{ include('back/objectif_admin/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="8">no records found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+    
+{% endblock %}

@@ -1,0 +1,112 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}programmes
+{% endblock %}
+
+{% block body %}
+	{# <div class="container-fluid vesitable py-5 bg-light rounded h-100 p-4">
+    <div class="container py-5">
+        <h1>Programs</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Categorie_pro</th>
+                    <th>Plan_pro</th>
+                    <th>Note_pro</th>
+                    <th>Date_pro</th>
+                    <th>actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for programme in programmes %}
+                <tr>
+                    <td>{{ programme.id }}</td>
+                    <td>{{ programme.categoriePro }}</td>
+                    <td>{{ programme.planPro }}</td>
+                    <td>{{ programme.notePro }}</td>
+                    <td>{{ programme.datePro ? programme.datePro|date('Y-m-d') : '' }}</td>
+                    <td>
+                        <a href="{{ path('app_programme_admin_show', {'id': programme.id}) }}">show</a>
+                        <a href="{{ path('app_programme_admin_edit', {'id': programme.id}) }}">edit</a>
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div> #}
+
+	{# <a href="{{ path('app_programme_new') }}">Create new</a> #}
+{# templates/programme/index.html.twig #}
+
+<div class="container-fluid vesitable py-5 bg-light rounded h-100 p-4">
+    <div class="container py-5">
+        <h1 class="regular_anta">Programs</h1>
+        
+        {# Search Form Start #}
+        {{ form_start(search_form, {'attr': {'class': 'form-inline mb-4'}}) }}
+            <div class="form-group mr-2">
+                {{ form_label(search_form.categorie_pro) }}
+                {{ form_widget(search_form.categorie_pro, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group mr-2">
+                {{ form_label(search_form.plan_pro) }}
+                {{ form_widget(search_form.plan_pro, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <div class="form-group mr-2">
+                {{ form_label(search_form.date_pro) }}
+                {{ form_widget(search_form.date_pro, {'attr': {'class': 'form-control'}}) }}
+            </div>
+            <button type="submit" class="btn btn-primary">Search</button>
+        {{ form_end(search_form) }}
+        {# Search Form End #}
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Categorie_pro</th>
+                    <th>Plan_pro</th>
+                    <th>Note_pro</th>
+                    <th>Date_pro</th>
+                    <th>Image</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for programme in programmes %}
+                <tr>
+                    <td>{{ programme.id }}</td>
+                    <td>{{ programme.categoriePro }}</td>
+                    <td>{{ programme.planPro }}</td>
+                    <td>{{ programme.notePro }}</td>
+                    <td>{{ programme.datePro ? programme.datePro|date('Y-m-d') : '' }}</td>
+                    <td class="text-center">
+                                {% if programme.image %}
+                                    <img src="{{ asset('Uploads/Image/'  ~ programme.image) }}" alt="Program Image" style="max-width: 100px;">
+                                {% else %}
+                                    No Image
+                                {% endif %}
+                            </td>
+                    <td>
+                        <a href="{{ path('app_programme_admin_show', {'id': programme.id}) }}">show</a>
+                        <a href="{{ path('app_programme_admin_edit', {'id': programme.id}) }}">edit</a>
+                        {{ include('back/programme/_delete_form.html.twig') }}
+                    </td>
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">no records found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+{% endblock %}

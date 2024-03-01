@@ -1,4 +1,4 @@
-{% extends 'base.html.twig' %}
+{% extends 'front/basefrontone.html.twig' %}
 
 {% block title %}Objectif index{% endblock %}
 
@@ -9,7 +9,8 @@
         <thead>
             <tr>
                 <th>Id</th>
-                <th>Cin</th>
+                <th>programme_id</th>
+                {# <th>Cin</th> #}
                 <th>Objectif_o</th>
                 <th>Description_o</th>
                 <th>Categorie_o</th>
@@ -22,7 +23,8 @@
         {% for objectif in objectifs %}
             <tr>
                 <td>{{ objectif.id }}</td>
-                <td>{{ objectif.cin }}</td>
+                <td>{{objectif.programme_id}}</td>
+                {# <td>{{ objectif.cin }}</td> #}
                 <td>{{ objectif.objectifO }}</td>
                 <td>{{ objectif.descriptionO }}</td>
                 <td>{{ objectif.categorieO }}</td>
