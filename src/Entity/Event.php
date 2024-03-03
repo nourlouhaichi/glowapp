@@ -9,6 +9,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 
+use function Clue\StreamFilter\remove;
+
 #[ORM\Entity(repositoryClass: EventRepository::class)]
 class Event
 {
@@ -46,7 +48,7 @@ class Event
     #[ORM\ManyToOne(inversedBy: 'events')]
     private ?Category $category = null;
 
-    #[ORM\OneToMany(mappedBy: 'event', targetEntity: Reservation::class)]
+    #[ORM\OneToMany(mappedBy: 'event', targetEntity: Reservation::class,cascade:["remove"])]
     private Collection $reservations;
 
     public function __construct()

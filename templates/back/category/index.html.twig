@@ -3,9 +3,11 @@
 {% block title %}Category index{% endblock %}
 
 {% block body %}
-    <h1>Category index</h1>
+    
+    <center><h1 class="mb-3 text-warning">Categories</h1></center>
+    <div class="container d-flex justify-content-end">
 
-    <table class="table">
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
@@ -19,8 +21,8 @@
                 <td>{{ category.id }}</td>
                 <td>{{ category.title }}</td>
                 <td>
-                    <a href="{{ path('app_category_show', {'id': category.id}) }}">show</a>
-                    <a href="{{ path('app_category_edit', {'id': category.id}) }}">edit</a>
+                    <a class="btn btn-primary rounded-pill m-2" href="{{ path('app_category_show', {'id': category.id}) }}"><i class="fa fa-eye"></i></a>
+                    <a class="btn btn-warning rounded-pill m-2" href="{{ path('app_category_edit', {'id': category.id}) }}"><i class="fa fa-pen"></a>
                 </td>
             </tr>
         {% else %}
@@ -30,6 +32,7 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
 
     <a href="{{ path('app_category_new') }}">Create new</a>
 {% endblock %}

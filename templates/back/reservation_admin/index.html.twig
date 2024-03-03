@@ -3,9 +3,10 @@
 {% block title %}Reservation index{% endblock %}
 
 {% block body %}
-    <h1>Reservation index</h1>
-
-    <table class="table">
+    <center><h1 class="mb-3 text-warning">Reservation</h1></center>
+    <div class="container d-flex justify-content-end">
+    <a href="{{ path('app_reservation_admin_new') }}"><i class="fa fa-plus"></i></a>
+    <table class="table table-striped">
         <thead>
             <tr>
                 <th>Id</th>
@@ -40,6 +41,7 @@
         {% endfor %}
         </tbody>
     </table>
+    </div>
 
-    <a href="{{ path('app_reservation_admin_new') }}">Create new</a>
+    
 {% endblock %}

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ReservationRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ReservationRepository::class)]
@@ -30,6 +31,9 @@ class Reservation
 
     #[ORM\ManyToOne(inversedBy: 'reservations')]
     private ?Event $event = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $qrCode = null;
 
     public function getId(): ?int
     {
@@ -107,4 +111,19 @@ class Reservation
 
         return $this;
     }
+
+    public function getQrCode(): ?string
+    {
+        return $this->qrCode;
+    }
+
+    public function setQrCode(?string $qrCode): static
+    {
+        $this->qrCode = $qrCode;
+
+        return $this;
+    }
+
+
+
 }
