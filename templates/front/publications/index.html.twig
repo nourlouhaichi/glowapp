@@ -87,7 +87,7 @@
                 </div>
                 <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">{{ pub.getTypeP() }}</div>
                 
-                <!-- Edit and Delete buttons -->
+                
                 <div class="p-4 border border-secondary border-top-0 rounded-bottom" style="height: 200px; overflow: hidden;">
                     <div style="position: absolute; top: 10px; right: 10px;">
                         <a href="{{ path('app_publication_edit', {'id': pub.id}) }}" class="text-white px-1 py-1 rounded"><i class="fas fa-pencil-alt me-2 text-primary"></i></a>
@@ -110,10 +110,12 @@
             </div> 
         {% endif %}
     {% endfor %}
+     
 </div>
 
 <br>
 <br>
 <br>
 <br>
+<center>{{ knp_pagination_render(publications) }}</center>
 {% endblock %}

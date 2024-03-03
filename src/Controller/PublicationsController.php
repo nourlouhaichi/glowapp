@@ -18,13 +18,16 @@ use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use App\Entity\Images;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
+use Knp\Component\Pager\PaginatorInterface;
 
 class PublicationsController extends AbstractController
 {
     #[Route('/publications', name: 'app_publications')]
-    public function index(PublicationRepository $PublicationRepository): Response
+    public function index(PublicationRepository $PublicationRepository,PaginatorInterface $paginator,Request $request): Response
     {
         $publication=$PublicationRepository->findAll();
+        $publication = $paginator->paginate($publication, $request->query->getInt('page', 1),3);
+
         return $this->render('front/publications/index.html.twig', [
             'publications'=>$publication
         ]);
