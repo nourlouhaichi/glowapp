@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Controller;
-
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Entity\Produit;
 use App\Form\Produit1Type;
 use App\Repository\ProduitRepository;
@@ -97,5 +98,33 @@ class ProduitController extends AbstractController
         }
 
         return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
+    }
+    #[Route('/print', name: 'app_produit_print', methods: ['GET'])]
+    public function print( ProduitRepository $produitRepository)
+    {
+       
+        $result = $produitRepository->findAll();
+        $pdfOptions = new Options();
+    
+        // Instantiate Dompdf with our options
+        $dompdf = new Dompdf($pdfOptions);
+        
+        // Retrieve the HTML generated in our twig file
+        $html = $this->renderView('produit/print.html.twig', [
+            'produits' => $result
+        ]);
+     
+        // Load HTML to Dompdf
+        $dompdf->loadHtml($html);
+        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
+        $dompdf->setPaper('A4', 'portrait');
+     
+        // Render the HTML as PDF
+        $dompdf->render();
+        // Output the generated PDF as a response with Content-Type set to 'application/pdf'
+        return new Response($dompdf->output(), Response::HTTP_OK, [
+            'Content-Type' => 'application/pdf',
+        ]);
+
     }
 }

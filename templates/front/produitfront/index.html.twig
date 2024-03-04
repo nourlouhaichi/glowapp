@@ -147,9 +147,9 @@
                                    <p class="description" style="height: 4em; overflow: hidden;">{{ produit.description }}</p>
                                    <div class="d-flex justify-content-between flex-lg-wrap">
                                      <p class="text-dark fs-5 fw-bold mb-0">TND {{ produit.price }} / </p>
-                                     <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a> 
+                                     <a href="{{path('cart_add', {ref: produit.ref})}}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a> 
                                    </div>
-                                    <a href="#" class="btn btn-outline-primary mt-2">See More</a>
+                                    <a href="{{path('app_produitfront_details', {ref: produit.ref})}}" class="btn btn-outline-primary mt-2">See More</a>
    
      <!-- See More Button -->
 
@@ -176,6 +176,7 @@
 </div>
 <!-- Fruits Shop End-->
 {% endblock %}
+
 
 
 

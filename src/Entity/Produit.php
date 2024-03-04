@@ -37,9 +37,7 @@ class Produit
     #[ORM\Column(length: 255)]
     private ?string $image = null;
 
-    #[ORM\ManyToOne(inversedBy: 'produits')]
-    #[ORM\JoinColumn(name: 'panier_id', referencedColumnName: 'id')]
-    private ?Panier $panier;
+    
 
     #[ORM\ManyToOne(inversedBy: 'Produits')]
     private ?CategorieProd $categorieProd = null;
@@ -51,12 +49,12 @@ class Produit
 
     
 
-    public function getRef(): ?string
+    public function getRef(): ?int
     {
         return $this->ref;
     }
 
-    public function setRef(string $ref): static
+    public function setRef(int $ref): static
     {
         $this->ref = $ref;
 
@@ -114,18 +112,7 @@ class Produit
     }
 
    
-    // Getter and setter for panier
-    public function getPanier(): ?Panier
-    {
-        return $this->panier;
-    }
-
-    public function setPanier(?Panier $panier): self
-    {
-        $this->panier = $panier;
-
-        return $this;
-    }
+    
 
     public function getCategorieProd(): ?CategorieProd
     {

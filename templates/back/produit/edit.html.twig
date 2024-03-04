@@ -1,16 +1,17 @@
 {% extends 'back/backbase.html.twig' %}
 
-{% block title %}Edit Product{% endblock %}
+{% block title %}Edit Produit{% endblock %}
 
 {% block body %}
+   
+
     <div class="container-fluid pt-4 px-4">
-        <center><h1 class="mb-3 text-warning">Edit Product</h1></center>
-
-        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
-
+     <center><h1 class="mb-3 text-warning">Edit Product</h1></center>
         <div class="row g-4">
             <div class="col-sm-12 col-xl-6">
                 <div class="bg-light rounded h-100 p-4">
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
                     <div class="form-floating mb-3">
                         {{ form_widget(form.name, {'attr': {'class': 'form-control', 'id': 'floatingInput', 'placeholder': 'Name Product'}}) }}
                         <label for="floatingInput">Name Product</label>
@@ -24,20 +25,20 @@
                         {{ form_errors(form.description) }}
                     </div>
 
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">TND</span>
-                        {{ form_widget(form.price, {'attr': {'class': 'form-control', 'aria-label': 'Amount (to the nearest dollar)'}}) }}
-                        <span class="input-group-text">.00</span>
-                    </div>
-                    <label for="floatingInput"></label>
-                    {{ form_errors(form.price) }}
-
                     <div class="form-floating mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text">TND</span>
+                            {{ form_widget(form.price, {'attr': {'class': 'form-control', 'aria-label': 'Amount (to the nearest dollar)'}}) }}
+                            <span class="input-group-text">.00</span>
+                        </div>
+                        <label for="floatingInput"></label>
+                        {{ form_errors(form.price) }}
+                    </div>
+                     <div class="form-floating mb-3">
                        {{ form_widget(form.categorieProd, {'attr': {'class': 'form-select', 'id': 'categorieSelect'}}) }}
                        <label for="categorieSelect">Category</label>
                        {{ form_errors(form.categorieProd) }}
-                    </div>
-
+                       </div>
                     <div class="form-floating mb-3">
                         {{ form_widget(form.image, {'attr': {'class': 'form-select', 'id': 'genderSelect'}}) }}
                         <label for="floatingInput">Image</label>
@@ -49,21 +50,20 @@
                 <div class="bg-light rounded h-100 p-4">
                     <div class="form-floating mb-3">
                         {{ form_widget(form.quantity, {'attr': {'class': 'form-select', 'id': 'dateOfBirth'}}) }}
-                        <label for="floatingInput">Quantity of Product</label>
+                        <label for="floatingInput">Quantity of Produit</label>
                         {{ form_errors(form.quantity) }}
                     </div>
                 </div>
             </div>
         </div>
-
-        <div class="container d-flex justify-content-end">
-          <a class="btn btn-primary rounded-pill m-2" href="{{ path('app_produit_index') }}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
-          <button type="submit" class="btn btn-success rounded-pill m-2"><i class="fa fa-check" aria-hidden="true"></i></button>
-           
-        </div>
-
-        {{ form_end(form) }}
     </div>
-{% endblock %}
 
+    <div class="text-center">
+        <a class="btn btn-warning rounded-pill m-2" href="{{ path('app_produit_index') }}">Back to list</a>
+        <button type="submit" class="btn btn-success rounded-pill m-2">Edit</button>
+    </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}
 

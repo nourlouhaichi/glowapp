@@ -4,10 +4,14 @@ namespace App\Controller;
 
 use App\Repository\CategorieProdRepository;
 
+use App\Entity\Produit;
 use App\Repository\ProduitRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class ProduitfrontController extends AbstractController
 {
@@ -36,5 +40,19 @@ class ProduitfrontController extends AbstractController
            'produits' => $produits,
        ]);
     }
+    #[Route('/produitfront/{ref}', name: 'app_produitfront_details', methods: ['GET'])]
+    public function produitfrontdetails(Produit $produit,CategorieProdRepository $categorieProdRepository): Response
+    {
+        return $this->render('front/produitfront/showdetails.html.twig', [
+            'produit' => $produit,
+            'categories' => $categorieProdRepository->findAll(),
+        ]);
+    }
+    
+    
+ 
+     
+     
+    
+     
 }
-
