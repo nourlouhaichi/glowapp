@@ -1,0 +1,37 @@
+{# <h1>Hi! Please confirm your email!</h1>
+
+<p>
+    Please confirm your email address by clicking the following link: <br><br>
+    <a href="{{ signedUrl|raw }}">Confirm my Email</a>.
+    This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.
+</p>
+
+<p>
+    Cheers!
+</p> #}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Email Verification</title>
+</head>
+<body style="font-family: Arial, sans-serif; background-color: #f5f5f5; padding: 20px;">
+
+<div style="max-width: 600px; margin: 0 auto; background-color: #fff; padding: 20px; border-radius: 10px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">
+    <center><img src="https://i.ibb.co/FqtPjbH/logoglowapp.png" style="max-width: 300px; height: auto;" alt="GlowApp Logo"></center>
+    
+    <p style="color: #333; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">Please confirm your email address by clicking the following link:</p>
+
+    <a href="{{ signedUrl|raw }}" style="display: block; text-decoration: none; color: #fff; background-color: #81C408; padding: 10px 20px; border-radius: 5px; text-align: center; margin-bottom: 20px;">Confirm my Email</a>
+
+    <p style="color: #333; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">This link will expire in {{ expiresAtMessageKey|trans(expiresAtMessageData, 'VerifyEmailBundle') }}.</p>
+
+    <p style="color: #333; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">IIf you didn't create an account with us, please disregard this email.</p>
+
+    <p style="color: #FFB524; font-size: 16px; line-height: 1.6; margin-bottom: 20px;">Thank you for choosing GlowApp!</p>
+</div>
+
+</body>
+</html>

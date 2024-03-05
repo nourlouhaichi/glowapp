@@ -165,6 +165,29 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getResult();
     }
 
+    public function showUsersSortedByCin(User $currentUser)
+{
+    return $this->createQueryBuilder('u')
+        ->select('u.cin', 'u.email', 'u.roles', 'u.lastname', 'u.firstname', 'u.gender', 'u.isBanned')
+        ->where('u != :currentUser')
+        ->setParameter('currentUser', $currentUser)
+        ->orderBy('u.cin', 'ASC') 
+        ->getQuery()
+        ->getResult();
+}
+
+
+    public function showUsersSortedByEmail(User $currentUser)
+    {
+        return $this->createQueryBuilder('u')
+        ->select('u.cin', 'u.email', 'u.roles', 'u.lastname', 'u.firstname', 'u.gender' , 'u.isBanned')
+        ->where('u != :currentUser')
+        ->setParameter('currentUser', $currentUser)
+        ->orderBy('u.email', 'ASC')
+        ->getQuery()
+        ->getResult();
+    }
+
     public function showUsersSortedByLastname(User $currentUser)
     {
         return $this->createQueryBuilder('u')
@@ -193,6 +216,16 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         ->select('u.cin', 'u.email', 'u.roles', 'u.lastname', 'u.firstname', 'u.gender', 'u.isBanned')
         ->where('u.cin like :cin')
         ->setParameter('cin', $cin)
+        ->getQuery()
+        ->getResult();
+    }
+
+    public function searchByLastname(string $lastname)
+    {
+        return $this->createQueryBuilder('u')
+        ->select('u.cin', 'u.email', 'u.roles', 'u.lastname', 'u.firstname', 'u.gender', 'u.isBanned')
+        ->where('u.lastname like :lastname')
+        ->setParameter('lastname', $lastname)
         ->getQuery()
         ->getResult();
     }

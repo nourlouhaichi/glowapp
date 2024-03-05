@@ -10,12 +10,12 @@
 <!-- Chart Start -->
             <div class="container-fluid pt-4 px-4">
                 <div class="row g-4">
-                    <div class="col-sm-12 col-xl-6">
+                <div class="col-sm-12 col-xl-6">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Distribution by gender</h6>
+                            <h6 class="mb-4">Distribution By Roles</h6>
                             <div class="container">
-                                <canvas id="gender" width="400" height="300"></canvas> 
-                            </div>
+                                <canvas id="rolesDistributionChart" width="400" height="300"></canvas>
+                        </div>
                         </div>
                     </div>
                     <div class="col-sm-12 col-xl-6">
@@ -26,14 +26,16 @@
                             </div>
                         </div>
                     </div>
+                    
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-light rounded h-100 p-4">
-                            <h6 class="mb-4">Distribution By Roles</h6>
+                            <h6 class="mb-4">Distribution by gender</h6>
                             <div class="container">
-                                <canvas id="rolesDistributionChart" width="400" height="300"></canvas>
-                        </div>
+                                <canvas id="gender" width="400" height="300"></canvas> 
+                            </div>
                         </div>
                     </div>
+                    
                     <div class="col-sm-12 col-xl-6">
                         <div class="bg-light rounded h-100 p-4">
                             <h6 class="mb-4">Distribution by Bans</h6>
@@ -163,14 +165,16 @@
                     label: 'Répartition des rôles',
                     data: roleCounts,
                     backgroundColor: [
-                        'rgba(75, 192, 192, 0.7)', // Rouge
+                        'rgba(75, 192, 192, 0.7)', // Vert
                         'rgba(54, 162, 235, 0.7)', // Bleu
                         'rgba(255, 206, 86, 0.7)', // Jaune
+                        'rgba(255, 99, 132, 0.7)', // Rouge
                     ],
                     borderColor: [
-                        'rgba(75, 192, 192, 1)', // Rouge
+                        'rgba(75, 192, 192, 1)', // Vert
                         'rgba(54, 162, 235, 1)', // Bleu
                         'rgba(255, 206, 86, 1)', // Jaune
+                        'rgba(255, 99, 132, 1)', // Rouge
                     ],
                     borderWidth: 1
                 }]

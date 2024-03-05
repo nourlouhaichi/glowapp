@@ -23,9 +23,9 @@ class UserEditType extends AbstractType
             ->add('roles', ChoiceType::class, [
                 'choices' => [
                     'Admin' => 'ROLE_ADMIN',
-                    'Utilisateur' => 'ROLE_USER'
-                    // 'Coach' => 'ROLE_COACH',
-                    // 'Nutritionist' => 'ROLE_NUTRITIONIST'
+                    'Utilisateur' => 'ROLE_USER',
+                    'Coach' => 'ROLE_COACH',
+                    'Nutritionist' => 'ROLE_NUTRITIONIST'
                 ],
                 'multiple' => true, // permet de sélectionner plusieurs rôles
                 'expanded' => true, // affiche les rôles sous forme de cases à cocher

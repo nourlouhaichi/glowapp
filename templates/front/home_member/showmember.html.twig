@@ -74,7 +74,16 @@
                     <div class="mt-3">
                       <h4 class="text-primary mb-1">{{ app.user.lastname}} {{ app.user.firstname}}</h4>
                       <p class="text-secondary mb-1">{% for role in app.user.roles %}
-                {% if role == "ROLE_USER" %}Membre{% elseif role == "ROLE_ADMIN" %}Administrateur{% endif %}{% endfor %}</p>
+                {% if role == "ROLE_USER" %}
+                    Member
+                {% elseif role == "ROLE_ADMIN" %}
+                    Admin
+                {% elseif role == "ROLE_COACH" %}
+                    Coach
+                {% elseif role == "ROLE_NUTRITIONIST" %}
+                    Nutritionist
+                {% endif %}
+                {% endfor %}</p>
                       <p class="text-muted font-size-sm">{{ app.user.createdAt | date('Y-m-d H:i:s') }}</p>
                     </div>
                   </div>

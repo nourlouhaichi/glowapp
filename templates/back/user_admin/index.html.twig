@@ -10,22 +10,20 @@
         <div class="row">
     <div class="col-sm-12 col-xl-4">
     <form id="searchForm" action="{{ path('app_user_admin_index') }}" method="GET">
-        <div class="input-group">
-            <input class="form-control" type="text" id="cinInput" name="cin" placeholder="CIN">
-            <button class="btn btn-success" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-        </div>
+    <div class="input-group">
+        <input class="form-control" type="text" id="searchInput" name="search_query" placeholder="Search">
+        <button class="btn btn-success" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+    </div>
     </form>
 </div>
 
-
-
-    <div class="col-sm-12 col-xl-4">
+    {# <div class="col-sm-12 col-xl-4">
         <select class='form-select' id="trie" name="trie" onchange="selectOptionTrie()">
             <option value="{{ path('app_user_admin_index', {'type1': 'created_at'}) }}" {% if type1 is defined and type1 == 'created_at' %}selected{% endif %}>Created at</option>
             <option value="{{ path('app_user_admin_index', {'type1': 'lastname'}) }}" {% if type1 is defined and type1 == 'lastname' %}selected{% endif %}>Lastname</option>
             <option value="{{ path('app_user_admin_index', {'type1': 'firstname'}) }}" {% if type1 is defined and type1 == 'firstname' %}selected{% endif %}>Firstname</option>
         </select>
-    </div>
+    </div> #}
 
     <div class="col-sm-12 col-xl-4">
         <select class='form-select' id="show" name="show" onchange="selectOption()">
@@ -40,23 +38,6 @@
 </div>
 
 
-<script>
-    function selectOptionTrie() {
-        var selectedOptionTrie = document.getElementById("trie").value;
-        window.location.href = selectedOptionTrie;
-    }
-    function selectOption() {
-        var selectedOption = document.getElementById("show").value;
-        window.location.href = selectedOption;
-    }
-    var cinInput = document.getElementById("cinInput");
-    cinInput.addEventListener("input", function(event) {
-    var cinValue = cinInput.value.trim();
-    console.log(cinValue);
-});
-    
-</script>
-
 <br>      
 
         <center><h1 class="mb-3 text-warning">Users Table</h1></center>
@@ -66,10 +47,10 @@
         <table  class="table table-striped">
         <thead>
             <tr>
-                <th>Cin</th>
-                <th>Email</th>
-                <th>Lastname</th>
-                <th>Firstname</th>
+                <th><a href="{{ path('app_user_admin_index', {'type1': 'cin'}) }}" style="color: gray;">Cin</a></th>
+                <th><a href="{{ path('app_user_admin_index', {'type1': 'email'}) }}" style="color: gray;">Email</a></th>
+                <th><a href="{{ path('app_user_admin_index', {'type1': 'lastname'}) }}" style="color: gray;">Lastname</a></th>
+                <th><a href="{{ path('app_user_admin_index', {'type1': 'firstname'}) }}" style="color: gray;">Firstname</a></th>
                 <th>Gender</th>
                 <th>Banned</th>
                 <th>Roles</th>
@@ -90,7 +71,15 @@
                     {% endif %}</td>
                 <td>{% if user.isBanned %}Yes{% else %}No{% endif %}</td>
                 <td>{% for role in user.roles %}
-                {% if role == "ROLE_USER" %}Member{% elseif role == "ROLE_ADMIN" %}Admin{% endif %}{% endfor %}</td>
+                {% if role == "ROLE_USER" %}
+                            Member
+                        {% elseif role == "ROLE_ADMIN" %}
+                            Admin
+                        {% elseif role == "ROLE_COACH" %}
+                            Coach
+                        {% elseif role == "ROLE_NUTRITIONIST" %}
+                            Nutritionist
+                        {% endif %}{% endfor %}</td>
                 {# <td>{{ user.password }}</td> #}  
                 {# <td>{{ user.datebirth ? user.datebirth|date('Y-m-d') : '' }}</td> #}
                 {# <td>{{ user.phone }}</td> #}
@@ -110,5 +99,18 @@
     </table>
     
     </div>
+
+    <script>
+    // function selectOptionTrie() {
+    //     var selectedOptionTrie = document.getElementById("trie").value;
+    //     window.location.href = selectedOptionTrie;
+    // }
+    
+    function selectOption() {
+        var selectedOption = document.getElementById("show").value;
+        window.location.href = selectedOption;
+    }
+    
+</script>
     
 {% endblock %}

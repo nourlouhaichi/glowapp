@@ -50,6 +50,10 @@ class LoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
         $user = $token->getUser();
 
+        if (!$user->isVerified()) {
+            return new RedirectResponse($this->urlGenerator->generate('app_logout'));
+        }
+
         if ($user->getIsBanned()) {
             return new RedirectResponse($this->urlGenerator->generate('app_logout'));
         }

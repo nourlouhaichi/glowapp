@@ -33,10 +33,14 @@ class UserAdminController extends AbstractController
     {
         $currentUser = $this->getUser();
         $type1 = $request->query->get('type1');
-        $cin = $request->query->get('cin');
+        $search_query = $request->query->get('search_query');
 
-        if ($cin !== null) {
-            $users = $userRepository->searchByCin($cin);
+        if ($search_query !== null) {
+            if (ctype_digit($search_query)) {
+                $users = $userRepository->searchByCin($search_query);
+            } else {
+                $users = $userRepository->searchByLastname($search_query);
+            }
         } else {
             switch ($type1) {
                 case 'all':
@@ -58,9 +62,12 @@ class UserAdminController extends AbstractController
                     $users = $userRepository->findAllMalesWithSpecificFieldsExceptCurrentUser($currentUser);
                     break;
 
-                case 'created_at':
-                    $users = $userRepository->findAllUsersWithSpecificFieldsExceptCurrentUser($currentUser);
+                case 'cinn':
+                    $users = $userRepository-> showUsersSortedByCin($currentUser);
                     break;
+                case 'email':
+                    $users = $userRepository->showUsersSortedByEmail($currentUser);
+                    break;    
                 case 'lastname':
                     $users = $userRepository->showUsersSortedByLastname($currentUser);
                     break;
