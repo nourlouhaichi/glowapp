@@ -1,80 +1,225 @@
+																						
 {% extends 'front/basefrontone.html.twig' %}
 
 {% block title %}Programme
 {% endblock %}
 
 {% block body %}
+<style>
+		.styled-form {
+			max-width: 600px; /* Adjust based on your design */
+			margin: auto;
+		}
 
-	{# <table class="table">
-		        <tbody>
-		            <tr>
-		                <th>Id</th>
-		                <td>{{ programme.id }}</td>
-		            </tr>
-		            <tr>
-		                <th>Categorie_pro</th>
-		                <td>{{ programme.categoriePro }}</td>
-		            </tr>
-		            <tr>
-		                <th>Plan_pro</th>
-		                <td>{{ programme.planPro }}</td>
-		            </tr>
-		            <tr>
-		                <th>Note_pro</th>
-		                <td>{{ programme.notePro }}</td>
-		            </tr>
-		            <tr>
-		                <th>Date_pro</th>
-		                <td>{{ programme.datePro ? programme.datePro|date('Y-m-d') : '' }}</td>
-		            </tr>
-		        </tbody>
-		    </table> #}
+		.styled-container {
+			position: relative;
+			max-width: 480px; /* Adjust to fit your form width */
+			margin: auto;
+		}
 
-	<a href="{{ path('app_programme_index') }}">back to list</a>
+		.styled-input {
+			border: 0;
+			width: 100%;
+			padding: 15px 20px; /* Adjust padding as needed */
+			border-radius: 50px; /* Creates rounded corners */
+			box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23); /* Optional: adds a subtle shadow */
+		}
 
-	<a href="{{ path('app_programme_edit', {'id': programme.id}) }}">edit</a>
+		.styled-button {
+			position: absolute;
+			top: 0;
+			right: 0;
+			border: 0;
+			background-color: #28a745; /* Button color, adjust as needed */
+			color: white; /* Text color */
+			padding: 15px 20px; /* Adjust padding as needed */
+			border-radius: 50px; /* Creates rounded corners */
+			transform: translate(50%, 50%); /* Adjusts the position of the button to slightly overlap the input field */
+			box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Optional: adds a shadow to the button */
+		}
 
-	{{ include('front/programme/_delete_form.html.twig') }}
+		.styled-input:focus,
+		.styled-button:focus {
+			outline: none;
+			box-shadow: 0 0 0 2px #495057; /* Adjust focus color as needed */
+		}
+	</style>
+    <div class="container my-5">
+        <div class="row mb-4">
+            <div class="col text-center">
+               
+            </div>
+        </div>
 
+        <div class="row g-4 align-items-center">
+            <div class="col-lg-6">
+                <div class="border rounded">
+                    <img src="{{ asset('Uploads/Image/' ~ programme.image) }}" class="img-fluid rounded" alt="Program Image">
+                </div>
 
-	<div class="container-fluid py-5 mt-5">
-		<div class="container py-5">
-			<div class="row g-4">
-				<div class="col-lg-6">
-					<div class="border rounded">
-						<a href="#">
-							<img src="{{ asset('Uploads/Image/' ~ programme.image) }}" style="width: 500px; height: 400px; class=" img-fluid rounded" alt=" image">
-
-						</a>
-					</div>
-				</div>
-				<div class="col-lg-6">
-					<h4 class="fw-bold mb-3">{{ programme.categoriePro }}</h4>
-					<p class="mb-3">{{ programme.planPro }}</p>
-					<h5 class="fw-bold mb-3">{{ programme.datePro ? programme.datePro|date('Y-m-d') : '' }}</h5>
-					<div class="d-flex mb-4">
-						<i class="fa fa-star text-secondary"></i>
-						<i class="fa fa-star text-secondary"></i>
-						<i class="fa fa-star text-secondary"></i>
-						<i class="fa fa-star text-secondary"></i>
-						<i class="fa fa-star"></i>
-					</div>
-					<p class="mb-4">{{ programme.notePro }}</p>
+                <div class="text-center mt-4">
+				 <a href="{{ path('app_programme_index') }}" class="btn btn-outline-secondary rounded-pill px-4 py-2 text-primary">
+                    <i class="fa fa-arrow-left me-2"></i> Back to list
+                </a>
+                    <a href="{{ path('app_programme_edit', {'id': programme.id}) }}" class="btn btn-outline-primary rounded-pill px-4 py-2">
+                        <i class="fa fa-edit me-2"></i> Edit
+                    </a>
+                    <a href="{{ path('app_programme_delete', {'id': programme.id}) }}" class="btn btn-outline-danger rounded-pill px-4 py-2" onclick="event.preventDefault(); document.getElementById('delete-form-{{ programme.id }}').submit();">
+                        <i class="fa fa-trash me-2"></i> Delete
+                    </a>
 					
-					<a href="{{ path('app_programme_edit', {'id': programme.id}) }}" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">
-						<i class="fa fa-edit me-2 text-primary"></i>edit</a>
-					<a href="{{ path('app_programme_index') }}" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary">
-						<i class="fa fa-arrow-left me-2 text-primary"></i>back to list</a>
+                </div>
+            </div>
+
+            <div class="col-lg-6">
+			</br></br></br></br></br></br>
+                <h2 class="fw-bold mb-3">{{ programme.titrePro }}</h2>
+                <h5 class="mb-3">Plan du programme:</h5>
+                <p>{{ programme.planPro }}</p>
+                <h5 class="mb-3">Notes:</h5>
+                <p>{{ programme.notePro }}</p>
+                <h5 class="mb-3">Prix du programme:</h5>
+                <p>{{ programme.prix }}</p>
+                <h5 class="mb-3">Date du programme:</h5>
+                <p>{{ programme.datePro ? programme.datePro|date('Y-m-d') : '' }}</p>
+                <h5 class="mb-3">Reservez maintenant!!</h5>
+                <p>Encore {{ programme.placeDispo }} places dispo !</p>
+
+                <form method="post" action="{{ path('reserverProg', {'id': programme.id}) }}" novalidate="novalidate" class="styled-form">
+                    <div class="styled-container d-flex align-items-center">
 					
-					<a href="{{ path('app_programme_delete', {'id': programme.id}) }}" onclick="event.preventDefault(); {document.getElementById('delete-form-{{ programme.id }}').submit();}" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-danger">
-						<i class="fa fa-trash me-2 text-danger"></i>Delete
-					</a>
+<input type="number" class="form-control styled-input flex-grow-1" id="nbrplace" name="nbrplace" placeholder="Nombre de tickets" min="1">
+                        <button type="submit" class="btn styled-button ml-2">Reserver</button>
+                    </div>
+                </form>
+				{% if error %}
+    <div class="alert alert-danger" role="alert">
+        {{ error }}
+    </div>
+{% endif %}
 
-				</div>
+                <h5 class="mb-3">Evaluez le programme :</h5>
+                <div class="d-flex mb-4" id="rating-container">
+    {% for i in 1..5 %}
+        <i class="{{ i <= averageRating ? 'fas fa-star' : 'far fa-star' }} text-secondary" id="star-{{ i }}" onclick="submitRating({{ i }}, {{ programme.id }})"></i>
+    {% endfor %}
+</div>
+
+				
+    </div>
+
+	<div class="comments-list mt-4">
+    <h3 class="comments-title">Reviews</h3>
+    {% if programme.comments|length > 0 %}
+        {% for comment in programme.comments %}
+            <div class="comment-item p-3 mb-3" style="border: 1px solid #dee2e6; border-radius: 5px;">
+                <div class="comment-header d-flex justify-content-between mb-2">
+                    <strong class="comment-author" style="font-size: 1rem;">Anonymous User</strong> {# You can replace 'Anonymous User' with the user's name if available #}
+                    <span class="comment-date text-muted" style="font-size: 0.8rem;">{{ comment.createdAt|date('Y-m-d H:i') }}</span>
+                </div>
+                <div class="comment-content" style="font-size: 0.9rem;">{{ comment.content }}</div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p class="no-comments">No reviews yet.</p>
+    {% endif %}
+</div>
+<div class="row g-4">
+    {{ form_start(commentForm, {'attr': {'class': 'comment-form'}}) }}
+    
+ 
+    <div class="col-lg-12">
+        <div class="border-bottom rounded my-4">
+            {{ form_widget(commentForm.content, {'attr': {'class': 'form-control border-0', 'placeholder': 'Your Review *'}}) }}
+        </div>
+    </div>
+    <div class="col-lg-12">
+        <div class="d-flex justify-content-between py-3 mb-5">
+       
+            <button type="submit" class="btn border border-secondary text-primary rounded-pill px-4 py-3">Post Comment</button>
+        </div>
+    </div>
+    
+    {{ form_end(commentForm) }}
+</div>
+
+{# <div class="comments-list">
+    {% for comment in programme.comments %}
+        <div class="comment">
+            <p>{{ comment.createdAt|date('Y-m-d H:i') }}</p>
+            <p>{{ comment.content }}</p>
+        </div>
+    {% else %}
+        <p>No comments yet.</p>
+    {% endfor %}
+</div> #}
+            </div>
+        </div>
+		
+
+    {{ include('front/programme/_delete_form.html.twig') }}
 
 
-				{{ include('front/programme/_delete_form.html.twig') }}
-			</div>
-		</div>
+
+	<div style="display: none;">
+		<input type="hidden" id="csrf_token" name="_csrf_token" value="{{ csrf_token('rate_programme') }}">
 	</div>
+ 
+    <script>
+        function updateStars(averageRating) {
+            for (let i = 1; i <= 5; i++) {
+                const star = document.getElementById('star-' + i);
+                if (i <= averageRating) {
+                    star.classList.remove('far', 'fa-star-o');
+                    star.classList.add('fas', 'fa-star');
+                } else {
+                    star.classList.remove('fas', 'fa-star');
+                    star.classList.add('far', 'fa-star-o');
+                }
+            }
+        }
+		
+
+        
+        function submitRating(rating, id) {
+            const url = `/programme/${id}/rate`; // Use template literals to insert the programmeId
+            const token = document.getElementById('csrf_token').value;
+            
+            fetch(url, {
+                method: 'POST',
+                body: JSON.stringify({rating: rating, _token: token}), // CSRF token is required
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-Requested-With': 'XMLHttpRequest'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok: ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                if (data.averageRating) {
+                    console.log('New average rating:', data.averageRating);
+                    updateStars(data.averageRating);
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+
+
+	<script>
+document.addEventListener('DOMContentLoaded', function() {
+    var nbrPlaceInput = document.getElementById('nbrplace');
+    if (nbrPlaceInput) {
+        nbrPlaceInput.addEventListener('input', function(e) {
+            if (this.value < 1) {
+                this.value = '';
+            }
+        });
+    }
+});
+</script>
 {% endblock %}

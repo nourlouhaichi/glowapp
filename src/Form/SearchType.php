@@ -17,7 +17,7 @@ class SearchType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('categorie_pro', TextType::class, [
+            ->add('titre_pro', TextType::class, [
                 'required' => false,
             ])
             ->add('plan_pro', TextType::class, [

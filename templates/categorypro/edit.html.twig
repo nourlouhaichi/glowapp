@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Categorypro{% endblock %}
+
+{% block body %}
+    <h1>Edit Categorypro</h1>
+
+    {{ include('categorypro/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_categorypro_index') }}">back to list</a>
+
+    {{ include('categorypro/_delete_form.html.twig') }}
+{% endblock %}

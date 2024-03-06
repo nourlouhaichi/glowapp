@@ -25,9 +25,9 @@ class ProgrammeRepository extends ServiceEntityRepository
 {
     $qb = $this->createQueryBuilder('p');
 
-    if (!empty($criteria['categorie_pro'])) {
-        $qb->andWhere('p.categorie_pro LIKE :categorie_pro')
-            ->setParameter('categorie_pro', '%' . $criteria['categorie_pro'] . '%');
+    if (!empty($criteria['titre_pro'])) {
+        $qb->andWhere('p.titre_pro LIKE :titre_pro')
+            ->setParameter('titre_pro', '%' . $criteria['titre_pro'] . '%');
     }
 
     if (!empty($criteria['plan_pro'])) {
@@ -41,6 +41,29 @@ class ProgrammeRepository extends ServiceEntityRepository
     }
 
     return $qb->getQuery()->getResult();
+}
+
+
+public function findByCategory(int $categoryId): array
+    {
+        return $this->createQueryBuilder('p')
+            ->leftJoin('p.categorypro', 'c')
+            ->andWhere('c.id = :categoryId')
+            ->setParameter('categoryId', $categoryId)
+            ->getQuery()
+            ->getResult();
+    }
+
+
+
+    public function findByKeyword($keyword)
+{
+    return $this->createQueryBuilder('p')
+        ->where('p.titre_pro LIKE :keyword')
+        ->orWhere('p.plan_pro LIKE :keyword')
+        ->setParameter('keyword', '%' . $keyword . '%')
+        ->getQuery()
+        ->getResult();
 }
 //    /**
 //     * @return Programme[] Returns an array of Programme objects

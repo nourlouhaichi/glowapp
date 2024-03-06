@@ -275,3 +275,62 @@
     background: var(--dark);
     border-color: var(--primary);
 }
+
+.input-group {
+	display: flex;
+	width: 100%;
+}
+
+.input-group .form-control {
+	flex: 1;
+	border-radius: 0.25rem 0 0 0.25rem; /* Adjust as per your theme */
+}
+
+.input-group-text {
+	background-color: #ffffff; /* Match with the input field background color */
+	border: 1px solid #ced4da; /* Match with input field border */
+	border-left: 0; /* Remove left border */
+	border-radius: 0 0.25rem 0.25rem 0; /* Adjust as per your theme */
+	cursor: pointer; /* Optional, if you want the icon to feel clickable */
+}
+
+.fa-search {
+	color: #495057; /* Icon color */
+}
+
+.styled-form {
+    max-width: 600px; /* Adjust based on your design */
+    margin: auto;
+}
+
+.styled-container {
+    position: relative;
+    max-width: 480px; /* Adjust to fit your form width */
+    margin: auto;
+}
+
+.styled-input {
+    border: 0;
+    width: 100%;
+    padding: 15px 20px; /* Adjust padding as needed */
+    border-radius: 50px; /* Creates rounded corners */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23); /* Optional: adds a subtle shadow */
+}
+
+.styled-button {
+    position: absolute;
+    top: 0;
+    right: 0;
+    border: 0;
+    background-color: #28a745; /* Button color, adjust as needed */
+    color: white; /* Text color */
+    padding: 15px 20px; /* Adjust padding as needed */
+    border-radius: 50px; /* Creates rounded corners */
+    transform: translate(50%, 50%); /* Adjusts the position of the button to slightly overlap the input field */
+    box-shadow: 0 4px 6px rgba(0,0,0,0.2); /* Optional: adds a shadow to the button */
+}
+
+.styled-input:focus, .styled-button:focus {
+    outline: none;
+    box-shadow: 0 0 0 2px #495057; /* Adjust focus color as needed */
+}

@@ -4,6 +4,7 @@ namespace App\Controller;
 use App\Form\SearchType;
 use App\Entity\Programme;
 use App\Form\ProgrammeType;
+use App\Entity\Reservation;
 use App\Repository\ProgrammeRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -33,25 +34,29 @@ class Programme_adminController extends AbstractController
         ]);
     }
 
-    #[Route('/new', name: 'app_programme_admin_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $programme = new Programme();
-        $form = $this->createForm(ProgrammeType::class, $programme);
-        $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($programme);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('app_programme_admin_index', [], Response::HTTP_SEE_OTHER);
-        }
+   
 
-        return $this->renderForm('back/programme/new.html.twig', [
-            'programme' => $programme,
-            'form' => $form,
-        ]);
-    }
+    // #[Route('/new', name: 'app_programme_admin_new', methods: ['GET', 'POST'])]
+    // public function new(Request $request, EntityManagerInterface $entityManager): Response
+    // {
+    //     $programme = new Programme();
+    //     $form = $this->createForm(ProgrammeType::class, $programme);
+    //     $form->handleRequest($request);
+
+    //     if ($form->isSubmitted() && $form->isValid()) {
+    //         $entityManager->persist($programme);
+    //         $entityManager->flush();
+
+    //         return $this->redirectToRoute('app_programme_admin_index', [], Response::HTTP_SEE_OTHER);
+    //     }
+
+    //     return $this->renderForm('back/programme/new.html.twig', [
+    //         'programme' => $programme,
+    //         'form' => $form,
+    //     ]);
+    // }
 
     #[Route('/{id}', name: 'app_programme_admin_show', methods: ['GET'])]
     public function show(Programme $programme): Response

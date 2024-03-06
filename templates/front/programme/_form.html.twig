@@ -2,42 +2,59 @@
 	<h1 class="text-center text-white display-6">Ajouter un nouveau programme</h1>
 </div>
 <div class="container-fluid py-5 mt-5 ">
-	
-		<div class="form-container">
-			{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
 
-			<div class="form-group">
-				{{ form_label(form.categorie_pro, 'Category', {'label_attr': {'class': 'control-label'}}) }}
-				{{ form_widget(form.categorie_pro, {'attr': {'class': 'form-control'}}) }}
-				{{ form_errors(form.categorie_pro) }}
-			</div>
+	<div class="form-container">
+		{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
 
-			<div class="form-group">
-				{{ form_label(form.plan_pro, 'Plan', {'label_attr': {'class': 'control-label'}}) }}
-				{{ form_widget(form.plan_pro, {'attr': {'class': 'form-control'}}) }}
-				{{ form_errors(form.plan_pro) }}
-			</div>
-
-			<div class="form-group">
-				{{ form_label(form.note_pro, 'Note', {'label_attr': {'class': 'control-label'}}) }}
-				{{ form_widget(form.note_pro, {'attr': {'class': 'form-control'}}) }}
-				{{ form_errors(form.note_pro) }}
-			</div>
-
-			<div class="form-group">
-				{{ form_label(form.date_pro, 'Date', {'label_attr': {'class': 'control-label'}}) }}
-				{{ form_widget(form.date_pro, {'attr': {'class': 'form-control'}}) }}
-				{{ form_errors(form.date_pro) }}
-			</div>
-			<div class="form-group">
-				{{ form_label(form.image) }}
-				{{ form_widget(form.image) }}
-				{{ form_errors(form.image) }}
-			</div>
-
-			<button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
-
-			{{ form_end(form) }}
+		<div class="form-group">
+			{{ form_label(form.titre_pro, 'Titre', {'label_attr': {'class': 'control-label'}}) }}
+			{{ form_widget(form.titre_pro, {'attr': {'class': 'form-control'}}) }}
+			{{ form_errors(form.titre_pro) }}
 		</div>
-	
+
+		<div class="form-group">
+			{{ form_label(form.plan_pro, 'Plan', {'label_attr': {'class': 'control-label'}}) }}
+			{{ form_widget(form.plan_pro, {'attr': {'class': 'form-control'}}) }}
+			{{ form_errors(form.plan_pro) }}
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.note_pro, 'Note', {'label_attr': {'class': 'control-label'}}) }}
+			{{ form_widget(form.note_pro, {'attr': {'class': 'form-control'}}) }}
+			{{ form_errors(form.note_pro) }}
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.date_pro, 'Date', {'label_attr': {'class': 'control-label'}}) }}
+			{{ form_widget(form.date_pro, {'attr': {'class': 'form-control'}}) }}
+			{{ form_errors(form.date_pro) }}
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.placeDispo) }}
+			{{ form_widget(form.placeDispo) }}
+			{{ form_errors(form.placeDispo) }}
+		</div>
+			<div class="form-group">
+			{{ form_label(form.prix) }}
+			{{ form_widget(form.prix) }}
+			{{ form_errors(form.prix) }}
+		</div>
+		<div class="form-group">
+			{{ form_label(form.image) }}
+			{{ form_widget(form.image) }}
+			{{ form_errors(form.image) }}
+		</div>
+
+		<div class="form-group">
+			{{ form_label(form.categorypro, 'categorypro', {'label_attr': {'class': 'control-label'}}) }}
+			{{ form_widget(form.categorypro, {'attr': {'class': 'form-control'}}) }}
+			{{ form_errors(form.categorypro) }}
+		</div>
+
+		<button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+
+		{{ form_end(form) }}
+	</div>
+
 </div>

@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Categorypro{% endblock %}
+
+{% block body %}
+    <h1>Create new Categorypro</h1>
+
+    {{ include('categorypro/_form.html.twig') }}
+
+    <a href="{{ path('app_categorypro_index') }}">back to list</a>
+{% endblock %}

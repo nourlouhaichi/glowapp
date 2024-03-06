@@ -18,16 +18,13 @@ class Programme
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    #[Assert\NotBlank(message: "Category is required.")]
-    private ?string $categorie_pro = null;
+
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Plan is required.")]
     private ?string $plan_pro = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
-    private ?string $image = null;
+   
     
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "Note is required.")]
@@ -41,26 +38,39 @@ class Programme
     #[ORM\OneToMany(targetEntity: Objectif::class, mappedBy: 'programme' ,cascade: ['persist', 'remove'])]
     private Collection $objectifs;
 
-    
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $image = null;
 
-    
+    #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "title is required.")]
+    private ?string $titre_pro = null;
+
+    #[ORM\ManyToOne(inversedBy: 'programs')]
+    private ?Categorypro $categorypro = null;
+
+    #[ORM\OneToMany(mappedBy: 'programe', targetEntity: Rating::class, cascade: ['remove'])]
+    private Collection $ratings;
+
+    #[ORM\OneToMany(mappedBy: 'idprog', targetEntity: Reservation::class, cascade: ['remove'])]
+    private Collection $reservations;
+
+    #[ORM\Column]
+    #[Assert\NotBlank(message: "Veuillez entrer la capacité !")]
+    private ?int $placeDispo = null;
+
+    #[ORM\Column]
+    #[Assert\NotBlank( message:"Veuillez entrer le prix !")]
+    private ?float $prix = null;
+
+    #[ORM\OneToMany(mappedBy: 'progComment', targetEntity: CommentProg::class, cascade: ['remove'])]
+    private Collection $comments;
+   
 
     public function getId(): ?int
     {
         return $this->id;
     }
 
-    public function getCategoriePro(): ?string
-    {
-        return $this->categorie_pro;
-    }
-
-    public function setCategoriePro(string $categorie_pro): static
-    {
-        $this->categorie_pro = $categorie_pro;
-
-        return $this;
-    }
 
     public function getPlanPro(): ?string
     {
@@ -100,6 +110,9 @@ class Programme
     public function __construct()
 {
     $this->objectifs = new ArrayCollection();
+    $this->ratings = new ArrayCollection();
+    $this->reservations = new ArrayCollection();
+    $this->comments = new ArrayCollection();
 }
 public function __toString()
     {
@@ -118,5 +131,150 @@ public function setImage(?string $image): static
 
     return $this;
 }
+
+public function getTitrePro(): ?string
+{
+    return $this->titre_pro;
+}
+
+public function setTitrePro(string $titre_pro): static
+{
+    $this->titre_pro = $titre_pro;
+
+    return $this;
+}
+    
+public function getCategorypro(): ?Categorypro
+{
+    return $this->categorypro;
+}
+
+public function setCategorypro(?Categorypro $categorypro): static
+{
+    $this->categorypro = $categorypro;
+
+    return $this;
+}
+
+/**
+ * @return Collection<int, Rating>
+ */
+public function getRatings(): Collection
+{
+    return $this->ratings;
+}
+
+public function addRating(Rating $rating): static
+{
+    if (!$this->ratings->contains($rating)) {
+        $this->ratings->add($rating);
+        $rating->setPrograme($this);
+    }
+
+    return $this;
+}
+
+public function removeRating(Rating $rating): static
+{
+    if ($this->ratings->removeElement($rating)) {
+        // set the owning side to null (unless already changed)
+        if ($rating->getPrograme() === $this) {
+            $rating->setPrograme(null);
+        }
+    }
+
+    return $this;
+}
+
+/**
+ * @return Collection<int, Reservation>
+ */
+public function getReservations(): Collection
+{
+    return $this->reservations;
+}
+
+public function addReservation(Reservation $reservation): static
+{
+    if (!$this->reservations->contains($reservation)) {
+        $this->reservations->add($reservation);
+        $reservation->setIdprog($this);
+    }
+
+    return $this;
+}
+
+public function removeReservation(Reservation $reservation): static
+{
+    if ($this->reservations->removeElement($reservation)) {
+        // set the owning side to null (unless already changed)
+        if ($reservation->getIdprog() === $this) {
+            $reservation->setIdprog(null);
+        }
+    }
+
+    return $this;
+}
+
+
+public function getPlaceDispo()
+    {
+        return $this->placeDispo;
+    }
+
+    /**
+     * Set the value of placeDispo
+     *
+     * @return  self
+     */ 
+    public function setPlaceDispo($placeDispo)
+    {
+        $this->placeDispo = $placeDispo;
+
+        return $this;
+    }
+
+    public function getPrix(): ?float
+    {
+        return $this->prix;
+    }
+
+    public function setPrix(float $prix): static
+    {
+        $this->prix = $prix;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommentProg>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(CommentProg $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setProgComment($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(CommentProg $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getProgComment() === $this) {
+                $comment->setProgComment(null);
+            }
+        }
+
+        return $this;
+    }
+
     
 }
