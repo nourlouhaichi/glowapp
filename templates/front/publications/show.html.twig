@@ -69,8 +69,8 @@
                         <div class="position-relative">
                             <i class="fa fa-quote-right fa-2x text-secondary position-absolute" style="bottom: 30px; right: 0;"></i>
                             <div class="mb-4 pb-4 border-bottom border-secondary">
-                                <p class="mb-0">{{comment.getContenue()}}
-                                </p>
+                                <p class="m-0 pb-3">created at {{comment.Datecr| date("d/m/Y")}}</p>
+                                
                             </div>
                             <div class="d-flex align-items-center flex-nowrap">
                                 <div class="bg-secondary rounded">
@@ -78,7 +78,7 @@
                                 </div>
                                 <div class="ms-4 d-block">
                                     <h4 class="text-dark">User</h4>
-                                    <p class="m-0 pb-3">created at {{comment.Datecr| date("d/m/Y")}}</p>
+                                    {{comment.getContenue()}}
                                 </div>
                             </div>
                         </div>

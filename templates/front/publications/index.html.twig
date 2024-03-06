@@ -1,10 +1,43 @@
 {% extends 'front/frontbase.html.twig' %}
 
-
 {% block title %}GlowApp{% endblock %}
 {% block body %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#success-alert').fadeOut(5000);
+        $('#error-alert').fadeOut(5000);
+    });
+</script>
+{% block stylesheets %}
+    <style>
+        .custom-alert {
+            font-size: 14px; 
+            padding: 8px 15px; 
+            border-radius: 5px; 
+            margin: 0 auto; 
+            width: fit-content;
+            position: fixed;
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        .alert-success {
+            background-color: #d4edda; 
+            border-color: #c3e6cb; 
+            color: #155724; 
+        }
+
+        .alert-warning {
+            background-color: #f8d7da;
+            border-color: #f5c6cb; 
+            color: #721c24; 
+        }
+    </style>
+{% endblock %}
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<!-- Navbar start -->
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
                     <img src="{{asset('front/img/logoglowapp.png')}}" length='150px' width='150px'>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -26,6 +59,13 @@
                             <a href="{{path('app_publications')}}" class="nav-item nav-link">Publications</a>
                             
                     </div>
+<div class="input-group w-50 mx-auto d-flex"> 
+    <input class="form-control me-1 py-1 px-0.5" type="search" value="" id="example-search-input" placeholder="search" aria-describedby="search-icon-1" style="font-size: 12px;"> <!-- Adjust 'px-2' to reduce horizontal padding -->
+    <span class="input-group-text p-1"> 
+        <i class="fa fa-search" aria-hidden="true"></i>
+    </span>
+</div>
+                                
                     <form method="post" action="{{ path('app_publication_new') }}">
     <input type="hidden" name="_token">
     <button class="btn btn-primary">Add new post</button>
@@ -34,7 +74,6 @@
                 </nav>
             </div>
         </div>
-        <!-- Navbar End -->
 <br> 
 <br>
 <br> 
@@ -51,9 +90,19 @@
 <br>
 <br> 
 <br>  
+{% for message in app.flashes("success") %}
+<div class="alert alert-success custom-alert text-smaller text-center" id="success-alert">
+    <i class="fas fa-check-circle"></i>
+    <span>{{ message }}</span>
+</div>
+{% endfor %}
 
-
-
+{% for message in app.flashes("error") %}
+<div class="alert alert-warning custom-alert text-smaller text-center" id="error-alert">
+    <i class="fas fa-exclamation-circle"></i>
+    <span>{{ message }}</span>
+</div>
+{% endfor %}
 
 <div class="tab-content">
     {% set itemCount = publications|length %}
@@ -117,5 +166,21 @@
 <br>
 <br>
 <br>
-<center>{{ knp_pagination_render(publications) }}</center>
+
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+<script>
+    $(document).ready(function () {
+        // Trigger search on input field changes rather than button click
+        $('#example-search-input').on('keyup', function () {
+            var searchQuery = $(this).val().toLowerCase();
+            $('.col-md-4.position-relative').each(function () {
+                var publicationTitle = $(this).find('h4').text().toLowerCase();
+                $(this).toggle(publicationTitle.includes(searchQuery));
+            });
+        });
+    });
+</script>
+{% endblock %}
 {% endblock %}

@@ -2,7 +2,9 @@
 
 {% block title %}GlowApp{% endblock %}
 {% block body %}
+
 <!-- Navbar start -->
+ <script src="{{ asset('bundles/mercuryseriesflashy/js/flashy.js') }}"></script>
                 <nav class="navbar navbar-light bg-white navbar-expand-xl">
                     <img src="{{asset('front/img/logoglowapp.png')}}" length='150px' width='150px'>
                     <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
@@ -40,6 +42,5 @@
     <h1>Add new Publication</h1>
 
     {{ include('front/publications/_form.html.twig', {'button_label': 'Add'}) }}
-
 
 {% endblock %}

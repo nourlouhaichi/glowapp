@@ -52,6 +52,7 @@ class Publication
     private ?\DateTimeImmutable $updatedAt = null;
 
     #[ORM\OneToMany(targetEntity: Images::class, mappedBy: 'publications', orphanRemoval: true, cascade:["persist"])]
+    #[Assert\NotBlank(message:"image required ")]
     private Collection $images;
     public function __construct()
     {

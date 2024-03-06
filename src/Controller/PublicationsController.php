@@ -14,11 +14,11 @@ use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use App\Repository\CommentRepository;
-use Vich\UploaderBundle\Form\Type\VichImageType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use App\Entity\Images;
-use Symfony\Component\Validator\Validator\ValidatorInterface;
 use Knp\Component\Pager\PaginatorInterface;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBag;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 class PublicationsController extends AbstractController
 {
@@ -26,10 +26,10 @@ class PublicationsController extends AbstractController
     public function index(PublicationRepository $PublicationRepository,PaginatorInterface $paginator,Request $request): Response
     {
         $publication=$PublicationRepository->findAll();
-        $publication = $paginator->paginate($publication, $request->query->getInt('page', 1),3);
 
         return $this->render('front/publications/index.html.twig', [
             'publications'=>$publication
+            
         ]);
     }
     #[Route('/Admin', name: 'Admin_page')]
@@ -51,13 +51,14 @@ class PublicationsController extends AbstractController
         }
     
     #[Route('/new', name: 'app_publication_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager ,FlashBagInterface $flashBag): Response
     {
         $publication = new Publication();
         $form = $this->createForm(PublicationType::class, $publication)->add('images', FileType::class,['label'=>false,'multiple'=>true,'mapped'=>false,'required'=>false]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $flashBag->add("success","publication added !");
             $images=$form->get('images')->getData();
             foreach($images as $image){
                 $fichier = md5(uniqid()) . '.' . $image->guessExtension();
@@ -132,13 +133,14 @@ class PublicationsController extends AbstractController
         ]);
     }
     #[Route('/{id}/edit', name: 'app_publication_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Publication $publication, EntityManagerInterface $entityManager): Response
+    public function edit(Request $request, Publication $publication, EntityManagerInterface $entityManager,FlashBagInterface $flashBag): Response
     {
         dump('Before handling request:', $publication);
         $form = $this->createForm(PublicationType::class, $publication)->add('images', FileType::class,['label'=>false,'multiple'=>true,'mapped'=>false,'required'=>false]);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $flashBag->add("success","publication edited !");
             $images=$form->get('images')->getData();
             foreach($images as $image){
                 $fichier = md5(uniqid()) . '.' . $image->guessExtension();
@@ -155,7 +157,7 @@ class PublicationsController extends AbstractController
             return $this->redirectToRoute('app_publications', [], Response::HTTP_SEE_OTHER);
         }
 
-        return $this->renderForm('front/publications/edit.html.twig', [
+        return $this->renderForm('front/publications/editpub.html.twig', [
             'publication' => $publication,
             'form' => $form,
         ]);
@@ -211,15 +213,18 @@ class PublicationsController extends AbstractController
     }*/
 
     #[Route('/deletecm/{id}', name: 'app_publicationcomdelete', methods: ['POST'])]
-    public function deletecm(Request $request, Publication $publication, EntityManagerInterface $entityManager, CommentRepository $commentRepository): Response
+    public function deletecm(Request $request, Publication $publication, EntityManagerInterface $entityManager, CommentRepository $commentRepository,FlashBagInterface $flashBag): Response
     {
         $comments = $commentRepository->findBy(['publication' => $publication]);
-
+        
         foreach ($comments as $comment) {
             $entityManager->remove($comment);
+            
         }
+        $flashBag->add("error","publication deleted !");
         $entityManager->remove($publication);
         $entityManager->flush();
+        
     
         return $this->redirectToRoute('app_publications', [], Response::HTTP_SEE_OTHER);
     }
