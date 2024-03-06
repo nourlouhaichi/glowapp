@@ -6,3 +6,21 @@
 {{ form_end(form) }}
 </div>
 </div>
+{% block javascripts %}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> {# Inclure jQuery #}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/js/bootstrap-datepicker.min.js"></script> {# Inclure le plugin de datepicker Bootstrap #}
+
+    <script>
+        $(document).ready(function() {
+            $('.datepicker').datepicker({
+                format: 'yyyy-mm-dd', // Format de date
+                autoclose: true, // Fermer automatiquement le calendrier après la sélection
+                todayHighlight: true, // Mettre en surbrillance la date actuelle
+                // Ajoutez d'autres options de configuration selon vos besoins
+            });
+        });
+    </script>
+{% endblock %}
+</div>
+</div>

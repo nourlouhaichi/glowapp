@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 
 
 #[Route('/event/admin')]
@@ -27,6 +28,7 @@ class EventAdminController extends AbstractController
     #[Route('/new', name: 'app_event_admin_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
+        
         $event = new Event();
         $form = $this->createForm(EventType::class, $event);
         $form->handleRequest($request);
@@ -52,6 +54,7 @@ class EventAdminController extends AbstractController
             }
             $entityManager->persist($event);
             $entityManager->flush();
+            flash()->addSuccess('Ajout réussi ! ');
 
             return $this->redirectToRoute('app_event_admin_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -98,6 +101,7 @@ class EventAdminController extends AbstractController
                 $event->setImage($newFilename);
             }
             $entityManager->flush();
+            flash()->addSuccess('Modification réussite ! ');
 
             return $this->redirectToRoute('app_event_admin_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -114,6 +118,7 @@ class EventAdminController extends AbstractController
         if ($this->isCsrfTokenValid('delete'.$event->getId(), $request->request->get('_token'))) {
             $entityManager->remove($event);
             $entityManager->flush();
+            flash()->addSuccess('Suppression réussite ! ');
         }
 
         return $this->redirectToRoute('app_event_admin_index', [], Response::HTTP_SEE_OTHER);
