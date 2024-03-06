@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Product List</title>
+    <style>
+        /* Customize styling */
+        body {
+            font-family: Arial, sans-serif;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        h1 {
+            color: #562B05;
+            text-align: center;
+            padding: 20px 0;
+        }
+        .logo {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 8px;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo">
+        <img src="{{ asset('front/img/logoglowapp.png') }}" alt="Company Logo" style="max-width: 200px;">
+    </div>
+    <h1>Product List</h1>
+    <table>
+        <thead>
+            <tr>
+                <th>Ref</th>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Category</th>
+                <th>Quantity</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for produit in produits %}
+                <tr>
+                    <td>{{ produit.ref }}</td>
+                    <td>{{ produit.name }}</td>
+                    <td>{{ produit.description }}</td>
+                    <td>{{ produit.price }}</td>
+                    <td>{{ produit.categorieProd }}</td>
+                    <td>{{ produit.quantity }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>

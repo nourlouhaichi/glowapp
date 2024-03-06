@@ -7,9 +7,17 @@
     <div class="container-fluid pt-4 px-4">  
         <center><h1 class="mb-3 text-warning">Product Table</h1></center>
         <div class="container d-flex justify-content-end">
+
+             <a href="{{ path('app_produit_print') }}" class="btn btn-primary">PDF</a>
             <a class="btn btn-success rounded-pill m-2" href="{{ path('app_produit_new') }}"><i class="fa fa-plus"></i></a>
         </div>
-        <div class="container-fluid pt-4 px-4">                  
+        <div class="container-fluid pt-4 px-4">  
+            <form action="{{ path('dql') }}" method="POST" class="d-none d-md-flex ms-4">
+                <input class="form-control bg-dark border-0" type="search" name="test" placeholder="Search">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form>
+        
+
             <table class="table table-bordered">
                 <thead>
                     <tr>

@@ -62,6 +62,41 @@ class ProduitController extends AbstractController
             'form' => $form,
         ]);
     }
+    #[Route('/print', name: 'app_produit_print', methods: ['GET'])]
+public function print(ProduitRepository $produitRepository)
+{      
+    define('DOMPDF_ENABLE_DEBUG', true);
+    // Get all products from the repository
+    $produits = $produitRepository->findAll();
+
+    // Configure Dompdf options
+    $pdfOptions = new Options();
+    $pdfOptions->set('defaultFont', 'Arial');
+
+    // Instantiate Dompdf
+    $dompdf = new Dompdf($pdfOptions);
+
+    // Render the HTML template to generate PDF content
+    $html = $this->renderView('back/produit/print.html.twig', [
+        'produits' => $produits
+    ]);
+
+    // Load HTML content into Dompdf
+    $dompdf->loadHtml($html);
+
+    // (Optional) Set paper size and orientation
+    $dompdf->setPaper('A4', 'portrait');
+
+    // Render PDF content
+    $dompdf->render();
+
+    // Output PDF content as response
+    $response = new Response($dompdf->output());
+    $response->headers->set('Content-Type', 'application/pdf');
+
+    return $response;
+}
+
 
     #[Route('/{ref}', name: 'app_produit_show', methods: ['GET'])]
     public function show(Produit $produit): Response
@@ -99,32 +134,27 @@ class ProduitController extends AbstractController
 
         return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
     }
-    #[Route('/print', name: 'app_produit_print', methods: ['GET'])]
-    public function print( ProduitRepository $produitRepository)
-    {
-       
-        $result = $produitRepository->findAll();
-        $pdfOptions = new Options();
-    
-        // Instantiate Dompdf with our options
-        $dompdf = new Dompdf($pdfOptions);
-        
-        // Retrieve the HTML generated in our twig file
-        $html = $this->renderView('produit/print.html.twig', [
-            'produits' => $result
-        ]);
-     
-        // Load HTML to Dompdf
-        $dompdf->loadHtml($html);
-        // (Optional) Setup the paper size and orientation 'portrait' or 'portrait'
-        $dompdf->setPaper('A4', 'portrait');
-     
-        // Render the HTML as PDF
-        $dompdf->render();
-        // Output the generated PDF as a response with Content-Type set to 'application/pdf'
-        return new Response($dompdf->output(), Response::HTTP_OK, [
-            'Content-Type' => 'application/pdf',
-        ]);
+  
+  
 
+
+
+    
+    #[Route('/dql', name: 'dql', methods: ['POST'])]//recherche avec dql
+    public function dql(EntityManagerInterface $em, Request $request, ProduitRepository $produitRepository):Response
+    {
+        $result=$produitRepository->findAll();
+        $req=$em->createQuery("select d from App\Entity\Produit d where d.price=:n OR d.categorieProd =:n OR d.name=:n OR d.ref=:n");
+        if($request->isMethod('post'))
+        {
+            $value=$request->get('test');
+            $req->setParameter('n',$value);
+            $result=$req->getResult();
+
+        }
+
+        return $this->render('back/produit/index.html.twig',[
+            'produits'=>$result,
+        ]);
     }
 }

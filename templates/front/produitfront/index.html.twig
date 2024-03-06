@@ -70,111 +70,139 @@
     <div class="container py-5">
         <h1 class="mb-4"> Our Shop</h1>
         <div class="row g-4">
-                    <div class="col-lg-12">
-                        <div class="row g-4">
-                            <div class="col-xl-3">
-                                <div class="input-group w-100 mx-auto d-flex">
-                                    <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
-                                    <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
-                                </div>
-                            </div>
-                            <div class="col-6"></div>
-                            <div class="col-xl-3">
-                                <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
-                                    <label for="fruits">Default Sorting:</label>
-                                    <select id="fruits" name="fruitlist" class="border-0 form-select-sm bg-light me-3" form="fruitform">
-                                        <option value="volvo">Nothing</option>
-                                        <option value="saab">Popularity</option>
-                                        <option value="opel">Organic</option>
-                                        <option value="audi">Fantastic</option>
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-        <div class="row g-4">
-            <div class="col-lg-3">
+            <div class="col-lg-12">
                 <div class="row g-4">
-                    <div class="col-lg-12">
-                        <div class="mb-3">
-                            <h4>Categories</h4>
-                            <ul class="list-unstyled fruite-categorie">
-                                 {% for categorie in categories %}
-                                    <li>
-                                        <div class="d-flex justify-content-between fruite-name">
-                                           
-                                            <a href="{{ path('app_category_products', {'id': categorie.id}) }}">{{ categorie.nomCa }}</a>
-                                        </div>
-                                    </li>
-                                {% endfor %}
-                              
-                            </ul>
+                    <div class="col-xl-3">
+                        <div class="input-group w-100 mx-auto d-flex">
+                            <input class="form-control p-3" type="search" value="search" id="example-search-input" placeholder="keywords" aria-describedby="search-icon-1">
+                            <span class="input-group-text p-3">
+                                <button class="fa fa-search" id="searchButton">Search</button>
+                            </span>
                         </div>
-                          <div class="col-lg-12">
-                                        <div class="mb-3">
-                                            <h4 class="mb-2">Price</h4>
-                                            <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">
-                                            <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
-                                        </div>
-                                    </div>
                     </div>
-                    
-                </div>
-
-                <div class="col-lg-12">
-                   <div class="text-center">
-                     <img src="{{ asset('front/img/HealthyLifestyle.jpg') }}" class="img-fluid w-100 rounded" alt="">
-                      <h3 class="text-secondary fw-bold mt-3">For Better  life</h3>
-                   </div>
-
-                </div>
-            </div>
-            <div class="col-lg-9">
-                <div class="row g-4 justify-content-center">
-                    {% for produit in produits %}
-                        {% if loop.index % 3 == 1 %}
-                            </div><div class="row g-4 justify-content-center">
-                        {% endif %}
-                        <div class="col-md-6 col-lg-4 col-xl-3">
-                            <div class="rounded position-relative fruite-item">
-                                <div class="fruite-img">
-                                    <img src="{{ asset('uploads/' ~ produit.image) }}" class="img-fluid w-100 rounded-top" alt="{{ produit.name }}" style="height: 200px;"> <!-- Set a fixed height for the image -->
-                                </div>
-                               <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;"></div> 
-                                <!-- Updated part of the code -->
-                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                   <h4>{{ produit.name }}</h4>
-                                          <!-- Use CSS to limit the height and hide overflow -->
-                                   <p class="description" style="height: 4em; overflow: hidden;">{{ produit.description }}</p>
-                                   <div class="d-flex justify-content-between flex-lg-wrap">
-                                     <p class="text-dark fs-5 fw-bold mb-0">TND {{ produit.price }} / </p>
-                                     <a href="{{path('cart_add', {ref: produit.ref})}}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a> 
-                                   </div>
-                                    <a href="{{path('app_produitfront_details', {ref: produit.ref})}}" class="btn btn-outline-primary mt-2">See More</a>
-   
-     <!-- See More Button -->
-
-</div>
-
+                    <div class="col-6"></div>
+                    <div class="col-xl-3">
+                        <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
+                           
+                            <div class="btn-group">
+                             
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                   Sort by price
+                                </button>
+                                   <ul class="dropdown-menu">
+                                      <li><a class="dropdown-item" href="{{ path('app_produitfront') }}">All</a></li>
+                                      <li><a class="dropdown-item" href="{{ path('tri_prix', {'tri': 'asc'}) }}">Croissant</a></li>
+                                      <li><a class="dropdown-item" href="{{ path('tri_prix', {'tri': 'desc'}) }}">Décroissant</a></li>
+                                    </ul>
                             </div>
                         </div>
-                    {% endfor %}
+                    </div>
                 </div>
-                 <div class="col-12">
-                                        <div class="pagination d-flex justify-content-center mt-5">
-                                            <a href="#" class="rounded">&laquo;</a>
-                                            <a href="#" class="active rounded">1</a>
-                                            <a href="#" class="rounded">2</a>
-                                            <a href="#" class="rounded">3</a>
-                                           
-                                            <a href="#" class="rounded">&raquo;</a>
-                                        </div>
+                <div class="row g-4">
+                    <div class="col-lg-3">
+                        <div class="row g-4">
+                            <div class="col-lg-12">
+                                <div class="mb-3">
+                                    <h4>Categories</h4>
+                                    <ul class="list-unstyled fruite-categorie">
+                                        {% for categorie in categories %}
+                                        <li>
+                                            <div class="d-flex justify-content-between fruite-name">
+                                            <a href="{{ path('app_category_products', {'id': categorie.id}) }}">{{ categorie.nomCa }}</a>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                                <div class="col-lg-12">
+                                    <div class="mb-3">
+                                        <h4 class="mb-2">Price</h4>
+                                        <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">
+                                        <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
                                     </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="text-center">
+                                <img src="{{ asset('front/img/HealthyLifestyle.jpg') }}" class="img-fluid w-100 rounded" alt="">
+                                <h3 class="text-secondary fw-bold mt-3">For Better  life</h3>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="row g-4 justify-content-center" id="productsContainer">
+                            {% for produit in produits %}
+                            {% if loop.index % 3 == 1 %}
+                            </div><div class="row g-4 justify-content-center">
+                            {% endif %}
+                            <div class="col-md-6 col-lg-4 col-xl-3">
+                                <div class="rounded position-relative fruite-item">
+                                    <div class="fruite-img">
+                                        <img src="{{ asset('uploads/' ~ produit.image) }}" class="img-fluid w-100 rounded-top" alt="{{ produit.name }}" style="height: 200px;"> <!-- Set a fixed height for the image -->
+                                    </div>
+                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;"></div>
+                                    <!-- Updated part of the code -->
+                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                        <h4>{{ produit.name }}</h4>
+                                        <!-- Use CSS to limit the height and hide overflow -->
+                                        <p class="description" style="height: 4em; overflow: hidden;">{{ produit.description }}</p>
+                                        <div class="d-flex justify-content-between flex-lg-wrap">
+                                            <p class="text-dark fs-5 fw-bold mb-0">TND {{ produit.price }} / </p>
+                                            <a href="{{ path('cart_add', {ref: produit.ref}) }}"  class="fa fa-shopping-bag me-2 text-primary"> </a>
+                                        </div>
+                                        <a href="{{ path('app_produitfront_details', {ref: produit.ref}) }}" class="btn btn-outline-primary mt-2">See More</a>
+                                        <!-- See More Button -->
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-12">
+                            <div class="pagination d-flex justify-content-center mt-5">
+                                <a href="#" class="rounded">&laquo;</a>
+                                <a href="#" class="active rounded">1</a>
+                                <a href="#" class="rounded">2</a>
+                                <a href="#" class="rounded">3</a>
+                                <a href="#" class="rounded">&raquo;</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </div>
-</div>
 <!-- Fruits Shop End-->
+{% block javascripts %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#searchButton').click(function () {
+            var searchQuery = $('#example-search-input').val().toLowerCase();
+            var productsContainer = $('#productsContainer');
+
+            // Hide all products initially
+            $('.fruite-item').hide();
+
+            // Loop through each product item
+            $('.fruite-item').each(function () {
+                var productName = $(this).find('h4').text().toLowerCase();
+
+                // If the product name matches the search query
+                if (productName.includes(searchQuery)) {
+                    // Show the product
+                    $(this).show();
+
+                    // Move the product to the top of the list
+                    $(this).prependTo(productsContainer);
+                }
+            });
+        });
+    });
+</script>
+{% endblock %}
+
 {% endblock %}
 
 

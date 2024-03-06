@@ -5,3 +5,9 @@ controllers:
 kernel:
     resource: ../../src/Kernel.php
     type: annotation
+
+
+print:
+  path: /produit/print
+  controller: App\Controller\ProduitController::print
+  methods: ['GET']

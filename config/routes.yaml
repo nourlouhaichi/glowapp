@@ -1,3 +1,14 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+
+dql:
+    path: /dql
+    controller: App\Controller\ProduitController::dql
+    methods: [POST]
+
+
+print:
+  path: /produit/print
+  controller: App\Controller\ProduitController::print
+  methods: ['GET']
