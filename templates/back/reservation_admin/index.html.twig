@@ -5,7 +5,6 @@
 {% block body %}
     <center><h1 class="mb-3 text-warning">Reservation</h1></center>
     <div class="container d-flex justify-content-end">
-    <a href="{{ path('app_reservation_admin_new') }}"><i class="fa fa-plus"></i></a>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -30,9 +29,10 @@
                 <td>{{ reservation.event }}</td>
                 <td>{{ reservation.createAt ? reservation.createAt|date('Y-m-d H:i:s') : '' }}</td>
                 <td>
-                    <a href="{{ path('app_reservation_admin_show', {'id': reservation.id}) }}">show</a>
-                    <a href="{{ path('app_reservation_admin_edit', {'id': reservation.id}) }}">edit</a>
+                    <a class="btn btn-primary rounded-pill m-2" href="{{ path('app_reservation_admin_show', {'id': reservation.id}) }}"><i class="fa fa-eye"></i></a>
+                    <a class="btn btn-warning rounded-pill m-2" href="{{ path('app_reservation_admin_edit', {'id': reservation.id}) }}"><i class="fa fa-pen"></i></a>
                 </td>
+
             </tr>
         {% else %}
             <tr>
@@ -42,6 +42,7 @@
         </tbody>
     </table>
     </div>
+    <a href="{{ path('app_reservation_admin_new') }}">Create new</i></a>
 
     
 {% endblock %}

@@ -5,6 +5,11 @@
 {% block body %}
 
     <center><h1 class="mb-3 text-warning">Events</h1></center>
+     <div class="container-fluid pt-4 px-4">  
+            <form action="{{ path('dql') }}" method="POST" class="d-none d-md-flex ms-4">
+                <input class="form-control border-0"  type="search" name="test" placeholder="Search">
+                    <button type="submit" class="btn btn-primary">Search</button>
+            </form>
 
     <table  class="table table-striped">
         <thead>
@@ -49,4 +54,6 @@
     </table>
 
     <a  href="{{ path('app_event_admin_new') }}">Create new</a>
+    
 {% endblock %}
+

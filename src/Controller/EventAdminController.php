@@ -12,6 +12,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+
 #[Route('/event/admin')]
 class EventAdminController extends AbstractController
 {
@@ -116,5 +117,23 @@ class EventAdminController extends AbstractController
         }
 
         return $this->redirectToRoute('app_event_admin_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+     #[Route('/dql', name: 'dql', methods: ['POST'])]//recherche avec dql
+    public function dql(EntityManagerInterface $entityManager, Request $request, EventRepository $eventRepository): Response
+    {
+        $result=$eventRepository->findAll();
+        $req=$entityManager->createQuery("select d from App\Entity\Event d where d.title=:n OR d.description =:n OR d.location=:n");
+        if($request->isMethod('post'))
+        {
+            $value=$request->get('test');
+            $req->setParameter('n',$value);
+            $result=$req->getResult();
+
+        }
+
+        return $this->render('back/event_admin/index.html.twig',[
+            'events'=>$result,
+        ]);
     }
 }

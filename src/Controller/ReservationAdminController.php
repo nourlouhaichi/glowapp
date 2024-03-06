@@ -78,4 +78,5 @@ class ReservationAdminController extends AbstractController
 
         return $this->redirectToRoute('app_reservation_admin_index', [], Response::HTTP_SEE_OTHER);
     }
+
 }

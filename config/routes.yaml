@@ -3,5 +3,8 @@
 #    controller: App\Controller\DefaultController::index
 # config/routes.yaml
 
-
+dql:
+    path: /dql
+    controller: App\Controller\EventAdminController::dql
+    methods: [POST]
 
