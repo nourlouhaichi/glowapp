@@ -26,7 +26,8 @@ class PublicationsController extends AbstractController
     public function index(PublicationRepository $PublicationRepository,PaginatorInterface $paginator,Request $request): Response
     {
         $publication=$PublicationRepository->findAll();
-
+        $publication = $paginator->paginate($publication, $request->query->getInt('page', 1),9);
+        
         return $this->render('front/publications/index.html.twig', [
             'publications'=>$publication
             
@@ -116,7 +117,7 @@ class PublicationsController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_publication_show', methods: ['GET', 'POST'])]
-    public function show(Publication $publication,Request $request,EntityManagerInterface $em): Response
+    public function show(Publication $publication,Request $request,EntityManagerInterface $em,FlashBagInterface $flashBag): Response
     {
         $comment=new Comment();
         $form= $this->createFormBuilder($comment)->add("contenue")->add("Add",SubmitType::class)->getForm();
@@ -124,6 +125,7 @@ class PublicationsController extends AbstractController
         $comment->setPublication($publication);
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid()){
+            $flashBag->add("success","comment added ! ");
             $em->persist($comment);
             $em->flush();
         }

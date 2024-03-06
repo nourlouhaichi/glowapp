@@ -14,6 +14,7 @@ use Symfony\Component\HttpFoundation\File\File;
 use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 
+
 #[ORM\Entity(repositoryClass: PublicationRepository::class)]
 #[Vich\Uploadable]
 class Publication
@@ -208,5 +209,16 @@ class Publication
 
         return $this;
     }
+    public function editComment(int $commentId, string $newContent): void
+{
+    foreach ($this->comments as $comment) {
+        if ($comment->getId() === $commentId) {
+            $comment->setContenue($newContent);
+            // Optionally, you can also update the comment's last updated timestamp here.
+            // $comment->setUpdatedAt(new \DateTime());
+            break;
+        }
+    }
+}
 
 }

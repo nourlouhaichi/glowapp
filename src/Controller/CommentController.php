@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use DateTime;
+use Symfony\Component\HttpFoundation\Session\Flash\FlashBagInterface;
 
 #[Route('/comment')]
 class CommentController extends AbstractController
@@ -31,6 +32,7 @@ class CommentController extends AbstractController
         $form->handleRequest($request);
          $comment->setDatecr(new DateTime());
         if ($form->isSubmitted() && $form->isValid()) {
+       
             $entityManager->persist($comment);
             $entityManager->flush();
 
@@ -79,4 +81,16 @@ class CommentController extends AbstractController
 
         return $this->redirectToRoute('app_comment_index', [], Response::HTTP_SEE_OTHER);
     }
+    #[Route('/{id}/del', name: 'frontapp_comment_delete', methods: ['POST'])]
+    public function frontdelete(Request $request, Comment $comment, EntityManagerInterface $entityManager,FlashBagInterface $flashBag): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+            $flashBag->add("error","comment deleted ! ");
+            $entityManager->remove($comment);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('app_publications', [], Response::HTTP_SEE_OTHER);
+    }
+
 }

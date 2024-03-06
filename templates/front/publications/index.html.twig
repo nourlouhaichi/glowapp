@@ -77,14 +77,6 @@
 <br> 
 <br>
 <br> 
-<br>
-<br> 
-<br>
-<br> 
-<br>  
-<br> 
-<br>
-<br> 
 <br>  
 <br> 
 <br>
@@ -172,7 +164,6 @@
 
 <script>
     $(document).ready(function () {
-        // Trigger search on input field changes rather than button click
         $('#example-search-input').on('keyup', function () {
             var searchQuery = $(this).val().toLowerCase();
             $('.col-md-4.position-relative').each(function () {
@@ -183,4 +174,5 @@
     });
 </script>
 {% endblock %}
+<center>{{ knp_pagination_render(publications) }}</center>
 {% endblock %}

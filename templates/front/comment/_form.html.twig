@@ -1,5 +1,11 @@
-    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
-    {{ form_widget(form) }}
+<div class="form-container">
+{{ form_start(form, {'attr': {'novalidate': 'novalidate','class':'form-horizontal'}})}}
+<div class="form-group">
+    {{ form_label(form.contenue, ' Add Comment', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.contenue, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.contenue) }}
+</div>
 
-    <button class="btn">{{ button_label|default('Save') }}</button>
 {{ form_end(form) }}
+<a href="{{ path('app_publications') }}">Back to list</a>
+</div>
