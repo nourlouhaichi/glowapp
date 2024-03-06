@@ -9,13 +9,14 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert; 
+use Scheb\TwoFactorBundle\Model\Email\TwoFactorInterface;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 #[UniqueEntity(fields: ['cin'], message: 'There is already an account with this cin')]
 #[UniqueEntity(fields: ['phone'], message: 'There is already an account with this phone number')]
 
-class User implements UserInterface, PasswordAuthenticatedUserInterface
+class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFactorInterface
 {
     // #[ORM\Id]
     // #[ORM\GeneratedValue]
@@ -117,6 +118,9 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+
+    #[ORM\Column(length: 10)]
+    private ?string $authCode = null;
 
 
     public function __construct()
@@ -341,4 +345,29 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
         return $this;
     }
+
+    public function isEmailAuthEnabled() : bool 
+    {
+        return true;
+    }
+
+    public function getEmailAuthRecipient() : string 
+    {
+        return $this->email;
+    }
+
+    public function getEmailAuthCode(): string 
+    {
+        if (null == $this->authCode) 
+        {
+            throw new \LogicException('The email authentication code was not set');
+        }
+        return $this->authCode;
+    }
+
+    public function setEmailAuthCode(string $authCode): void 
+    {
+        $this->authCode = $authCode;
+    }
+
 }

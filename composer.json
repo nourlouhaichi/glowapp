@@ -10,6 +10,8 @@
         "doctrine/doctrine-bundle": "^2.11",
         "doctrine/doctrine-migrations-bundle": "3.3",
         "doctrine/orm": "2.18.0",
+        "scheb/2fa-bundle": "^6.12",
+        "scheb/2fa-email": "^6.12",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/apache-pack": "*",
         "symfony/asset": "5.4.*",
