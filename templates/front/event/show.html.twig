@@ -22,8 +22,7 @@
                                 <p class="mb-4">Lieu : {{event.location}}</p>
                                 <p class="mb-4">Date : {{event.date|date('d-m-Y')}}</p>
                                 <p class="mb-4">Nb de places : {{event.nbP}}</p>
-
-                                
+                                                                
                                 {% if event.nbP > 0 %}
                                 <a href="{{path('app_reservation', {'id': event.id})}}" class="btn border border-secondary rounded-pill px-4 py-2 mb-4 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Resevation</a>
                                 {% endif %}

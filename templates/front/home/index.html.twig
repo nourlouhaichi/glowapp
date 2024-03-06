@@ -27,7 +27,6 @@
             </div>
         </div>
         <!-- Modal Search End -->
-<br>
 
         <!-- Hero Start -->
         <div class="container-fluid py-5 mb-5 hero-header">
@@ -67,5 +66,30 @@
             </div>
         </div>
         <!-- Hero End -->
+
+        <!-- Vesitable Shop Start-->
+        <div class="container-fluid vesitable py-5">
+            <div class="container py-5">
+                <h1 class="mb-0">Fresh Organic Vegetables</h1>
+                <div class="owl-carousel vegetable-carousel justify-content-center">
+                    {% for item in events %}
+                        <div class="border border-primary rounded position-relative vesitable-item">
+                            <div class="vesitable-img">
+                                <img src="{{ asset('uploads/' ~ item.image) }}" class="img-fluid w-100 rounded-top" alt="">
+                            </div>
+                            <div class="text-white bg-primary px-3 py-1 rounded position-absolute" style="top: 10px; right: 10px;">{{item.Category}}</div>
+                            <div class="p-4 rounded-bottom">
+                                <h4>{{item.title}}</h4>
+                                <p>{{item.description|slice(0, 50)}}...</p>
+                                <div class="d-flex justify-content-between flex-lg-wrap">
+                                    <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        <!-- Vesitable Shop End -->
                
 {% endblock %}

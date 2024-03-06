@@ -11,6 +11,7 @@
         <div class="qrCode" >
           <img src="{{Reservation.qrCode}}" />
           <a href="{{Reservation.qrCode}}" download > Telecharger </a>
+          <a href="{{ path('app_Reservation_print',{id:Reservation.id}) }}" class="btn btn-primary">PDF</a>
         </div>     
     </div>
 </div>

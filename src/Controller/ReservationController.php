@@ -2,18 +2,22 @@
 
 namespace App\Controller;
 
+use ApiPlatform\Core\OpenApi\Options;
 use App\Entity\Event;
 use App\Entity\Reservation;
+use App\Repository\ReservationRepository;
 /*use BaconQrCode\Encoder\QrCode;*/
 use DateTime;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
+use Dompdf\Dompdf;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Endroid\QrCode\QrCode;
 use Endroid\QrCode\Response\QrCodeResponse;
 use Endroid\QrCode\Writer\PngWriter;
+use Symfony\Component\HttpFoundation\Request;
 
 class ReservationController extends AbstractController
 {
@@ -45,6 +49,33 @@ class ReservationController extends AbstractController
             'Reservation' => $reservation,
         ]);
     }
+
+    #[Route('/print/{id}', name: 'app_Reservation_print')]
+    public function printReservations(ReservationRepository $reservationRepository,$id)
+    {
+
+        $reservation = $reservationRepository->findOneById($id);
+        $qrCode = $reservation->getQrCode();
+
+        $data = [
+            'imageSrc'  => $qrCode,
+            'name'         => 'John Doe',
+            'address'      => 'USA',
+            'mobileNumber' => '000000000',
+            'email'        => 'john.doe@email.com'
+        ];
+        $html =  $this->renderView('front/reservation/print.html.twig', ['data' => $data]);
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->render();
+        return new Response (
+            $dompdf->stream('resume', ["Attachment" => false]),
+            Response::HTTP_OK,
+            ['Content-Type' => 'application/pdf']
+        );
+
+    }
+
 
 
 
