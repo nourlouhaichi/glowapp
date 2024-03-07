@@ -2,27 +2,27 @@
 
 namespace App\Repository;
 
-use App\Entity\Reservation;
+use App\Entity\Reservationprog;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @extends ServiceEntityRepository<Reservation>
+ * @extends ServiceEntityRepository<Reservationprog>
  *
- * @method Reservation|null find($id, $lockMode = null, $lockVersion = null)
- * @method Reservation|null findOneBy(array $criteria, array $orderBy = null)
- * @method Reservation[]    findAll()
- * @method Reservation[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Reservationprog|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Reservationprog|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Reservationprog[]    findAll()
+ * @method Reservationprog[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ReservationRepository extends ServiceEntityRepository
+class ReservationprogRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, Reservation::class);
+        parent::__construct($registry, Reservationprog::class);
     }
 
 //    /**
-//     * @return Reservation[] Returns an array of Reservation objects
+//     * @return Reservationprog[] Returns an array of Reservationprog objects
 //     */
 //    public function findByExampleField($value): array
 //    {
@@ -36,7 +36,7 @@ class ReservationRepository extends ServiceEntityRepository
 //        ;
 //    }
 
-//    public function findOneBySomeField($value): ?Reservation
+//    public function findOneBySomeField($value): ?Reservationprog
 //    {
 //        return $this->createQueryBuilder('r')
 //            ->andWhere('r.exampleField = :val')

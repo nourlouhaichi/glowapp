@@ -1,5 +1,6 @@
 <?php
 
+
 namespace App\Controller;
 use App\Repository\RatingRepository;
 use App\Entity\CommentProg;
@@ -7,7 +8,7 @@ use App\Form\CommentFormType;
 use App\Form\RatingType;
 use App\Entity\Rating;
 use App\Entity\Programme;
-use App\Entity\Reservation;
+use App\Entity\Reservationprog;
 use phpDocumentor\Reflection\Types\Array_;
 use phpDocumentor\Reflection\Types\False_;
 use ProxyManager\Exception\ExceptionInterface;
@@ -17,19 +18,17 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityManagerInterface;
 
-
-class ReservationController extends AbstractController
+class ReservationprogController extends AbstractController
 {
     /**
-     * @Route("/reservation", name="reservation")
+     * @Route("/reservationprog", name="reservationprog")
      */
     public function index(): Response
     {
         return $this->render('reservation/index.html.twig', [
-            'controller_name' => 'ReservationController',
+            'controller_name' => 'ReservationprogController',
         ]);
     }
-
 
 
 
@@ -54,7 +53,6 @@ class ReservationController extends AbstractController
     //         $reservation->setIdprog($programme);
     //         $nbredeticketDemandé = (int)($req->get('nbrplace'));
     //         $reservation->setApprouve(0);
-
 
     //         if ($nbredeticketDemandé <= $programme->getPlaceDispo()) {
     //             $reservation->setNbrPlace($nbredeticketDemandé);
@@ -83,7 +81,7 @@ class ReservationController extends AbstractController
 public function reserverProg(Request $req, $id, EntityManagerInterface $entityManager, RatingRepository $ratingRepository)
 {
     $programme = $entityManager->getRepository(Programme::class)->find($id);
-    $reservation = new Reservation();
+    $reservationprog = new Reservationprog();
     $averageRating = $ratingRepository->calculateAverageRating($programme);
     $comment = new CommentProg();
     $commentForm = $this->createForm(CommentFormType::class, $comment);
@@ -93,13 +91,13 @@ public function reserverProg(Request $req, $id, EntityManagerInterface $entityMa
         $nbredeticketDemandé = (int)($req->get('nbrplace'));
         
         if ($nbredeticketDemandé <= $programme->getPlaceDispo()) {
-            $reservation->setIdprog($programme);
-            $reservation->setNbrPlace($nbredeticketDemandé);
-            $reservation->setApprouve(0);
+            $reservationprog->setIdprog($programme);
+            $reservationprog->setNbrPlace($nbredeticketDemandé);
+            $reservationprog->setApprouve(0);
             $programme->setPlaceDispo($programme->getPlaceDispo() - $nbredeticketDemandé);
 
             try {
-                $entityManager->persist($reservation);
+                $entityManager->persist($reservationprog);
                 $entityManager->flush();
                 return $this->redirectToRoute('app_programme_show', ['id' => $id]);
             } catch (ExceptionInterface $e) {
@@ -126,18 +124,17 @@ public function reserverProg(Request $req, $id, EntityManagerInterface $entityMa
 
 
 
-
     /**
-     * @Route("/listreservation/{id}", name="afficherReservation")
+     * @Route("/listreservationprog/{id}", name="afficherReservation")
      */
     public function listReservationByProg($id, EntityManagerInterface $entityManager)
     {
         $prog = $entityManager->getRepository(Programme::class)->find($id);
-        $listReservation = $entityManager->getRepository(Reservation::class)->findBy(array('idprog' => $prog));
+        $listReservationprog = $entityManager->getRepository(Reservationprog::class)->findBy(array('idprog' => $prog));
         $listProgsBack = $entityManager->getRepository(Programme::class)->findAll();
 
         return $this->render('reservation/listReservation.html.twig', [
-            'reservations' => $listReservation,
+            'reservations' => $listReservationprog,
             'progs' => $listProgsBack,
         ]);
     }
@@ -147,17 +144,15 @@ public function reserverProg(Request $req, $id, EntityManagerInterface $entityMa
 
 
 
-
     /**
      * @Route("/listreser", name="listReservationBack")
      */
-    public function listReservation(EntityManagerInterface $entityManager)
+    public function listReservationprog(EntityManagerInterface $entityManager)
     {
-        $listReservation = $entityManager->getRepository(Reservation::class)->findAll();
+        $listReservationprog = $entityManager->getRepository(Reservationprog::class)->findAll();
 
-        return $this->render('reservation/listReservationBack.html.twig', array('reservations' => $listReservation));
+        return $this->render('reservation/listReservationBack.html.twig', array('reservations' => $listReservationprog));
     }
-
 
 
 
@@ -169,16 +164,17 @@ public function reserverProg(Request $req, $id, EntityManagerInterface $entityMa
      */
     public function approuverReservation(int $id, EntityManagerInterface $entityManager)
     {
-        $reservation = $entityManager->getRepository(Reservation::class)->find($id);
+        $reservationprog = $entityManager->getRepository(Reservationprog::class)->find($id);
 
-        if (!$reservation) {
+        if (!$reservationprog) {
             throw $this->createNotFoundException('Reservation not found for id ' . $id);
         }
 
-        $reservation->setApprouve(true);
+        $reservationprog->setApprouve(true);
 
         $entityManager->flush();
 
         return $this->redirectToRoute('listReservationBack', ['id' => $id]);
     }
 }
+

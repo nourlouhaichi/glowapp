@@ -51,8 +51,8 @@ class Programme
     #[ORM\OneToMany(mappedBy: 'programe', targetEntity: Rating::class, cascade: ['remove'])]
     private Collection $ratings;
 
-    #[ORM\OneToMany(mappedBy: 'idprog', targetEntity: Reservation::class, cascade: ['remove'])]
-    private Collection $reservations;
+    // #[ORM\OneToMany(mappedBy: 'idprog', targetEntity: Reservation::class, cascade: ['remove'])]
+    // private Collection $reservations;
 
     #[ORM\Column]
     #[Assert\NotBlank(message: "Veuillez entrer la capacité !")]
@@ -64,6 +64,9 @@ class Programme
 
     #[ORM\OneToMany(mappedBy: 'progComment', targetEntity: CommentProg::class, cascade: ['remove'])]
     private Collection $comments;
+
+    #[ORM\OneToMany(mappedBy: 'idprog', targetEntity: Reservationprog::class)]
+    private Collection $reservationprogs;
    
 
     public function getId(): ?int
@@ -111,8 +114,8 @@ class Programme
 {
     $this->objectifs = new ArrayCollection();
     $this->ratings = new ArrayCollection();
-    $this->reservations = new ArrayCollection();
     $this->comments = new ArrayCollection();
+    $this->reservationprogs = new ArrayCollection();
 }
 public function __toString()
     {
@@ -186,35 +189,35 @@ public function removeRating(Rating $rating): static
     return $this;
 }
 
-/**
- * @return Collection<int, Reservation>
- */
-public function getReservations(): Collection
-{
-    return $this->reservations;
-}
+// /**
+//  * @return Collection<int, Reservation>
+//  */
+// public function getReservations(): Collection
+// {
+//     return $this->reservations;
+// }
 
-public function addReservation(Reservation $reservation): static
-{
-    if (!$this->reservations->contains($reservation)) {
-        $this->reservations->add($reservation);
-        $reservation->setIdprog($this);
-    }
+// public function addReservation(Reservation $reservation): static
+// {
+//     if (!$this->reservations->contains($reservation)) {
+//         $this->reservations->add($reservation);
+//         $reservation->setIdprog($this);
+//     }
 
-    return $this;
-}
+//     return $this;
+// }
 
-public function removeReservation(Reservation $reservation): static
-{
-    if ($this->reservations->removeElement($reservation)) {
-        // set the owning side to null (unless already changed)
-        if ($reservation->getIdprog() === $this) {
-            $reservation->setIdprog(null);
-        }
-    }
+// public function removeReservation(Reservation $reservation): static
+// {
+//     if ($this->reservations->removeElement($reservation)) {
+//         // set the owning side to null (unless already changed)
+//         if ($reservation->getIdprog() === $this) {
+//             $reservation->setIdprog(null);
+//         }
+//     }
 
-    return $this;
-}
+//     return $this;
+// }
 
 
 public function getPlaceDispo()
@@ -270,6 +273,36 @@ public function getPlaceDispo()
             // set the owning side to null (unless already changed)
             if ($comment->getProgComment() === $this) {
                 $comment->setProgComment(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservationprog>
+     */
+    public function getReservationprogs(): Collection
+    {
+        return $this->reservationprogs;
+    }
+
+    public function addReservationprog(Reservationprog $reservationprog): static
+    {
+        if (!$this->reservationprogs->contains($reservationprog)) {
+            $this->reservationprogs->add($reservationprog);
+            $reservationprog->setIdprog($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservationprog(Reservationprog $reservationprog): static
+    {
+        if ($this->reservationprogs->removeElement($reservationprog)) {
+            // set the owning side to null (unless already changed)
+            if ($reservationprog->getIdprog() === $this) {
+                $reservationprog->setIdprog(null);
             }
         }
 

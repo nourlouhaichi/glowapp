@@ -2,11 +2,11 @@
 
 namespace App\Entity;
 
-use App\Repository\ReservationRepository;
+use App\Repository\ReservationprogRepository;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: ReservationRepository::class)]
-class Reservation
+#[ORM\Entity(repositoryClass: ReservationprogRepository::class)]
+class Reservationprog
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -14,13 +14,12 @@ class Reservation
     private ?int $id = null;
 
     #[ORM\Column]
-    #[Assert\Positive(message:"the places num must be a positive number.")]
     private ?int $nbrplace = null;
 
     #[ORM\Column]
     private ?bool $approuve = null;
 
-    #[ORM\ManyToOne(inversedBy: 'reservations')]
+    #[ORM\ManyToOne(inversedBy: 'reservationprogs')]
     private ?Programme $idprog = null;
 
     public function getId(): ?int
