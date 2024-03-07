@@ -17,22 +17,23 @@
   <tbody>
     {% for cm in comments %}
     <tr>
-      <th scope="row">{{cm.Id()}}</th>
+      <th scope="row">{{ cm.id }}</th>
       <td>User</td>
-      <td>{{cm.getContenue()}}</td>
-      <td>{{ cm.getDatecr()|date('Y-m-d') }}</td>
-      <td><a href="{{path('app_comment_edit', {'id': cm.id}) }}"> modify</a></td>
+      <td>{{ cm.contenue }}</td>
+      <td>{{ cm.datecr|date('Y-m-d') }}</td>
+      <td><a href="{{ path('app_comment_edit', {'id': cm.id}) }}"> modify</a></td>
       <td>
         <form method="post" action="{{ path('app_comment_delete', {'id': cm.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
-    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cm.id) }}">
-    <button class="btn">Delete</button>
-</form></td>
+          <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ cm.id) }}">
+          <button class="btn">Delete</button>
+        </form>
+      </td>
     </tr>
     {% endfor %}
   </tbody>
 </table>
 <center>
-<form method="post" action="{{path('app_comment_new')}}">
+<form method="post" action="{{ path('app_comment_new') }}">
   <input type="hidden" name="_token">
   <button class="btn btn-primary">Add new Comment</button>
 </form>

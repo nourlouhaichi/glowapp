@@ -10,6 +10,58 @@
     });
 </script>
 {% block stylesheets %}
+<style>
+    /* Enhanced Search Bar */
+    .search-bar-container {
+        width: 50%;
+        margin: 1rem auto;
+        display: flex;
+        border: 2px solid #81C408; /* Primary color based on logo */
+        border-radius: 30px; /* Rounded corners */
+        overflow: hidden; /* Ensures inner elements conform to border radius */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow for depth */
+    }
+
+    .search-bar-container input {
+        flex-grow: 1;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px; /* Larger font size for readability */
+    }
+
+    .search-bar-container button {
+        background-color: #81C408; /* Matching primary color */
+        border: none;
+        color: white;
+        padding: 10px;
+        cursor: pointer; /* Hand cursor on hover */
+    }
+
+    /* "Add New Post" Button Enhancement */
+    .add-new-post-btn {
+        background-color: #81C408; /* Green color for visibility */
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px; /* Slightly rounded edges */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Consistent with search bar */
+        transition: all 0.3s ease;
+        text-transform: uppercase; /* Aesthetic choice for button text */
+        font-weight: bold;
+        margin-left: 15px; /* Space from the edge */
+        display: block; /* To enable margin auto to center */
+        margin-top: 20px;
+        margin-bottom: 20px;
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .add-new-post-btn:hover {
+        background-color: #218838; /* Darker shade on hover */
+        transform: translateY(-2px); /* Slight raise on hover */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15); /* Larger shadow on hover */
+    }
+</style>
     <style>
         .custom-alert {
             font-size: 14px; 
@@ -59,25 +111,27 @@
                             <a href="{{path('app_publications')}}" class="nav-item nav-link">Publications</a>
                             
                     </div>
-<div class="input-group w-50 mx-auto d-flex"> 
-    <input class="form-control me-1 py-1 px-0.5" type="search" value="" id="example-search-input" placeholder="search" aria-describedby="search-icon-1" style="font-size: 12px;"> <!-- Adjust 'px-2' to reduce horizontal padding -->
-    <span class="input-group-text p-1"> 
-        <i class="fa fa-search" aria-hidden="true"></i>
-    </span>
-</div>
-                                
-                    <form method="post" action="{{ path('app_publication_new') }}">
-    <input type="hidden" name="_token">
-    <button class="btn btn-primary">Add new post</button>
-
-</form>
                 </nav>
             </div>
         </div>
 <br> 
 <br>
 <br> 
+<br> 
+<br> 
+<br>
+<br> 
 <br>  
+<div class="search-bar-container"> 
+    <input type="search" id="example-search-input" placeholder="Search...">
+    <button>
+        <i class="fa fa-search" aria-hidden="true"></i>
+    </button>  
+</div>
+<form method="post" action="{{ path('app_publication_new') }}">
+    <input type="hidden" name="_token">
+<button class="add-new-post-btn">Add new post</button></form>
+
 <br> 
 <br>
 <br> 

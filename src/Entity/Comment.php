@@ -2,7 +2,6 @@
 
 namespace App\Entity;
 
-use Symfony\Component\Validator\Constraints as Assert;
 use App\Repository\CommentRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -18,8 +17,6 @@ class Comment
     #[ORM\Column(type: Types::DATE_MUTABLE)]
     private ?\DateTimeInterface $datecr = null;
 
-    #[Assert\NotBlank(message:"content required ")]
-    #[Assert\Length(min:3,minMessage:"too short ")]
     #[ORM\Column(length: 255)]
     private ?string $contenue = null;
 

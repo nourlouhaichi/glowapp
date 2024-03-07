@@ -30,9 +30,8 @@ class CommentController extends AbstractController
         $comment = new Comment();
         $form = $this->createForm(CommentType::class, $comment);
         $form->handleRequest($request);
-         $comment->setDatecr(new DateTime());
+        $comment->setDatecr(new DateTime());
         if ($form->isSubmitted() && $form->isValid()) {
-       
             $entityManager->persist($comment);
             $entityManager->flush();
 
@@ -92,5 +91,4 @@ class CommentController extends AbstractController
 
         return $this->redirectToRoute('app_publications', [], Response::HTTP_SEE_OTHER);
     }
-
 }

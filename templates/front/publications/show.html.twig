@@ -101,6 +101,7 @@
             </div>
         </div>
     </div>
+    
 </div>
 </center>
 <br>
@@ -129,8 +130,16 @@
                             </div>
                         </div>
                     </div>
+                    
                     <br>
+
  {% endfor %}
  <br>
 {{ include('front/comment/_form.html.twig') }}
+    <!-- Your existing template code -->
+
+    {% include 'front/comment/_form.html.twig' with {
+        'prohibitedWords': ['badword1', 'badword2', 'badword3']  // List of prohibited words
+    } %}
+
 {% endblock %}
