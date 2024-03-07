@@ -3,14 +3,17 @@
 namespace App\Controller;
 use App\Entity\Produit;
 use App\Repository\ProduitRepository;
+use Stripe\Stripe;
+use Stripe\Checkout\Session as StripeSession;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 
-
- #[Route("/cart", name:"cart_")]
+#[Route("/cart", name:"cart_")]
  
 class CartController extends AbstractController
 {
@@ -105,5 +108,62 @@ class CartController extends AbstractController
         $session->remove("panier");
 
         return $this->redirectToRoute("cart_index");
+    }
+     #[Route('/checkout', name: "checkout")]
+     public function checkout(SessionInterface $session, ProduitRepository $produitRepository): Response
+     {
+
+         Stripe::setApiKey($_ENV['STRIPE_SECRET_KEY']);
+
+         $panier = $session->get("panier", []);
+         $dataPanier = [];
+         $total = 0;
+
+         $lineItems = [];
+
+         foreach ($panier as $ref => $quantite) {
+             $produit = $produitRepository->find($ref);
+
+
+             $totalPrice = $produit->getPrice() * $quantite * 100;
+
+             // Add product to line items
+             $lineItems[] = [
+                 'price_data' => [
+                     'currency' => 'usd', // Change to your currency if needed
+                     'product_data' => [
+                         'name' => $produit->getName(),
+                     ],
+                     'unit_amount' => $totalPrice,
+                 ],
+                 'quantity' => $quantite,
+             ];
+
+             $total += $totalPrice;
+         }
+
+         $session = StripeSession::create([
+             'payment_method_types' => ['card'],
+             'line_items' => $lineItems,
+             'mode' => 'payment',
+             'success_url' => $this->generateUrl('cart_checkout_success',[],UrlGeneratorInterface::ABSOLUTE_URL),
+             'cancel_url' =>  $this->generateUrl('cart_checkout_cancel',[],UrlGeneratorInterface::ABSOLUTE_URL),
+         ]);
+
+         return new RedirectResponse($session->url, 303);
+     }
+
+    #[Route('/checkout/success', name: 'checkout_success')]
+    public function checkoutSuccess(): Response
+    {
+        // Render the success template
+        return $this->render('front/cart/checkout_success.html.twig');
+    }
+
+    #[Route('/checkout/cancel', name: 'checkout_cancel')]
+    public function checkoutCancel(): Response
+    {
+        // Render the cancel template
+        return $this->render('front/cart/checkout_cancel.html.twig');
     }
 }

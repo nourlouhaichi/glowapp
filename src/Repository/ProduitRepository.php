@@ -5,6 +5,7 @@ namespace App\Repository;
 use App\Entity\Produit;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Doctrine\ORM\Query;
 
 /**
  * @extends ServiceEntityRepository<Produit>
@@ -28,6 +29,25 @@ class ProduitRepository extends ServiceEntityRepository
             ->getQuery()
             ->getResult();
     }
+
+    public function paginationQuery()
+    {
+        return $this->createQueryBuilder('p')
+            ->orderBy('p.ref', 'ASC')
+           
+            ->getQuery()
+            
+        ;
+    }
+
+    public function paginationCQuery($categorieId): Query
+    {
+        return $this->createQueryBuilder('p')
+            ->where('p.categorieProd = :categorieId')
+            ->setParameter('categorieId', $categorieId)
+            ->getQuery();
+    }
+    
 
 //    /**
 //     * @return Produit[] Returns an array of Produit objects

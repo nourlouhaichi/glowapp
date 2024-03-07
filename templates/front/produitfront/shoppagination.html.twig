@@ -1,0 +1,18 @@
+{# templates/pagination/custom_pagination.html.twig #}
+{% if pageCount > 1 %}
+    <div class="pagination d-flex justify-content-center mt-5">
+        {% if previous is defined %}
+            <a href="{{ path(route, query|merge({(pageParameterName): 1})) }}" class="rounded">&laquo;</a>
+        {% endif %}
+        {% for page in pagesInRange %}
+            {% if page != current %}
+                <a href="{{ path(route, query|merge({(pageParameterName): page})) }}" class="rounded">{{ page }}</a>
+            {% else %}
+                <a href="#" class="active rounded">{{ page }}</a>
+            {% endif %}
+        {% endfor %}
+        {% if next is defined %}
+            <a href="{{ path(route, query|merge({(pageParameterName): pageCount})) }}" class="rounded">&raquo;</a>
+        {% endif %}
+    </div>
+{% endif %}

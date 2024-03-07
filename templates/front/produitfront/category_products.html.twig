@@ -1,6 +1,6 @@
 {% extends 'front/frontbase.html.twig' %}
 
-{% block title %}Products{% endblock %}
+{% block title %}Shop here{% endblock %}
 
 {% block body %}
 <div class="container px-0">
@@ -35,11 +35,12 @@
 <!-- Navbar End -->
 
 <!-- Single Page Header start -->
+
 <div class="container-fluid page-header py-5">
     <h1 class="text-center text-white display-6">Shop</h1>
     <ol class="breadcrumb justify-content-center mb-0">
         <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="#">Pages</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('cart_index') }}">Cart</a></li>
         <li class="breadcrumb-item active text-white">Shop</li>
     </ol>
 </div>
@@ -68,18 +69,22 @@
 <!-- Fruits Shop Start-->
 <div class="container-fluid fruite py-5">
     <div class="container py-5">
-        <h1 class="mb-4">Products in {{ categories.nomCa }}</h1>
+        <h1 class="mb-4"> Our Shop</h1>
         <div class="row g-4">
             <div class="col-lg-12">
                 <div class="row g-4">
+                    
                     <div class="col-xl-3">
                         <div class="input-group w-100 mx-auto d-flex">
                             <input class="form-control p-3" type="search" value="search" id="example-search-input" placeholder="keywords" aria-describedby="search-icon-1">
                             <span class="input-group-text p-3">
-                                <button class="fa fa-search" id="searchButton">Search</button>
+                               <button class="btn btn-warning py-2 border-left-0 border text-white" type="button" id="searchButton">
+                                <i class="fa fa-search"></i> <span class="text-white">Search</span>
+                                </button>
                             </span>
                         </div>
                     </div>
+                    
                     <div class="col-6"></div>
                     <div class="col-xl-3">
                         <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
@@ -105,13 +110,13 @@
                                 <div class="mb-3">
                                     <h4>Categories</h4>
                                     <ul class="list-unstyled fruite-categorie">
-                                     {% for categorie in categories %}
-                                          <li>
-                                              <div class="d-flex justify-content-between fruite-name">
-                                              <a href="{{ path('app_category_products', {'id': categorie.id}) }}">{{ categorie.nomCa }}</a>
-                                              </div>
-                                            </li>
-                                    {% endfor %}
+                                        {% for categorie in categories %}
+                                        <li>
+                                            <div class="d-flex justify-content-between fruite-name">
+                                            <a href="{{ path('app_category_products', {'id': categorie.id}) }}">{{ categorie.nomCa }}</a>
+                                            </div>
+                                        </li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                                 <div class="col-lg-12">
@@ -132,35 +137,34 @@
                     </div>
                     <div class="col-lg-9">
                         <div class="row g-4 justify-content-center" id="productsContainer">
-                           <div class="row g-4">
-                        {% for produit in produits %}
-                            <div class="col-md-6 col-lg-6 col-xl-4">
-                                <div class="rounded position-relative fruite-item">
-                                    <div class="fruite-img">
-                                        <img src="{{ asset('uploads/' ~ produit.image) }}" class="img-fluid w-100 rounded-top" alt="{{ produit.name }}">
-                                    </div>
-                                    <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Fruits</div>
-                                    <div class="p-4 border border-secondary border-top-0 rounded-bottom">
-                                        <h4>{{ produit.name }}</h4>
-                                        <p>{{ produit.description }}</p>
-                                        <div class="d-flex justify-content-between flex-lg-wrap">
-                                            <p class="text-dark fs-5 fw-bold mb-0">$ {{ produit.price }} / kg</p>
-                                            <a href="#" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        {% endfor %}
-                    </div>
-                        <div class="col-12">
-                            <div class="pagination d-flex justify-content-center mt-5">
-                                <a href="#" class="rounded">&laquo;</a>
-                                <a href="#" class="active rounded">1</a>
-                                <a href="#" class="rounded">2</a>
-                                <a href="#" class="rounded">3</a>
-                                <a href="#" class="rounded">&raquo;</a>
-                            </div>
+                            {% for produit in pagination %}
+                            {% if loop.index % 3 == 1 %}
+                            </div><div class="row g-4 justify-content-center">
+                            {% endif %}
+                            <div class="col-md-6 col-lg-4 col-xl-3">
+    <div class="rounded position-relative fruite-item">
+        <div class="fruite-img">
+            <img src="{{ asset('uploads/' ~ produit.image) }}" class="img-fluid w-100 rounded-top" alt="{{ produit.name }}" style="height: 200px;">
+        </div>
+        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;"></div>
+        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+            <h4>{{ produit.name }}</h4>
+            <p class="description" style="height: 4em; overflow: hidden;">{{ produit.description }}</p>
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <p class="text-dark fs-5 fw-bold mb-0">TND {{ produit.price }} / </p>
+                    <a href="{{ path('cart_add', {ref: produit.ref}) }}" class="fa fa-shopping-bag me-2 text-primary fa-2x"></a>
+                </div>
+                <a href="{{ path('app_produitfront_details', {ref: produit.ref}) }}" class="btn btn-outline-primary mt-2">See More</a>
+            </div>
+        </div>
+    </div>
+</div>
+                            {% endfor %}
+                            {{ knp_pagination_render(pagination, 'front/produitfront/shoppagination.html.twig') }}
+
                         </div>
+                        
                     </div>
                 </div>
             </div>

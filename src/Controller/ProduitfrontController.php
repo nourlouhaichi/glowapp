@@ -12,39 +12,53 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Knp\Component\Pager\PaginatorInterface;
 
 class ProduitfrontController extends AbstractController
 {
     #[Route('/produitfront', name: 'app_produitfront')]
-    public function index(ProduitRepository $produitRepository, CategorieProdRepository $categorieProdRepository, Request $request): Response
+    public function index(ProduitRepository $produitRepository, CategorieProdRepository $categorieProdRepository ,Request $request,PaginatorInterface $paginator): Response
     {
-        $searchQuery = $request->query->get('search');
         $produits = $produitRepository->findAll();
         $categories = $categorieProdRepository->findAll();
+       
 
-        if ($searchQuery) {
-            // Filter products based on search query
-            $produits = $produitRepository->searchProducts($searchQuery);
-        }
+        $pagination = $paginator->paginate(
+            $produitRepository->paginationQuery(),
+            $request->query->get('page',1),
+            5
+        );
+
 
         return $this->render('front/produitfront/index.html.twig', [
-            'produits' => $produits,
+            'pagination'=>$pagination,
+            
             'categories' => $categories,
         ]);
     }
 
 
     #[Route('/categorie/{id}', name: 'app_category_products')]
-    public function categoryProducts($id, ProduitRepository $produitRepository, CategorieProdRepository $categorieProdRepository): Response
-    {
-       $produits = $produitRepository->findByCategory($id);
-       $categories = $categorieProdRepository->find($id);
-
-       return $this->render('front/produitfront/category_products.html.twig', [
-           'categories' => $categories,
-           'produits' => $produits,
-       ]);
+    public function categoryProducts($id, ProduitRepository $produitRepository, CategorieProdRepository $categorieProdRepository, Request $request, PaginatorInterface $paginator): Response
+{
+    $categories = $categorieProdRepository->find($id);
+    $produits = $produitRepository->findByCategory($id);
+    if (!$categories) {
+        throw $this->createNotFoundException('La catégorie n\'existe pas.');
     }
+
+    $pagination = $paginator->paginate(
+        $produitRepository->paginationCQuery($id),
+        $request->query->get('page', 1),
+        3
+    );
+
+    return $this->render('front/produitfront/category_products.html.twig', [
+        'categories' => $categories,
+        'pagination' => $pagination,
+    ]);
+}
+ 
     #[Route('/produitfront/{ref}', name: 'app_produitfront_details', methods: ['GET'])]
     public function produitfrontdetails(Produit $produit,CategorieProdRepository $categorieProdRepository): Response
     {
@@ -53,7 +67,6 @@ class ProduitfrontController extends AbstractController
             'categories' => $categorieProdRepository->findAll(),
         ]);
     }
-
     #[Route('/tri-prix', name: 'tri_prix')]
     public function triPrix(Request $request, ProduitRepository $produitRepository,CategorieProdRepository $categorieProdRepository): Response
     {

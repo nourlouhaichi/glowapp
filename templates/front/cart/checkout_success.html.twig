@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Payment Success{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <h1>Payment Successful!</h1>
+        <p>Your payment has been processed successfully.</p>
+        <a href="{{ path('app_produitfront') }}" class="btn btn-primary">Continue Shopping</a>
+    </div>
+{% endblock %}

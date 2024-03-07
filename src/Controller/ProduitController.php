@@ -5,6 +5,7 @@ use Dompdf\Dompdf;
 use Dompdf\Options;
 use App\Entity\Produit;
 use App\Form\Produit1Type;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use App\Repository\ProduitRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -19,11 +20,28 @@ class ProduitController extends AbstractController
     #[Route('/', name: 'app_produit_index', methods: ['GET'])]
     public function index(ProduitRepository $produitRepository): Response
     {
+        $lowQuantityThreshold = 3;
+
         return $this->render('back/produit/index.html.twig', [
             'produits' => $produitRepository->findAll(),
+            'lowQuantityThreshold' => $lowQuantityThreshold,
         ]);
     }
+    #[Route('/api/produits', name: 'api_produits')]
+    public function apiProduits(ProduitRepository $produitRepository): Response
+    {
+        $produits = $produitRepository->findAll();
+        $data = [];
 
+        foreach ($produits as $produit) {
+            $data[] = [
+                'name' => $produit->getName(),
+                'quantity' => $produit->getQuantity(),
+            ];
+        }
+
+        return $this->json($data);
+    }
     #[Route('/new', name: 'app_produit_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -53,6 +71,7 @@ class ProduitController extends AbstractController
             }
             $entityManager->persist($produit);
             $entityManager->flush();
+            flash()->addSuccess('Produit ajouté avec succès !');
 
             return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
         }
@@ -62,42 +81,45 @@ class ProduitController extends AbstractController
             'form' => $form,
         ]);
     }
+        
+       
+        
     #[Route('/print', name: 'app_produit_print', methods: ['GET'])]
-public function print(ProduitRepository $produitRepository)
-{      
-    define('DOMPDF_ENABLE_DEBUG', true);
-    // Get all products from the repository
-    $produits = $produitRepository->findAll();
-
-    // Configure Dompdf options
-    $pdfOptions = new Options();
-    $pdfOptions->set('defaultFont', 'Arial');
-
-    // Instantiate Dompdf
-    $dompdf = new Dompdf($pdfOptions);
-
-    // Render the HTML template to generate PDF content
-    $html = $this->renderView('back/produit/print.html.twig', [
-        'produits' => $produits
-    ]);
-
-    // Load HTML content into Dompdf
-    $dompdf->loadHtml($html);
-
-    // (Optional) Set paper size and orientation
-    $dompdf->setPaper('A4', 'portrait');
-
-    // Render PDF content
-    $dompdf->render();
-
-    // Output PDF content as response
-    $response = new Response($dompdf->output());
-    $response->headers->set('Content-Type', 'application/pdf');
-
-    return $response;
-}
-
-
+    public function print(ProduitRepository $produitRepository)
+    {      
+        // Get all products from the repository
+        $produits = $produitRepository->findAll();
+    
+        // Render the HTML template to generate PDF content
+        $html = $this->renderView('back/produit/print.html.twig', [
+            'logoPath' => 'public/front/img/logoglowapp.png', // Path to your logo image
+            'produits' => $produits 
+        ]);
+    
+        // Configure Dompdf options
+        $pdfOptions = new Options();
+        $pdfOptions->set('isRemoteEnabled', true);
+    
+        // Instantiate Dompdf with the configured options
+        $dompdf = new Dompdf($pdfOptions);
+    
+        // Load HTML content into Dompdf
+        $dompdf->loadHtml($html);
+    
+        // (Optional) Set paper size and orientation
+        $dompdf->setPaper('A4', 'portrait');
+    
+        // Render PDF content
+        $dompdf->render();
+    
+        // Output PDF content as response
+        $response = new Response($dompdf->output());
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'attachment; filename=my_pdf.pdf');
+    
+        return $response;
+    }
+    
     #[Route('/{ref}', name: 'app_produit_show', methods: ['GET'])]
     public function show(Produit $produit): Response
     {
@@ -114,7 +136,7 @@ public function print(ProduitRepository $produitRepository)
         // $form->handleRequest($request); bch man5srhomich ya3ni les donnees yab9o persisté
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
-
+            flash()->addSuccess('Produit modifier avec succès ! Vous êtes prêt à passer à létape suivante.');
             return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
         }
 
@@ -134,12 +156,9 @@ public function print(ProduitRepository $produitRepository)
 
         return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
     }
-  
-  
 
 
-
-    
+   
     #[Route('/dql', name: 'dql', methods: ['POST'])]//recherche avec dql
     public function dql(EntityManagerInterface $em, Request $request, ProduitRepository $produitRepository):Response
     {
