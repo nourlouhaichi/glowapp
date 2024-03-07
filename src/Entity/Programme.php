@@ -117,7 +117,7 @@ class Programme
 public function __toString()
     {
         
-        return $this->categorie_pro;
+        return $this->categorypro;
     }
 
 public function getImage(): ?string

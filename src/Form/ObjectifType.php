@@ -32,7 +32,7 @@ class ObjectifType extends AbstractType
                 'required' => false,
                 'empty_data' => '',])
             // ->add('programme')
-            ->add('programme', EntityType::class, ['class' => Programme::class,'choice_label' => 'categorie_pro',]);
+            ->add('programme', EntityType::class, ['class' => Programme::class,'choice_label' => 'titre_pro',]);
         ;
     }
 

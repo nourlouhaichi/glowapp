@@ -1,34 +1,63 @@
 {% extends 'front/basefrontone.html.twig' %}
 
+
+
+
+
+
 {% block title %}Programme index
 {% endblock %}
 
 {% block body %}
 
+	<style>
+
+
+		.icon-search-container i.fa-search {
+			font-size: 20px;
+			transition: transform 0.3s ease; /* Smooth transition for hover effect */
+		}
+
+		.icon-search-container:hover i.fa-search {
+			transform: scale(1.1); /* Scale up the icon on hover */
+		}
+
+
+		/* Add more custom styles here */
+	</style>
+
 
 	<div class="container-fluid py-5 mt-5">
 		<div class="container-fluid fruite py-5">
 			<div class="container py-5">
-				<div class="header_prog">
-					<h1 class="fw-bold mb-0">Programmes disponibles :</h1>
+
+				<div class="d-flex flex-row g-1">
+					<h1 class="me-auto">Available Programs :</h1>
 					<button type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4  rounded-pill text-white h-100">
-						<a href="{{ path('app_programme_new') }}" style="color: white">Create new</a>
+						<a href="{{ path('app_programme_new') }}" style="color: white"><i style="color: white" class="fa fa-plus me-2"></i> Create new</a>
+					</button>
+					<button style="margin-left: 10px" type="submit" class="btn btn-primary border-2 border-secondary py-3 px-4  rounded-pill text-white h-100">
+						<a href="{{ path('app_objectif_new') }}" style="color: white"><i style="color: white" class="fa fa-bullseye me-2"></i> Add objective</a>
 					</button>
 				</div>
+
+
 				<div class="row g-4">
 					<div class="col-lg-12">
-						<div class="row g-4">
-							<div class="col-xl-3">
-								<div class="input-group w-100 mx-auto d-flex align-items-stretch">
-									<input type="search" class="form-control" placeholder="keywords" aria-label="Search" aria-describedby="search-icon-1">
-									<span id="search-icon-1" class="input-group-text">
-										<i class="fa fa-search"></i>
-									</span>
+
+							<div style="margin: 10px; width: 100%">
+								<div style="width: 100%; display: flex;" class="w-100 mx-auto">
+									<input style="flex-grow: 1; height: 50px; border-top-left-radius: .375rem; border-bottom-left-radius: .375rem;" type="search" class="form-control" placeholder="keywords" aria-label="Search" aria-describedby="search-icon-1">
+									<button id="search-icon-1" class="btn btn-primary border-2 border-secondary  btn-default" style="margin-left: -15px; border-radius: 30px; height: 50px; border-top-left-radius: .375rem; border-bottom-left-radius: .375rem;">
+										 <span id="search-icon-1" class="icon-search-container">
+                					<i class="fa fa-search" style="color: white;"></i>
+           							 </span>
+									</button>
 								</div>
 							</div>
-							<div class="col-6"></div>
 
-						</div>
+
+
 						<div class="row g-4">
 							<div class="col-lg-3">
 								<div class="row g-4">
@@ -37,6 +66,7 @@
 									<div class="row g-4">
 										<div class="col-lg-12">
 											<div class="mb-3">
+
 												<h4>Categories</h4>
 												<ul class="list-unstyled fruite-categorie">
 													{% for category in categories %}
@@ -55,8 +85,6 @@
 										</div>
 
 									</div>
-
-
 								</div>
 
 							</div>
@@ -65,23 +93,31 @@
 								<div class="row g-4 justify-content-center">
 									{% for programme in programmes %}
 										<div class="col-md-6 col-lg-6 col-xl-4">
-											<div class="rounded position-relative fruite-item">
+											<div  style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); padding: 10px" class="d-flex flex-column  rounded position-relative fruite-item gap-1">
+
+
 												<div class="fruite-img">
-													<img src="{{ asset('Uploads/Image/' ~ programme.image) }}" class="img-fluid w-100 rounded-top" alt="">
+													<img src="{{ asset('Uploads/Image/' ~ programme.image) }}" class="img-fluid w-100 rounded-top" style="min-height: 300px;max-height: 400px ;object-fit: cover;" alt="">
+													<div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 20px; left: 20px; ">Nutritionist/Coach</div>
 												</div>
-												<div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">Nutritionist/Coach</div>
-												<div class="p-4 border border-secondary border-top-0 rounded-bottom">
-													<h4>{{programme.titrePro}}</h4>
-													<p>{{ programme.planPro }}</p>
-													<div class="d-flex justify-content-between flex-lg-wrap">
-														<p class="text-dark fs-5 fw-bold mb-0">{{ programme.datePro ? programme.datePro|date('Y-m-d') : '' }}</p>
-														<a href="{{ path('app_programme_show', {'id': programme.id}) }}" class="btn border border-secondary rounded-pill px-3 text-primary">
-															<i class="fa fa-shopping-bag me-2 text-primary"></i>
-															show details</a>
 
 
+												<div class="d-flex flex-column">
+													<div style="font-size: 16px; color: grey ; font-weight: bold">{{programme.titrePro}}</div>
+													<p style="font-size: 12px">{{ programme.planPro }}</p>
+
+													<div class="d-flex flex-column">
+														<div class="d-flex justify-content-between  flex-lg-wrap gap-1">
+															<p class=" fs-5 fw-bold mb-0">{{ programme.datePro ? programme.datePro|date('Y-m-d') : '' }}</p>
+															<a href="{{ path('app_programme_show', {'id': programme.id}) }}" class="btn border border-secondary rounded-pill px-3 text-primary">
+																<i class="fa fa-shopping-bag me-2 text-primary"></i>
+																show details</a>
+																
+														</div>
 													</div>
 												</div>
+
+
 											</div>
 										</div>
 

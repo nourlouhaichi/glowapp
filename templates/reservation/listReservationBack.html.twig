@@ -78,7 +78,7 @@
                         <td>{{ l.idprog.titrePro }}</td>
                         <td>{{ l.nbrplace }}</td>
                         <td>{{ l.idprog.prix * l.nbrplace }} DT</td>
-                        <td><img src="{{ asset('Uploads/Image/' ~ l.idprog.image) }}" height="80" width="80" class="img-lg"></td>
+                        <td><img src="{{ asset('Uploads/Image/' ~ l.idprog.image) }}" height="50" width="50" class="img-lg"></td>
                         {% if l.approuve == 1 %}
                         <td style="background-color: #0b2e13">Approved</td>
                         {% elseif l.approuve == 0 %}
