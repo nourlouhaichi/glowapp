@@ -1,0 +1,13 @@
+{% extends 'front/frontbase.html.twig' %}
+
+{% block title %}GlowApp{% endblock %}
+
+
+{% block body %}
+    <h1>Edit Publication</h1>
+
+    {{ include('front/comment/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_publications') }}">back to list</a>
+
+{% endblock %}

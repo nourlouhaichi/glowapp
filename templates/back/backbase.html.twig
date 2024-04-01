@@ -66,21 +66,29 @@
                 <div class="navbar-nav w-100">
                     <a href="{{ path('app_home_admin') }}" class="nav-item nav-link "><i class="fa fa-tachometer-alt me-2"></i>Dashboard</a>
                     <a href="{{ path('app_user_admin_index') }}" class="nav-item nav-link"><i class="fa fa-user me-2"></i>Users</a>
-                    <a href="widget.html" class="nav-item nav-link"><i class="fa fa-shopping-basket me-2"></i>Products</a>
-                    <a href="form.html" class="nav-item nav-link"><i class="fa fa-file-image me-2"></i>Publications</a>
-                    <a href="table.html" class="nav-item nav-link"><i class="fa fa-comments me-2"></i>Opinions</a>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-user me-2"></i>Programs</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-shopping-basket me-2"></i>Products</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="button.html" class="dropdown-item">Programs</a>
-                            <a href="button.html" class="dropdown-item">Objectives</a>
+                            <a href="{{ path('app_produit_index') }}" class="dropdown-item">Products</a>
+                            <a href="{{ path('app_categorie_prod_index') }}" class="dropdown-item">Category</a>
+                        </div>
+                    </div>
+                    <a href="{{ path('backapp_publications') }}" class="nav-item nav-link"><i class="fa fa-file-image me-2"></i>Publications</a>
+                    <a href="{{ path('app_comment_index') }}" class="nav-item nav-link"><i class="fa fa-comments me-2"></i>Opinions</a>
+                    <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-heartbeat me-2"></i>Programs</a>
+                        <div class="dropdown-menu bg-transparent border-0">
+                            <a href="{{ path('app_programme_admin_index') }}" class="dropdown-item">Programs</a>
+                            <a href="{{ path('app_Objectif_admin_index') }}" class="dropdown-item">Objectives</a>
+                            <a href="{{ path('listReservationBack') }}" class="dropdown-item">Reservations</a>
                         </div>
                     </div>
                     <div class="nav-item dropdown">
-                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-user me-2"></i>Events</a>
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown"><i class="fa fa-calendar me-2"></i>Events</a>
                         <div class="dropdown-menu bg-transparent border-0">
-                            <a href="button.html" class="dropdown-item">Events</a>
-                            <a href="button.html" class="dropdown-item">Reservations</a>
+                            <a href="{{ path('app_event_admin_index') }}" class="dropdown-item">Events</a>
+                            <a href="{{ path('app_reservation_admin_index') }}" class="dropdown-item">Reservations</a>
+                            <a href="{{ path('app_category_index') }}" class="dropdown-item">Category</a>
                         </div>
                     </div>
                     

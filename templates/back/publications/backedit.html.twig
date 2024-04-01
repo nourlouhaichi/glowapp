@@ -1,0 +1,12 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}GlowApp{% endblock %}
+
+{% block body %}
+
+    <h1>Edit Publication</h1>
+
+    {{ include('back/publications/_form.html.twig', {'button_label': 'Update'}) }}
+
+
+{% endblock %}

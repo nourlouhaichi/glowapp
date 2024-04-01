@@ -1,0 +1,40 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}Reservation index{% endblock %}
+
+{% block body %}
+    <center><h1 class="mb-3 text-warning">Reservation</h1></center>
+    <div class="container d-flex justify-content-end">
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Event</th>
+                <th>CreateAt</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for reservation in reservations %}
+            <tr>
+                <td>{{ reservation.id }}</td>
+                <td>{{ reservation.event }}</td>
+                <td>{{ reservation.createAt ? reservation.createAt|date('Y-m-d H:i:s') : '' }}</td>
+                <td>
+                    <a class="btn btn-primary rounded-pill m-2" href="{{ path('app_reservation_admin_show', {'id': reservation.id}) }}"><i class="fa fa-eye"></i></a>
+                    <a class="btn btn-warning rounded-pill m-2" href="{{ path('app_reservation_admin_edit', {'id': reservation.id}) }}"><i class="fa fa-pen"></i></a>
+                </td>
+
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    <a href="{{ path('app_reservation_admin_new') }}">Create new</i></a>
+
+    
+{% endblock %}

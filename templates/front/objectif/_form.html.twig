@@ -1,0 +1,128 @@
+<style>
+	.label{
+		font-weight: bold;
+		font-size: 20px;
+		margin-bottom: 5px;
+	}
+
+	.special-form{
+		margin: 5px ; padding: 5px
+	}
+	.special-page-header {
+		position: relative;
+		background: linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)), url(https://img.freepik.com/photos-gratuite/arrangement-plat-halteres-ecouteurs_23-2148259077.jpg?t=st=1709835166~exp=1709838766~hmac=d8a890b18cac147074debc65ce37914f95dc08018bf3268f0e0714db7632a7b3&w=996);
+		background-position: center center;
+		background-repeat: no-repeat;
+		background-size: cover;
+	}
+
+</style>
+<div class="container px-0">
+                <nav class="navbar navbar-light bg-white navbar-expand-xl">
+                    <a href="{{ path('app_home_member') }}"><img src="{{asset('front/img/logoglowapp.png')}}" length='150px' width='150px'></a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto">
+                            <a href="{{ path('app_home_member') }}" class="nav-item nav-link">Home</a>
+                            <a href="{{ path('app_produitfront') }}" class="nav-item nav-link">Shop</a>
+                            <a href="{{ path('app_event') }}" class="nav-item nav-link">Events</a>
+                            <a href="{{ path('app_programme_index') }}" class="nav-item nav-link active" >Programs</a>
+                            <a href="{{ path('app_publications') }}" class="nav-item nav-link">Publications</a>
+                        </div>
+                        {# <div class="d-flex m-3 me-0">
+                         <a href="{{ path('profile_member') }}" class="my-auto">
+                                <i class="fas fa-user fa-2x"></i>
+                            </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="submit" class="btn btn-secondary py-3 w-100 mb-2"> <a href="{{ path('app_logout') }}">Log Out</a></button>
+                           
+                           
+                        </div> #}
+                        <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <img class="rounded-circle me-lg-2" src="{{ asset('uploads/user/' ~ app.user.profilePicture) }}"alt="" style="width: 40px; height: 40px;">
+                            
+                            <span class="d-none d-lg-inline-flex">{{ app.user.lastname}} {{ app.user.firstname}}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="{{ path('profile_member') }}" class="dropdown-item">My Profile</a>
+                            {% if 'ROLE_ADMIN' in app.user.roles %}
+                            <a href="{{ path('app_home_admin') }}" class="dropdown-item">Back Office</a>
+                            {% endif %}
+                            {# <a href="#" class="dropdown-item">Settings</a> #}
+                            <a href="{{ path('app_logout') }}" class="dropdown-item">Log Out</a>
+                        </div>
+                    </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar End -->
+
+<div style="margin-top: 30px; height: 400px" class="container-fluid special-page-header py-5">
+	<div style="display: flex ; height: 100%; width: 100%">
+		<h1 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);  text-transform: capitalize; font-size: 55px; color: white;font-weight: bold; margin: auto 30px" class="">Add New Objective</h1>
+	</div>
+</div>
+{# {{form_start(form, {'attr': {'novalidate': 'novalidate'}} )}}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }} #}
+<div class="container-fluid py-5 mt-5 ">
+
+	<div class="form-container">
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+
+{# <div class="form-group">
+    {{ form_label(form.cin, 'CIN', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.cin, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.cin) }}
+</div> #}
+
+<div class="form-group">
+    {{ form_label(form.objectif_o, 'Objective', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.objectif_o, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.objectif_o) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.description_o, 'Description', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.description_o, {'attr': {'class': 'form-control' }}) }}
+    {{ form_errors(form.description_o) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.categorie_o, 'Category', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.categorie_o, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.categorie_o) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.poid_o, 'Weight', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.poid_o, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.poid_o) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.taille_o, 'Height', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.taille_o, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.taille_o) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.programme, 'Program', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.programme, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.programme) }}
+</div>
+
+<div style="display: flex; width: 100%">
+			<button class="btn btn-primary border-2 border-secondary  rounded-pill text-white h-100" style="width: 120px; margin: 0 auto" type="submit" class="btn btn-primary">
+				<i style="color: white" class="fa fa-save me-2"></i>
+					{{ button_label|default('Save') }}
+			</button>
+		</div>
+
+{{ form_end(form) }}
+</div>
+</div>

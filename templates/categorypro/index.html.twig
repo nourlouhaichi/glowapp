@@ -1,0 +1,50 @@
+{# {% extends 'front/basefrontone.html.twig' %} #}
+
+{% block title %}Categorypro index{% endblock %}
+
+{% block body %}
+    <h1>Categorypro index</h1>
+    </br>
+     </br> </br> </br> </br> </br> </br>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <!-- Other navbar content -->
+
+    <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Categories
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            {% for categorypro in categorypros %}
+                <a class="dropdown-item" href="{{ path('show_programs_by_category', {'categoryId': categorypro.id}) }}">{{ categorypro.name }}</a>
+            {% endfor %}
+        </div>
+    </div>
+</nav>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for categorypro in categorypros %}
+            <tr>
+                <td>{{ categorypro.id }}</td>
+                <td>{{ categorypro.name }}</td>
+                <td>
+                    <a href="{{ path('app_categorypro_show', {'id': categorypro.id}) }}">show</a>
+                    <a href="{{ path('app_categorypro_edit', {'id': categorypro.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_categorypro_new') }}">Create new</a>
+{% endblock %}

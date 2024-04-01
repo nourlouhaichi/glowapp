@@ -1,0 +1,53 @@
+{# {{form_start(form, {'attr': {'novalidate': 'novalidate'}} )}}
+    {{ form_widget(form) }}
+    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_end(form) }} #}
+<div class="form-container">
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+
+{# <div class="form-group">
+    {{ form_label(form.cin, 'CIN', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.cin, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.cin) }}
+</div> #}
+
+<div class="form-group">
+    {{ form_label(form.objectif_o, 'Objectif', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.objectif_o, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.objectif_o) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.description_o, 'Description', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.description_o, {'attr': {'class': 'form-control' }}) }}
+    {{ form_errors(form.description_o) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.categorie_o, 'Category', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.categorie_o, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.categorie_o) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.poid_o, 'Weight', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.poid_o, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.poid_o) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.taille_o, 'Height', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.taille_o, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.taille_o) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.programme, 'Program', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.programme, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.programme) }}
+</div>
+
+<button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+
+{{ form_end(form) }}
+</div>

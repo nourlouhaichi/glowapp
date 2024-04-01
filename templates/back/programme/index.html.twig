@@ -1,0 +1,73 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}programmes
+{% endblock %}
+
+{% block body %}
+
+
+
+
+<div class="container-fluid vesitable py-5 bg-light rounded h-100 p-4">
+    <div class="container py-5">
+        <h1 class="regular_anta">Programs</h1>
+        
+        {# Search Form Start #}
+        {{ form_start(search_form, {'attr': {'class': 'form-inline mb-4'}}) }}
+            <div class="form-row">
+                <div class="form-group col-md-4">
+                    {{ form_label(search_form.titre_pro) }}
+                    {{ form_widget(search_form.titre_pro, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="form-group col-md-4">
+                    {{ form_label(search_form.plan_pro) }}
+                    {{ form_widget(search_form.plan_pro, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+                <div class="form-group col-md-4">
+                    {{ form_label(search_form.date_pro) }}
+                    {{ form_widget(search_form.date_pro, {'attr': {'class': 'form-control form-control-sm'}}) }}
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary btn-sm">Search</button>
+        {{ form_end(search_form) }}
+        {# Search Form End #}
+
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>titre_pro</th>
+                    <th>Plan_pro</th>
+                    <th>Note_pro</th>
+                    <th>Date_pro</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for programme in programmes %}
+                <tr>
+                    <td>{{ programme.id }}</td>
+                    <td>{{ programme.titrePro }}</td>
+                    <td>{{ programme.planPro }}</td>
+                    <td>{{ programme.notePro }}</td>
+                    <td>{{ programme.datePro ? programme.datePro|date('Y-m-d') : '' }}</td>
+                    <td>
+                    
+                        <a href="{{ path('app_programme_admin_show', {'id': programme.id}) }}">Show</a>
+                        <a href="{{ path('app_programme_admin_edit', {'id': programme.id}) }}">Edit</a>
+                    </td>
+                                                 <td><label class="badge badge-light"><a href="{{ url('afficherReservation',{'id':programme.id}) }}">Reservations</a></label></td>
+
+                </tr>
+                {% else %}
+                <tr>
+                    <td colspan="6">No records found</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock %}

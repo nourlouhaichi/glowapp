@@ -1,0 +1,14 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}Edit Event{% endblock %}
+
+{% block body %}
+    <center><h1 class="mb-3 text-warning">Edit</h1></center>
+
+    {{ include('back/event_admin/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_event_admin_index') }}">back to list</a>
+
+    {{ include('back/event_admin/_delete_form.html.twig') }}
+    
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}Event index{% endblock %}
+
+{% block body %}
+
+    <center><h1 class="mb-3 text-warning">Events</h1></center>
+     <div class="container-fluid pt-4 px-4">  
+            <form action="{{ path('dql') }}" method="POST" class="d-none d-md-flex ms-4">
+                <input class="form-control border-0"  type="search" name="test" placeholder="Search">
+                    <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+
+    <table  class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Location</th>
+                <th>Date</th>
+                <th>NbP</th>
+                <th>Categorie</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for event in events %}
+            <tr>
+                <td>{{ event.id }}</td>
+                <td>{% if event.image %}
+                <img src="{{ asset('uploads/' ~ event.image) }}" alt="{{ event.title }}" style="max-width: 100px">
+               {% else %}
+                <p>No photo available</p>
+               {% endif %} </td>
+                <td>{{ event.title }}</td>
+                <td>{{ event.description }}</td>
+                <td>{{ event.location }}</td>
+                <td>{{ event.date ? event.date|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ event.nbP }}</td>
+                <td>{{ event.Category }}</td>
+                <td>
+                    <a class="btn btn-primary rounded-pill m-2" href="{{ path('app_event_admin_show', {'id': event.id}) }}"><i class="fa fa-eye"></i></a>
+                    <a class="btn btn-warning rounded-pill m-2" href="{{ path('app_event_admin_edit', {'id': event.id}) }}"><i class="fa fa-pen"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a  href="{{ path('app_event_admin_new') }}">Create new</a>
+    
+{% endblock %}
+

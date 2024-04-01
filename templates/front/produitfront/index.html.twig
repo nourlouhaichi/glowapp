@@ -1,0 +1,221 @@
+{% extends 'front/frontbase.html.twig' %}
+
+{% block title %}Shop here{% endblock %}
+
+{% block body %}
+<div class="container px-0">
+                <nav class="navbar navbar-light bg-white navbar-expand-xl">
+                    <a href="{{ path('app_home_member') }}"><img src="{{asset('front/img/logoglowapp.png')}}" length='150px' width='150px'></a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto">
+                            <a href="{{ path('app_home_member') }}" class="nav-item nav-link ">Home</a>
+                            <a href="{{ path('app_produitfront') }}" class="nav-item nav-link">Shop</a>
+                            <a href="{{ path('app_event') }}" class="nav-item nav-link">Events</a>
+                            <a href="{{ path('app_programme_index') }}" class="nav-item nav-link" >Programs</a>
+                            <a href="{{ path('app_publications') }}" class="nav-item nav-link active">Publications</a>
+                        </div>
+                        {# <div class="d-flex m-3 me-0">
+                         <a href="{{ path('profile_member') }}" class="my-auto">
+                                <i class="fas fa-user fa-2x"></i>
+                            </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="submit" class="btn btn-secondary py-3 w-100 mb-2"> <a href="{{ path('app_logout') }}">Log Out</a></button>
+                           
+                           
+                        </div> #}
+                        <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <img class="rounded-circle me-lg-2" src="{{ asset('uploads/user/' ~ app.user.profilePicture) }}"alt="" style="width: 40px; height: 40px;">
+                            
+                            <span class="d-none d-lg-inline-flex">{{ app.user.lastname}} {{ app.user.firstname}}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="{{ path('profile_member') }}" class="dropdown-item">My Profile</a>
+                            {% if 'ROLE_ADMIN' in app.user.roles %}
+                            <a href="{{ path('app_home_admin') }}" class="dropdown-item">Back Office</a>
+                            {% endif %}
+                            {# <a href="#" class="dropdown-item">Settings</a> #}
+                            <a href="{{ path('app_logout') }}" class="dropdown-item">Log Out</a>
+                        </div>
+                    </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar End --><br>
+
+<!-- Single Page Header start -->
+<div class="container-fluid page-header py-5">
+    <h1 class="text-center text-white display-6">Shop</h1>
+    <ol class="breadcrumb justify-content-center mb-0">
+        <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ path('cart_index') }}">Cart</a></li>
+        <li class="breadcrumb-item active text-white">Shop</li>
+    </ol>
+</div>
+<!-- Single Page Header End -->
+
+<!-- Modal Search Start -->
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content rounded-0">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body d-flex align-items-center">
+                <div class="input-group w-75 mx-auto d-flex">
+                    <input type="search" class="form-control p-3" placeholder="keywords" aria-describedby="search-icon-1">
+                    <span id="search-icon-1" class="input-group-text p-3"><i class="fa fa-search"></i></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Modal Search End -->
+<br>
+
+<!-- Fruits Shop Start-->
+<div class="container-fluid fruite py-5">
+    <div class="container py-5">
+        <h1 class="mb-4"> Our Shop</h1>
+        <div class="row g-4">
+                    <div class="col-lg-12">
+                        <div class="row g-4">
+                             <div class="col-xl-3">
+                                    <div class="input-group w-100 mx-auto d-flex">
+                                      <input class="form-control p-3" type="search" value="search" id="example-search-input" placeholder="keywords" aria-describedby="search-icon-1">
+                                      <span class="input-group-text p-3">
+                                           <button class="btn btn-warning py-2 border-left-0 border text-white" type="button" id="searchButton">
+                                                <i class="fa fa-search"></i> <span class="text-white">Search</span>
+                                            </button>
+                                        </span>
+                                    </div>
+                                </div>
+                            <div class="col-6"></div>
+                            <div class="col-xl-3">
+                                <div class="bg-light ps-3 py-3 rounded d-flex justify-content-between mb-4">
+                                    <div class="btn-group">
+                                                <button type="button" class="btn btn-primary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                                     Sort by price
+                                                </button>
+                                        <ul class="dropdown-menu">
+                                             <li><a class="dropdown-item" href="{{ path('app_produitfront') }}">All</a></li>
+                                             <li><a class="dropdown-item" href="{{ path('tri_prix', {'tri': 'asc'}) }}">Croissant</a></li>
+                                             <li><a class="dropdown-item" href="{{ path('tri_prix', {'tri': 'desc'}) }}">Décroissant</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+        <div class="row g-4">
+            <div class="col-lg-3">
+                <div class="row g-4">
+                    <div class="col-lg-12">
+                        <div class="mb-3">
+                            <h4>Categories</h4>
+                            <ul class="list-unstyled fruite-categorie">
+                                 {% for categorie in categories %}
+                                    <li>
+                                        <div class="d-flex justify-content-between fruite-name">
+                                           
+                                            <a href="{{ path('app_category_products', {'id': categorie.id}) }}">{{ categorie.nomCa }}</a>
+                                        </div>
+                                    </li>
+                                {% endfor %}
+                              
+                            </ul>
+                        </div>
+                          <div class="col-lg-12">
+                                        <div class="mb-3">
+                                            <h4 class="mb-2">Price</h4>
+                                            <input type="range" class="form-range w-100" id="rangeInput" name="rangeInput" min="0" max="500" value="0" oninput="amount.value=rangeInput.value">
+                                            <output id="amount" name="amount" min-velue="0" max-value="500" for="rangeInput">0</output>
+                                        </div>
+                                    </div>
+                    </div>
+                    
+                </div>
+
+                <div class="col-lg-12">
+                   <div class="text-center">
+                     <img src="{{ asset('front/img/HealthyLifestyle.jpg') }}" class="img-fluid w-100 rounded" alt="">
+                      <h3 class="text-secondary fw-bold mt-3">For Better  life</h3>
+                   </div>
+
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="row g-4 justify-content-center">
+                    {% for produit in pagination %}
+                        {% if loop.index % 3 == 1 %}
+                            </div><div class="row g-4 justify-content-center">
+                        {% endif %}
+                        <div class="col-md-6 col-lg-4 col-xl-3">
+                            <div class="rounded position-relative fruite-item">
+                                <div class="fruite-img">
+                                    <img src="{{ asset('uploads/' ~ produit.image) }}" class="img-fluid w-100 rounded-top" alt="{{ produit.name }}" style="height: 200px;"> <!-- Set a fixed height for the image -->
+                                </div>
+                               <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;"></div> 
+                                <!-- Updated part of the code -->
+                                <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+                                   <h4>{{ produit.name }}</h4>
+                                          <!-- Use CSS to limit the height and hide overflow -->
+                                   <p class="description" style="height: 4em; overflow: hidden;">{{ produit.description }}</p>
+                                   <div class="d-flex justify-content-between flex-lg-wrap">
+                                     <p class="text-dark fs-5 fw-bold mb-0">TND {{ produit.price }} / </p>
+                                     <a href="{{path('cart_add', {ref: produit.ref})}}" class="btn border border-secondary rounded-pill px-3 text-primary"><i class="fa fa-shopping-bag me-2 text-primary"></i> Add to cart</a> 
+                                   </div>
+                                    <a href="{{path('app_produitfront_details', {ref: produit.ref})}}" class="btn btn-outline-primary mt-2">See More</a>
+   
+     <!-- See More Button -->
+
+</div>
+
+                            </div>
+                        </div>
+                    {% endfor %}
+                     {{ knp_pagination_render(pagination, 'front/produitfront/shoppagination.html.twig') }}
+                </div>
+                 
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+<!-- Fruits Shop End-->
+{% block javascripts %}
+ <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+ 
+<script>
+    $(document).ready(function () {
+        $('#searchButton').click(function () {
+            var searchQuery = $('#example-search-input').val().toLowerCase();
+            var noProductsRow = $('#noProductsRow');
+
+            // Loop through each product item and show/hide based on the search query
+            $('.fruite-item').each(function () {
+                var productName = $(this).find('h4').text().toLowerCase();
+
+                // If the search query is found in the product name, show it; otherwise, hide it
+                $(this).toggle(productName.includes(searchQuery));
+            });
+
+            // Show/hide the "No Products Found" row based on search results
+            noProductsRow.toggle($('.fruite-item:visible').length === 0);
+        });
+    });
+</script>
+
+{% endblock %}
+{% endblock %}
+
+
+
+
+
+
+
+

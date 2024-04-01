@@ -1,0 +1,55 @@
+{% extends 'front/frontbase.html.twig' %}
+
+{% block title %}New Program{% endblock %}
+
+{% block body %}
+
+<div class="container px-0">
+                <nav class="navbar navbar-light bg-white navbar-expand-xl">
+                    <a href="{{ path('app_home_member') }}"><img src="{{asset('front/img/logoglowapp.png')}}" length='150px' width='150px'></a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto">
+                            <a href="{{ path('app_home_member') }}" class="nav-item nav-link">Home</a>
+                            <a href="{{ path('app_produitfront') }}" class="nav-item nav-link">Shop</a>
+                            <a href="{{ path('app_event') }}" class="nav-item nav-link">Events</a>
+                            <a href="{{ path('app_programme_index') }}" class="nav-item nav-link active" >Programs</a>
+                            <a href="{{ path('app_publications') }}" class="nav-item nav-link">Publications</a>
+                        </div>
+                        {# <div class="d-flex m-3 me-0">
+                         <a href="{{ path('profile_member') }}" class="my-auto">
+                                <i class="fas fa-user fa-2x"></i>
+                            </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="submit" class="btn btn-secondary py-3 w-100 mb-2"> <a href="{{ path('app_logout') }}">Log Out</a></button>
+                           
+                           
+                        </div> #}
+                        <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <img class="rounded-circle me-lg-2" src="{{ asset('uploads/user/' ~ app.user.profilePicture) }}"alt="" style="width: 40px; height: 40px;">
+                            
+                            <span class="d-none d-lg-inline-flex">{{ app.user.lastname}} {{ app.user.firstname}}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="{{ path('profile_member') }}" class="dropdown-item">My Profile</a>
+                            {% if 'ROLE_ADMIN' in app.user.roles %}
+                            <a href="{{ path('app_home_admin') }}" class="dropdown-item">Back Office</a>
+                            {% endif %}
+                            {# <a href="#" class="dropdown-item">Settings</a> #}
+                            <a href="{{ path('app_logout') }}" class="dropdown-item">Log Out</a>
+                        </div>
+                    </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar End -->
+    <h1>Create new Program</h1>
+<a href="{{ path('app_programme_index') }}" class="btn border border-secondary rounded-pill px-3 text-primary"> back to list</a>
+    {{ include('front/programme/_form.html.twig') }}
+
+   
+    
+{% endblock %}

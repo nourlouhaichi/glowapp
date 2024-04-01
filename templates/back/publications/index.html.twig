@@ -1,0 +1,38 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}GlowApp{% endblock %}
+
+{% block body %}
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Type</th>
+      <th scope="col">Content</th>
+      <th scope="col">Date</th>
+      <th scope="col">Modify</th>
+      <th scope="col">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for pub in publications %}
+    <tr>
+      <th scope="row">{{pub.getId()}}</th>
+      <td>{{pub.getTitreP()}}</td>
+      <td>{{pub.gettypep()}}</td>
+      <td>{{pub.getContenueP()}}</td>
+      <td>{{ pub.getDatecrP()|date('Y-m-d') }}</td>
+      <td><a href="{{path('backapp_publication_edit', {'id': pub.id}) }}"> modify</a></td>
+      <td>
+        <a href="{{ path('backapp_publicationcomdelete', {'id': pub.id}) }}">Delete</a></form></td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+<center>
+<form method="post" action="{{ path('backapp_publication_new') }}">
+  <input type="hidden" name="_token">
+  <button class="btn btn-primary">Add new post</button>
+</form>
+{% endblock %}

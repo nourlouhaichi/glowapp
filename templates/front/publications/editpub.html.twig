@@ -1,0 +1,29 @@
+{% extends 'front/frontbase.html.twig' %}
+{% block title %}GlowApp{% endblock %}
+{% block body %}
+
+
+                <nav class="navbar navbar-light bg-white navbar-expand-xl">
+                    <img src="{{asset('front/img/logoglowapp.png')}}" length='150px' width='150px'>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto">
+                           <a href="{{ path('app_home_member') }}" class="nav-item nav-link active">Home</a>
+                            <a href="{{ path('app_produitfront') }}" class="nav-item nav-link">Shop</a>
+                            <a href="{{ path('app_event') }}" class="nav-item nav-link">Events</a>
+                            <a href="{{ path('app_programme_index') }}" class="nav-item nav-link" >Programs</a>
+                            <a href="{{ path('app_publications') }}" class="nav-item nav-link">Publications</a>
+                    </div>
+
+                </nav>
+            </div>
+        </div>
+        <div style="margin-top: 30px; height: 400px" class="container-fluid special-page-header py-5">
+    <div style="display: flex ; height: 100%; width: 100%">
+        <h1 style="text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);  text-transform: capitalize; font-size: 55px; color: white;font-weight: bold; margin: auto 30px" class="">Edit Publication</h1>
+    </div>
+</div>
+    {{ include('front/publications/_form.html.twig', {'button_label': 'Update'}) }}
+{% endblock %}

@@ -1,0 +1,153 @@
+{% extends 'front/frontbase.html.twig' %}
+
+{% block title %}GlowApp{% endblock %}
+{% block body %}
+<div class="container px-0">
+                <nav class="navbar navbar-light bg-white navbar-expand-xl">
+                    <a href="{{ path('app_home_member') }}"><img src="{{asset('front/img/logoglowapp.png')}}" length='150px' width='150px'></a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+                    <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto">
+                           <a href="{{ path('app_home_member') }}" class="nav-item nav-link active">Home</a>
+                            <a href="{{ path('app_produitfront') }}" class="nav-item nav-link">Shop</a>
+                            <a href="{{ path('app_event') }}" class="nav-item nav-link">Events</a>
+                            <a href="{{ path('app_programme_index') }}" class="nav-item nav-link" >Programs</a>
+                            <a href="{{ path('app_publications') }}" class="nav-item nav-link">Publications</a>
+                        </div>
+                        {# <div class="d-flex m-3 me-0">
+                         <a href="{{ path('profile_member') }}" class="my-auto">
+                                <i class="fas fa-user fa-2x"></i>
+                            </a> &nbsp;&nbsp;&nbsp;&nbsp;
+                            <button type="submit" class="btn btn-secondary py-3 w-100 mb-2"> <a href="{{ path('app_logout') }}">Log Out</a></button>
+                           
+                           
+                        </div> #}
+                        <div class="nav-item dropdown">
+                        <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                        <img class="rounded-circle me-lg-2" src="{{ asset('uploads/user/' ~ app.user.profilePicture) }}"alt="" style="width: 40px; height: 40px;">
+                            
+                            <span class="d-none d-lg-inline-flex">{{ app.user.lastname}} {{ app.user.firstname}}</span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-end bg-light border-0 rounded-0 rounded-bottom m-0">
+                            <a href="{{ path('profile_member') }}" class="dropdown-item">My Profile</a>
+                            {% if 'ROLE_ADMIN' in app.user.roles %}
+                            <a href="{{ path('app_home_admin') }}" class="dropdown-item">Back Office</a>
+                            {% endif %}
+                            {# <a href="#" class="dropdown-item">Settings</a> #}
+                            <a href="{{ path('app_logout') }}" class="dropdown-item">Log Out</a>
+                        </div>
+                    </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+        <!-- Navbar End -->
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#success-alert').fadeOut(5000);
+        $('#error-alert').fadeOut(5000);
+    });
+</script>
+{% block stylesheets %}
+    <style>
+        .custom-alert {
+            font-size: 14px; 
+            padding: 8px 15px; 
+            border-radius: 5px; 
+            margin: 0 auto; 
+            width: fit-content;
+            position: fixed;
+            top: 50%; 
+            left: 50%; 
+            transform: translate(-50%, -50%);
+            z-index: 9999;
+        }
+
+        .alert-success {
+            background-color: #d4edda; 
+            border-color: #c3e6cb; 
+            color: #155724; 
+        }
+
+        .alert-warning {
+            background-color: #f8d7da;
+            border-color: #f5c6cb; 
+            color: #721c24; 
+        }
+    </style>
+    {% endblock %}
+{% for message in app.flashes("success") %}
+<div class="alert alert-success custom-alert text-smaller text-center" id="success-alert">
+    <i class="fas fa-check-circle"></i>
+    <span>{{ message }}</span>
+</div>
+{% endfor %}
+<center>
+<div class="col-md-6 col-lg-4 col-xl-3">
+    <div class="rounded position-relative fruite-item">
+        <div class="fruite-img">
+                  <div class="carousel-inner">
+                        {% set isFirst = true %}
+                        {% for image in publications.images %}
+                            <div class="carousel-item {% if isFirst %}active{% endif %}">
+                                <img src="{{ asset('/images/publications/' ~ image.name) }}" class="d-block w-100" style="height: 300px; object-fit: cover;" alt="Publication Image">
+                            </div>
+                            {% set isFirst = false %}
+                        {% endfor %}
+                    </div>
+        </div>
+        <div class="text-white bg-secondary px-3 py-1 rounded position-absolute" style="top: 10px; left: 10px;">{{publications.getTypeP()}}</div>
+        <div class="p-4 border border-secondary border-top-0 rounded-bottom">
+            <h4>{{publications.getTitreP()}}</h4>
+            <p>{{publications.getContenueP()}}</p>
+            <div class="d-flex justify-content-between flex-lg-wrap">
+                
+            </div>
+        </div>
+    </div>
+</div>
+</center>
+<br>
+ {%for comment in publications.comments%}
+<div class="testimonial-item img-border-radius bg-light rounded p-4">
+                        <div class="position-relative">
+                                                                    <div style="position: absolute; top: 10px; right: 10px;">
+                        <form method="post" action="{{ path('frontapp_comment_delete', {'id': comment.id}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ comment.id) }}">
+                            <button class="text-white px-1 py-1 rounded" style="background-color: transparent; border: none;"><i class="fas fa-trash me-2 text-primary"></i></button>
+                        </form>
+                    </div>
+                            <i class="fa fa-quote-right fa-2x text-secondary position-absolute" style="bottom: 30px; right: 0;"></i>
+                            <div class="mb-4 pb-4 border-bottom border-secondary">
+                                <p class="m-0 pb-3">created at {{comment.Datecr| date("d/m/Y")}}</p>
+                                
+                            </div>
+                            <div class="d-flex align-items-center flex-nowrap">
+                                <div class="bg-secondary rounded">
+                                <img  src="{{ asset('uploads/user/' ~ app.user.profilePicture) }}"alt="" style="width: 100px; height: 100px;">
+                                    {# <img src="{{asset('front/img/avatar.jpg')}}" class="img-fluid rounded" style="width: 100px; height: 100px;" alt=""> #}
+                                </div>
+                                <div class="ms-4 d-block">
+                                    <h4 class="text-dark">{{ app.user.lastname}} {{ app.user.firstname}}</h4>
+                                    {{comment.getContenue()}}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+ {% endfor %}
+ <br>
+{{ include('front/comment/_form.html.twig') }}
+{% endblock %}

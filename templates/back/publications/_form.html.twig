@@ -1,0 +1,26 @@
+<div class="form-container">
+{{ form_start(form, {'attr': {'novalidate': 'novalidate','class':'form-horizontal'}})}}
+
+<div class="form-group">
+    {{ form_label(form.titre_p, 'Title', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.titre_p, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.titre_p) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.type_p, 'Type', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.type_p, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.type_p) }}
+</div>
+
+<div class="form-group">
+    {{ form_label(form.contenue_p, 'Content', {'label_attr': {'class': 'control-label'}}) }}
+    {{ form_widget(form.contenue_p, {'attr': {'class': 'form-control'}}) }}
+    {{ form_errors(form.contenue_p) }}
+</div>
+
+<button class="btn">{{ button_label|default('Save') }}</button>
+<a href="{{ path('backapp_publications') }}">Back to list</a>
+
+{{ form_end(form) }}
+</div>

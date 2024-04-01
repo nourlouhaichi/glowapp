@@ -10,13 +10,14 @@ use App\Form\EditProfileType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
+use App\Repository\EventRepository;
 
 class HomeMemberController extends AbstractController
 {
     #[Route('/home/member', name: 'app_home_member')]
-    public function index(): Response
+    public function index(EventRepository $eventRepository): Response
     {
-        return $this->render('front/home_member/indexmember.html.twig', [
+        return $this->render('front/home_member/indexmember.html.twig', ['events' => $eventRepository->findAll(),
             'controller_name' => 'HomeMemberController',
         ]);
     }

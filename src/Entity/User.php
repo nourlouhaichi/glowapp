@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\UserRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
@@ -122,6 +124,31 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     #[ORM\Column(length: 10)]
     private ?string $authCode = null;
 
+    #[ORM\OneToMany(mappedBy: 'userpub', targetEntity: Publication::class)]
+    private Collection $publications;
+
+    #[ORM\OneToMany(mappedBy: 'usercmn', targetEntity: Comment::class)]
+    private Collection $comments;
+
+    #[ORM\OneToMany(mappedBy: 'usereve', targetEntity: Event::class)]
+    private Collection $events;
+
+    #[ORM\OneToMany(mappedBy: 'userres', targetEntity: Reservation::class)]
+    private Collection $reservations;
+
+    #[ORM\OneToMany(mappedBy: 'userprod', targetEntity: Produit::class)]
+    private Collection $produits;
+
+    #[ORM\OneToMany(mappedBy: 'userprog', targetEntity: Programme::class)]
+    private Collection $programs;
+
+    #[ORM\OneToMany(mappedBy: 'userob', targetEntity: Objectif::class)]
+    private Collection $objectifs;
+
+    #[ORM\OneToMany(mappedBy: 'usercmnp', targetEntity: CommentProg::class)]
+    private Collection $commentprogs;
+
+
 
     public function __construct()
     {
@@ -136,6 +163,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
                 $this->setProfilePicture("Mprofile.png");
             }
         }
+        $this->publications = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->events = new ArrayCollection();
+        $this->reservations = new ArrayCollection();
+        $this->produits = new ArrayCollection();
+        $this->programs = new ArrayCollection();
+        $this->objectifs = new ArrayCollection();
+        $this->commentprogs = new ArrayCollection();
                             
     }
 
@@ -368,6 +403,246 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface, TwoFact
     public function setEmailAuthCode(string $authCode): void 
     {
         $this->authCode = $authCode;
+    }
+
+    /**
+     * @return Collection<int, Publication>
+     */
+    public function getPublications(): Collection
+    {
+        return $this->publications;
+    }
+
+    public function addPublication(Publication $publication): static
+    {
+        if (!$this->publications->contains($publication)) {
+            $this->publications->add($publication);
+            $publication->setUserpub($this);
+        }
+
+        return $this;
+    }
+
+    public function removePublication(Publication $publication): static
+    {
+        if ($this->publications->removeElement($publication)) {
+            // set the owning side to null (unless already changed)
+            if ($publication->getUserpub() === $this) {
+                $publication->setUserpub(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Comment>
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): static
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments->add($comment);
+            $comment->setUsercmn($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): static
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getUsercmn() === $this) {
+                $comment->setUsercmn(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Event>
+     */
+    public function getEvents(): Collection
+    {
+        return $this->events;
+    }
+
+    public function addEvent(Event $event): static
+    {
+        if (!$this->events->contains($event)) {
+            $this->events->add($event);
+            $event->setUsereve($this);
+        }
+
+        return $this;
+    }
+
+    public function removeEvent(Event $event): static
+    {
+        if ($this->events->removeElement($event)) {
+            // set the owning side to null (unless already changed)
+            if ($event->getUsereve() === $this) {
+                $event->setUsereve(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Reservation>
+     */
+    public function getReservations(): Collection
+    {
+        return $this->reservations;
+    }
+
+    public function addReservation(Reservation $reservation): static
+    {
+        if (!$this->reservations->contains($reservation)) {
+            $this->reservations->add($reservation);
+            $reservation->setUserres($this);
+        }
+
+        return $this;
+    }
+
+    public function removeReservation(Reservation $reservation): static
+    {
+        if ($this->reservations->removeElement($reservation)) {
+            // set the owning side to null (unless already changed)
+            if ($reservation->getUserres() === $this) {
+                $reservation->setUserres(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Produit>
+     */
+    public function getProduits(): Collection
+    {
+        return $this->produits;
+    }
+
+    public function addProduit(Produit $produit): static
+    {
+        if (!$this->produits->contains($produit)) {
+            $this->produits->add($produit);
+            $produit->setUserprod($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProduit(Produit $produit): static
+    {
+        if ($this->produits->removeElement($produit)) {
+            // set the owning side to null (unless already changed)
+            if ($produit->getUserprod() === $this) {
+                $produit->setUserprod(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Programme>
+     */
+    public function getPrograms(): Collection
+    {
+        return $this->programs;
+    }
+
+    public function addProgram(Programme $program): static
+    {
+        if (!$this->programs->contains($program)) {
+            $this->programs->add($program);
+            $program->setUserprog($this);
+        }
+
+        return $this;
+    }
+
+    public function removeProgram(Programme $program): static
+    {
+        if ($this->programs->removeElement($program)) {
+            // set the owning side to null (unless already changed)
+            if ($program->getUserprog() === $this) {
+                $program->setUserprog(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Objectif>
+     */
+    public function getObjectifs(): Collection
+    {
+        return $this->objectifs;
+    }
+
+    public function addObjectif(Objectif $objectif): static
+    {
+        if (!$this->objectifs->contains($objectif)) {
+            $this->objectifs->add($objectif);
+            $objectif->setUserob($this);
+        }
+
+        return $this;
+    }
+
+    public function removeObjectif(Objectif $objectif): static
+    {
+        if ($this->objectifs->removeElement($objectif)) {
+            // set the owning side to null (unless already changed)
+            if ($objectif->getUserob() === $this) {
+                $objectif->setUserob(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, CommentProg>
+     */
+    public function getCommentprogs(): Collection
+    {
+        return $this->commentprogs;
+    }
+
+    public function addCommentprog(CommentProg $commentprog): static
+    {
+        if (!$this->commentprogs->contains($commentprog)) {
+            $this->commentprogs->add($commentprog);
+            $commentprog->setUsercmnp($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCommentprog(CommentProg $commentprog): static
+    {
+        if ($this->commentprogs->removeElement($commentprog)) {
+            // set the owning side to null (unless already changed)
+            if ($commentprog->getUsercmnp() === $this) {
+                $commentprog->setUsercmnp(null);
+            }
+        }
+
+        return $this;
     }
 
 }

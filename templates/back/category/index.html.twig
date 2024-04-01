@@ -1,0 +1,38 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}Category index{% endblock %}
+
+{% block body %}
+    
+    <center><h1 class="mb-3 text-warning">Categories</h1></center>
+    <div class="container d-flex justify-content-end">
+
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Title</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <td>{{ category.id }}</td>
+                <td>{{ category.title }}</td>
+                <td>
+                    <a class="btn btn-primary rounded-pill m-2" href="{{ path('app_category_show', {'id': category.id}) }}"><i class="fa fa-eye"></i></a>
+                    <a class="btn btn-warning rounded-pill m-2" href="{{ path('app_category_edit', {'id': category.id}) }}"><i class="fa fa-pen"></i></a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+
+    <a href="{{ path('app_category_new') }}">Create new</a>
+{% endblock %}

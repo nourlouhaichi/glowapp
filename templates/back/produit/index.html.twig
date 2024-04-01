@@ -1,0 +1,110 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}Product index{% endblock %}
+
+{% block body %}
+
+    <div class="container-fluid pt-4 px-4">  
+        <center><h1 class="mb-3 text-warning">Product Table</h1></center>
+        
+        <div class="container d-flex justify-content-end">
+           <a href="{{ path('app_produit_print') }}" class="btn btn-primary">PDF</a>
+            
+        
+            <a class="btn btn-success rounded-pill m-2" href="{{ path('app_produit_new') }}"><i class="fa fa-plus"></i></a>
+        </div>
+        <div class="container-fluid pt-4 px-4">  
+            {# <form action="{{ path('dql') }}" method="POST" class="d-none d-md-flex ms-4">
+                <input class="form-control bg-dark border-0" type="search" name="test" placeholder="Search">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                </form> #}
+
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col" class="text-center">Ref</th>
+                        <th scope="col" class="text-center">Name</th>
+                        <th scope="col" class="text-center">Description</th>
+                        <th scope="col" class="text-center">Price</th>
+                        <th scope="col" class="text-center">Category</th>
+                        <th scope="col" class="text-center">Quantity</th>
+                        <th scope="col" class="text-center">Image</th>
+                        <th scope="col" class="text-center">Action</th> <!-- New column for action buttons -->
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for produit in produits %}
+                        <tr>
+                            <th scope="row" class="text-center">{{ produit.ref }}</th>
+                            <td>{{ produit.name }}</td>
+                            <td>{{ produit.description }}</td>
+                            <td class="text-end">{{ produit.price }}</td>
+                            <td>
+                                {% if produit.categorieProd is not null %}
+                                    {{ produit.categorieProd.nomCa }}
+                                {% else %}
+                                    No Category
+                                {% endif %}
+                            </td>
+                            <td class="text-center">{{ produit.quantity }}</td>
+                            <td class="text-center">
+                                {% if produit.image %}
+                                    <img src="{{ asset('uploads/'  ~ produit.image) }}" alt="Product Image" style="max-width: 100px;">
+                                {% else %}
+                                    No Image
+                                {% endif %}
+                            </td>
+                            <td class="text-center">
+                                <div class="btn-group" role="group" aria-label="Product Actions">
+                                    <a class="btn btn-primary rounded-pill m-2" href="{{ path('app_produit_show', {'ref': produit.ref}) }}"><i class="fa fa-eye"></i></a>
+                                    <a class="btn btn-warning rounded-pill m-2" href="{{ path('app_produit_edit', {'ref': produit.ref}) }}"><i class="fa fa-pen"></i></a>
+                                </div>
+                            </td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="8" class="text-center">no records found</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetch('/produit/api/produits')
+                .then(response => response.json())
+                .then(produits => {
+                    const lowQuantityThreshold = 10; // Customize your threshold
+
+                    produits.forEach(produit => {
+                        if (produit.quantity <= lowQuantityThreshold) {
+                            // Using SweetAlert2 for a nicer alert
+                            Swal.fire({
+                                title: 'Low Quantity Alert!',
+                                text: 'Low quantity for ' + produit.name + ': only ' + produit.quantity + ' left!',
+                                icon: 'warning',
+                            });
+                        }
+                    });
+                })
+                .catch(error => console.error('Error fetching product data:', error));
+        });
+    </script>
+
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

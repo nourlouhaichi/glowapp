@@ -1,0 +1,54 @@
+
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}Produit{% endblock %}
+
+{% block body %}
+    <div class="container-fluid pt-4 px-4">
+        <center><h1 class="mb-3 text-success">Product Details</h1></center>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="bg-light rounded h-100 p-4">
+                    <div class="info-item">
+                        <strong>Ref:</strong> {{ produit.ref }}
+                    </div>
+                    <div class="info-item">
+                        <strong>Name:</strong> {{ produit.name }}
+                    </div>
+                    <div class="info-item">
+                        <strong>Description:</strong>
+                        <p>{{ produit.description }}</p>
+                    </div>
+                    <div class="info-item">
+                        <strong>Price:</strong> {{ produit.price }}
+                    </div>
+                    <div class="info-item">
+                        <strong>Categorie:</strong> {{ produit.categorieProd.nomCa }}
+                    </div>
+                    <div class="info-item">
+                        <strong>Quantity:</strong> {{ produit.quantity }}
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="bg-light rounded h-100 p-4">
+                            <div class="product-image">
+            {% if produit.image %}
+                <img src="{{ asset('uploads/' ~ produit.image) }}" alt="Product Image" style="max-width: 300px; max-height: 300px;">
+            {% else %}
+                <p>No Image</p>
+            {% endif %}
+        </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container d-flex justify-content-center">
+            <a href="{{ path('app_produit_index') }}" class="btn btn-warning rounded-pill m-2">Back to list</a>
+            <a href="{{ path('app_produit_edit', {'ref': produit.ref}) }}" class="btn btn-success rounded-pill m-2">Edit</a>
+        </div>
+        {{ include('back/produit/_delete_form.html.twig') }}
+    </div>
+{% endblock %}
+

@@ -1,0 +1,31 @@
+<div class="form-container">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'form-horizontal'}}) }}
+    
+    <div class="form-group">
+        {{ form_label(form.titre_pro, 'Titre', {'label_attr': {'class': 'control-label'}}) }}
+        {{ form_widget(form.titre_pro, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.titre_pro) }}
+    </div>
+    
+    <div class="form-group">
+        {{ form_label(form.plan_pro, 'Plan', {'label_attr': {'class': 'control-label'}}) }}
+        {{ form_widget(form.plan_pro, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.plan_pro) }}
+    </div>
+    
+    <div class="form-group">
+        {{ form_label(form.note_pro, 'Note', {'label_attr': {'class': 'control-label'}}) }}
+        {{ form_widget(form.note_pro, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.note_pro) }}
+    </div>
+    
+    <div class="form-group">
+        {{ form_label(form.date_pro, 'Date', {'label_attr': {'class': 'control-label'}}) }}
+        {{ form_widget(form.date_pro, {'attr': {'class': 'form-control'}}) }}
+        {{ form_errors(form.date_pro) }}
+    </div>
+    
+    <button type="submit" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+    
+    {{ form_end(form) }}
+</div>

@@ -1,0 +1,48 @@
+{% extends 'back/backbase.html.twig' %}
+
+{% block title %}Edit Category{% endblock %}
+
+{% block body %}
+    <div class="container-fluid pt-4 px-4">
+        <center><h1 class="mb-3 text-warning">Edit Category</h1></center>
+
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+
+        <div class="row g-4">
+            <div class="col-sm-12 col-xl-6">
+                <div class="bg-light rounded h-100 p-4">
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form.nomCa, {'attr': {'class': 'form-control', 'id': 'floatingName', 'placeholder': 'Enter name'}}) }}
+                        <label for="floatingName">Name Category</label>
+                        {{ form_errors(form.nomCa) }}
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form.descriptionCat, {'attr': {'class': 'form-control', 'id': 'floatingDescription', 'placeholder': 'Enter description'}}) }}
+                        <label for="floatingDescription">Description Category</label>
+                        {{ form_errors(form.descriptionCat) }}
+                    </div>
+
+                    <div class="form-floating mb-3">
+                        {{ form_widget(form.CreateDateCa, {'attr': {'class': 'form-control', 'id': 'floatingCreateDateCa', 'placeholder': 'Enter creation date'}}) }}
+                        <label for="floatingCreateDateCa">Creation Date</label>
+                        {{ form_errors(form.CreateDateCa) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container d-flex justify-content-center">
+            
+          <a class="btn btn-primary rounded-pill m-2" href="{{ path('app_categorie_prod_index') }}"><i class="fa fa-arrow-left" aria-hidden="true"></i></a>
+          <button type="submit" class="btn btn-success rounded-pill m-2"><i class="fa fa-check" aria-hidden="true"></i></button>
+        </div>
+
+        {{ form_end(form) }}
+        
+        {{ include('back/categorie_prod/_delete_form.html.twig') }}
+    </div>
+{% endblock %}
+
+
+   
