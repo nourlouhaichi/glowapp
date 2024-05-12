@@ -38,6 +38,7 @@ class ReservationController extends AbstractController
         $result = $writer->write($qrCode) ;
         /*$reponse = new QrCodeResponse;*/
         $reservation->setQrCode($result->getDataUri());
+        $reservation->setUserres($this->getUser());
         $entityManager->persist($reservation);
         $entityManager->flush();
        
